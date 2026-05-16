@@ -1,0 +1,946 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Lenda da Iara</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --ciano:#22d3ee;
+  --azul-claro:#0ea5e9;
+  --azul-escuro:#022c43;
+}
+
+html, body{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  overscroll-behavior:none;
+  touch-action:manipulation;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:
+    radial-gradient(ellipse at 30% 20%,rgba(34,211,238,0.25),transparent 60%),
+    radial-gradient(ellipse at 70% 80%,rgba(14,165,233,0.3),transparent 60%),
+    linear-gradient(180deg,#020617 0%,#022c43 50%,#0ea5e9 100%);
+  color:white;
+  text-align:center;
+  user-select:none;
+  -webkit-user-select:none;
+  -webkit-tap-highlight-color:transparent;
+  overflow-y:auto;
+}
+
+/* BOLHAS */
+.bubbles{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:1;
+  overflow:hidden;
+}
+
+.bubble{
+  position:absolute;
+  bottom:-50px;
+  background:radial-gradient(circle at 30% 30%,rgba(255,255,255,0.4),rgba(34,211,238,0.15));
+  border:1px solid rgba(255,255,255,0.2);
+  border-radius:50%;
+  animation:rise linear infinite;
+}
+
+@keyframes rise{
+  0%{ transform:translateY(0) translateX(0); opacity:0; }
+  10%{ opacity:0.7; }
+  100%{ transform:translateY(-110vh) translateX(50px); opacity:0; }
+}
+
+/* MENU / LENDA */
+.tela{
+  position:relative;
+  z-index:5;
+  width:100%;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:60px 20px 40px;
+  animation:fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn{
+  from{ opacity:0; transform:translateY(20px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+.badge{
+  display:inline-block;
+  padding:6px 18px;
+  background:rgba(34,211,238,0.15);
+  border:1px solid rgba(34,211,238,0.5);
+  border-radius:20px;
+  font-size:11px;
+  letter-spacing:3px;
+  color:var(--ciano);
+  margin-bottom:18px;
+  text-transform:uppercase;
+}
+
+h1.titulo{
+  font-family:'Cinzel',serif;
+  font-size:clamp(34px,6vw,52px);
+  font-weight:700;
+  letter-spacing:2px;
+  margin-bottom:30px;
+  background:linear-gradient(90deg,#a5f3fc,#22d3ee,#a5f3fc);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 25px rgba(34,211,238,0.5));
+}
+
+.iara-img{
+  width:240px;
+  max-width:60vw;
+  margin:10px;
+  border-radius:16px;
+  filter:drop-shadow(0 0 30px rgba(34,211,238,0.6));
+  animation:floatImg 4s ease-in-out infinite;
+  border:2px solid rgba(34,211,238,0.4);
+}
+
+@keyframes floatImg{
+  0%,100%{ transform:translateY(0); }
+  50%{ transform:translateY(-12px); }
+}
+
+.historia{
+  max-width:520px;
+  margin:30px auto 10px;
+  background:rgba(2,6,23,0.55);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  padding:24px 28px;
+  border-radius:18px;
+  border:1px solid rgba(34,211,238,0.3);
+  box-shadow:0 0 40px rgba(34,211,238,0.2),inset 0 0 20px rgba(34,211,238,0.05);
+  font-size:15px;
+  line-height:1.7;
+  color:#e0f2fe;
+  font-weight:300;
+}
+
+.historia::before{
+  content:"❝";
+  display:block;
+  font-family:'Cinzel',serif;
+  font-size:48px;
+  color:var(--ciano);
+  line-height:0.4;
+  margin-bottom:8px;
+  opacity:0.6;
+}
+
+.btn-comecar{
+  margin-top:30px;
+  padding:16px 40px;
+  border:none;
+  border-radius:14px;
+  background:linear-gradient(90deg,#0ea5e9,var(--ciano));
+  color:white;
+  font-size:16px;
+  font-weight:600;
+  font-family:'Inter',sans-serif;
+  letter-spacing:1px;
+  cursor:pointer;
+  text-transform:uppercase;
+  box-shadow:0 8px 30px -8px rgba(34,211,238,0.7);
+  transition:all 0.3s;
+}
+
+.btn-comecar:hover{
+  transform:translateY(-3px);
+  box-shadow:0 12px 40px -8px rgba(34,211,238,0.9);
+}
+
+.voltar{
+  position:fixed;
+  top:16px;
+  left:16px;
+  padding:10px 16px;
+  background:rgba(2,6,23,0.7);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(34,211,238,0.4);
+  color:#a5f3fc;
+  border-radius:12px;
+  cursor:pointer;
+  font-size:13px;
+  font-weight:500;
+  z-index:50;
+  font-family:'Inter',sans-serif;
+  transition:all 0.3s;
+}
+
+.voltar:hover{
+  background:rgba(34,211,238,0.2);
+  color:white;
+}
+
+/* GAME */
+#game{
+  position:relative;
+  z-index:5;
+  display:none;
+  flex-direction:column;
+  align-items:center;
+  padding:30px 10px 20px;
+  min-height:100vh;
+}
+
+.hud-row{
+  display:flex;
+  gap:8px;
+  margin-bottom:14px;
+  align-items:center;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.hud{
+  font-family:'Cinzel',serif;
+  font-size:16px;
+  letter-spacing:1.5px;
+  color:var(--ciano);
+  padding:7px 16px;
+  background:rgba(2,6,23,0.6);
+  backdrop-filter:blur(8px);
+  border:1px solid rgba(34,211,238,0.4);
+  border-radius:30px;
+  white-space:nowrap;
+}
+.hud.vidas-hud{ color:#fca5a5; border-color:rgba(239,68,68,0.4); }
+.hud.tempo-hud{ color:#fde047; border-color:rgba(250,204,21,0.4); }
+.hud.vidas-hud.dano{ animation:hpPulse 0.3s ease; }
+@keyframes hpPulse{
+  0%,100%{ transform:scale(1); }
+  50%{ transform:scale(1.18); background:rgba(220,38,38,0.5); }
+}
+.mute-btn{
+  width:36px; height:36px;
+  border-radius:50%;
+  background:rgba(2,6,23,0.6);
+  border:1px solid rgba(34,211,238,0.4);
+  color:#a5f3fc;
+  font-size:16px;
+  cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  -webkit-tap-highlight-color:transparent;
+}
+.mute-btn:active{ transform:scale(0.92); }
+
+/* OVERLAY GAME OVER */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(2,6,23,0.88);
+  backdrop-filter:blur(8px);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  z-index:100;
+  color:white;
+  text-align:center;
+  padding:20px;
+  animation:overlayIn 0.4s ease;
+}
+.overlay.show{ display:flex; }
+@keyframes overlayIn{
+  from{ opacity:0; }
+  to{ opacity:1; }
+}
+.overlay h2{
+  font-family:'Cinzel',serif;
+  font-size:34px;
+  margin:10px;
+  background:linear-gradient(90deg,#a5f3fc,#22d3ee);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.overlay p{ color:#bae6fd; margin-bottom:10px; font-size:15px; }
+.overlay button{
+  margin:8px;
+  padding:14px 28px;
+  font-size:14px;
+  font-weight:600;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  background:linear-gradient(90deg,#0ea5e9,var(--ciano));
+  border:none;
+  border-radius:12px;
+  color:white;
+  cursor:pointer;
+  box-shadow:0 6px 20px -5px rgba(34,211,238,0.6);
+  transition:transform 0.2s;
+}
+.overlay button:hover{ transform:translateY(-2px); }
+
+canvas{
+  background:linear-gradient(180deg,#022c43,#0ea5e9);
+  border-radius:16px;
+  width:min(92vw, 560px);
+  height:auto;
+  touch-action:none;
+  border:2px solid rgba(34,211,238,0.3);
+  box-shadow:0 0 60px rgba(34,211,238,0.3);
+}
+
+.lane-buttons{
+  display:flex;
+  gap:10px;
+  margin-top:20px;
+  width:min(92vw, 560px);
+}
+
+.lane-buttons button{
+  flex:1;
+  padding:18px 0;
+  font-size:24px;
+  background:rgba(14,165,233,0.5);
+  backdrop-filter:blur(8px);
+  border:2px solid rgba(34,211,238,0.5);
+  border-radius:14px;
+  color:white;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  transition:all 0.15s;
+}
+
+.lane-buttons button:active{
+  background:var(--ciano);
+  color:#022c43;
+  transform:scale(0.95);
+  border-color:white;
+}
+
+.feedback{
+  position:fixed;
+  top:40%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-family:'Cinzel',serif;
+  font-size:48px;
+  font-weight:700;
+  letter-spacing:3px;
+  pointer-events:none;
+  text-shadow:0 0 20px currentColor;
+  z-index:40;
+  animation:popIn 0.3s ease;
+}
+
+@keyframes popIn{
+  from{ transform:translate(-50%,-50%) scale(0.5); opacity:0; }
+  to{ transform:translate(-50%,-50%) scale(1); opacity:1; }
+}
+
+/* ============================================
+   MOBILE — telas pequenas (até ~600px)
+   ============================================ */
+@media (max-width: 600px){
+  #game{
+    padding:14px 6px 14px;
+    justify-content:flex-start;
+  }
+  .voltar{
+    top:10px; left:10px;
+    padding:7px 12px;
+    font-size:11px;
+  }
+  .hud{
+    font-size:16px;
+    padding:6px 18px;
+    margin-bottom:10px;
+    margin-top:36px;     /* dá espaço pro botão voltar */
+  }
+  canvas{
+    width:96vw;
+    max-height:calc(100dvh - 180px);
+    object-fit:contain;
+  }
+  .lane-buttons{
+    width:96vw;
+    gap:6px;
+    margin-top:12px;
+  }
+  .lane-buttons button{
+    padding:14px 0;
+    font-size:20px;
+    border-radius:10px;
+  }
+  .feedback{
+    font-size:34px;
+    top:35%;
+  }
+
+  /* menu */
+  .historia{ padding:18px 20px; font-size:14px; }
+  .iara-img{ width:200px; }
+}
+
+/* Telas muito pequenas (até ~380px) */
+@media (max-width: 380px){
+  .hud{ font-size:14px; padding:5px 14px; }
+  .voltar{ font-size:10px; padding:6px 10px; }
+  .lane-buttons button{ padding:12px 0; font-size:18px; }
+  .feedback{ font-size:28px; }
+}
+
+/* === OTIMIZACAO MOBILE === */
+@media (max-width: 900px), (pointer: coarse){
+  *{ backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+  .titulo, .voltar, .hud, .lane-buttons button{ filter: none !important; }
+  .btn-comecar{ box-shadow: 0 4px 12px rgba(0,0,0,.4) !important; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- BOLHAS -->
+<div class="bubbles" id="bubbles"></div>
+
+<!-- BOTÃO VOLTAR -->
+<button class="voltar" onclick="voltar()">← Menu</button>
+
+<!-- MENU -->
+<div id="menu" class="tela">
+  <div class="badge">✦ Lenda Amazônica ✦</div>
+  <h1 class="titulo">🌊 Lenda da Iara</h1>
+
+  <img src="iara.png" class="iara-img" alt="Iara">
+
+  <div class="historia">
+    Iara é uma sereia das águas da Amazônia. Diz a lenda que ela encanta
+    pescadores com sua beleza e seu canto, fazendo com que mergulhem no rio
+    e nunca mais voltem. Você consegue resistir ao seu ritmo?
+  </div>
+
+  <button class="btn-comecar" onclick="start()">Começar</button>
+</div>
+
+<!-- JOGO -->
+<div id="game">
+  <div class="hud-row">
+    <div class="hud">PONTOS · <span id="score">0</span></div>
+    <div class="hud vidas-hud">VIDAS · <span id="vidas">5</span></div>
+    <div class="hud tempo-hud">⏱ <span id="tempo">90</span>s</div>
+    <button class="mute-btn" id="muteBtn" type="button" title="Mudo">🔊</button>
+  </div>
+  <canvas id="canvas" width="560" height="780"></canvas>
+
+  <div class="lane-buttons">
+    <button data-lane="0">⬅️</button>
+    <button data-lane="1">⬇️</button>
+    <button data-lane="2">⬆️</button>
+    <button data-lane="3">➡️</button>
+  </div>
+</div>
+
+<div id="feedback" class="feedback"></div>
+
+<!-- OVERLAY GAME OVER -->
+<div id="overlay" class="overlay">
+  <h2 id="goTitle">🌊 Você foi encantado!</h2>
+  <p id="goMsg">A Iara te levou pro fundo do rio.</p>
+  <p>Pontuação final: <span id="finalScore">0</span></p>
+  <button onclick="reiniciar()">🔄 Tentar de novo</button>
+  <button onclick="voltar()">← Menu</button>
+</div>
+
+<script>
+// 🎵 MÚSICA
+let audio = new Audio("ate-que-durou-ao-vivo.mp3");
+audio.volume = 0.5;
+
+let canvas = document.getElementById("canvas");
+let ctx = canvas.getContext("2d");
+
+// === OTIMIZACAO MOBILE: desabilita shadowBlur ===
+const IS_MOBILE = window.matchMedia('(pointer: coarse), (max-width: 900px)').matches;
+if(IS_MOBILE){
+  let _sb=0,_sc='transparent';
+  Object.defineProperty(ctx,'shadowBlur',{get:()=>_sb,set:v=>{_sb=0;}});
+  Object.defineProperty(ctx,'shadowColor',{get:()=>_sc,set:v=>{_sc='transparent';}});
+}
+
+let notes = [];
+let score = 0;
+let vidas = 5;
+let tempoRestante = 90;          // segundos para vencer
+let tempoInterval = null;
+let lanes = [112,224,336,448];   // canvas 560 de largura
+let spawnInterval = null;
+let running = false;
+let tick = 0;
+let gameOver = false;
+let vitoria = false;
+let muted = false;
+const MAX_VIDAS = 5;
+const TEMPO_INICIAL = 90;
+const NOTE_SPEED = 9;             // velocidade ajustada ao novo canvas
+const HIT_LINE = 660;             // posição vertical da linha de acerto
+
+function reset(){
+  notes = [];
+  score = 0;
+  vidas = MAX_VIDAS;
+  tempoRestante = TEMPO_INICIAL;
+  gameOver = false;
+  vitoria = false;
+  tick = 0;
+  document.getElementById("score").innerText = score;
+  document.getElementById("vidas").innerText = vidas;
+  document.getElementById("tempo").innerText = tempoRestante;
+  document.getElementById("overlay").classList.remove("show");
+  audio.currentTime = 0;
+  if(!muted){ audio.play().catch(()=>{}); }
+  // limpar timers e relançar
+  if(spawnInterval) clearInterval(spawnInterval);
+  spawnInterval = setInterval(spawn,700);
+  if(tempoInterval) clearInterval(tempoInterval);
+  tempoInterval = setInterval(tickTempo, 1000);
+}
+
+function reiniciar(){ reset(); }
+
+function start(){
+  document.getElementById("menu").style.display="none";
+  document.getElementById("game").style.display="flex";
+  reset();
+  if(!running){
+    running = true;
+    draw();
+  }
+}
+
+function tickTempo(){
+  if(gameOver || vitoria) return;
+  tempoRestante--;
+  document.getElementById("tempo").innerText = tempoRestante;
+  if(tempoRestante <= 0){
+    vencer();
+  }
+}
+
+function perderJogo(){
+  if(gameOver || vitoria) return;
+  gameOver = true;
+  if(spawnInterval){ clearInterval(spawnInterval); spawnInterval = null; }
+  if(tempoInterval){ clearInterval(tempoInterval); tempoInterval = null; }
+  audio.pause();
+  document.getElementById("goTitle").innerText = "🌊 Você foi encantado!";
+  document.getElementById("goMsg").innerText = "A Iara te levou pro fundo do rio.";
+  document.getElementById("finalScore").innerText = score;
+  document.getElementById("overlay").classList.add("show");
+}
+
+function vencer(){
+  if(gameOver || vitoria) return;
+  vitoria = true;
+  if(spawnInterval){ clearInterval(spawnInterval); spawnInterval = null; }
+  if(tempoInterval){ clearInterval(tempoInterval); tempoInterval = null; }
+  audio.pause();
+  document.getElementById("goTitle").innerText = "🌊 Você resistiu ao canto!";
+  document.getElementById("goMsg").innerText = "A Iara desapareceu nas águas. Você sobreviveu!";
+  document.getElementById("finalScore").innerText = score;
+  document.getElementById("overlay").classList.add("show");
+}
+
+function perderVida(){
+  if(gameOver || vitoria) return;
+  vidas--;
+  const vEl = document.getElementById("vidas");
+  vEl.innerText = vidas;
+  const hp = vEl.parentNode;
+  hp.classList.remove("dano");
+  void hp.offsetWidth;
+  hp.classList.add("dano");
+  if(vidas <= 0){ perderJogo(); }
+}
+
+function voltar(){
+  audio.pause();
+  audio.currentTime = 0;
+  if(spawnInterval){ clearInterval(spawnInterval); spawnInterval = null; }
+  if(tempoInterval){ clearInterval(tempoInterval); tempoInterval = null; }
+  window.location.href = "index.html";
+}
+
+function toggleMute(){
+  muted = !muted;
+  audio.muted = muted;
+  const btn = document.getElementById("muteBtn");
+  btn.innerText = muted ? "🔇" : "🔊";
+}
+
+function spawn(){
+  let lane = lanes[Math.floor(Math.random()*4)];
+  // notas nascem logo abaixo da Iara
+  notes.push({x: lane, y: 170});
+}
+
+function drawIara(){
+  // ===== IARA — sereia cantando no topo =====
+  // ondas/águas atrás dela
+  ctx.save();
+  for(let i=0;i<3;i++){
+    ctx.strokeStyle = `rgba(165,243,252,${0.2 - i*0.05})`;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    for(let x=0; x<=560; x+=10){
+      const y = 110 + Math.sin((x + tick*2 + i*40)*0.02) * (5 + i*2);
+      if(x===0) ctx.moveTo(x,y); else ctx.lineTo(x,y);
+    }
+    ctx.stroke();
+  }
+  ctx.restore();
+
+  const cx = 280;
+  const cy = 80;
+  const swayX = Math.sin(tick*0.04) * 4;
+
+  // ===== CABELO LONGO ESVOAÇANTE (atrás) =====
+  ctx.fillStyle = "rgba(34,211,238,0.5)";
+  for(let s=-1; s<=1; s+=2){
+    ctx.beginPath();
+    ctx.moveTo(cx + s*12, cy);
+    for(let t=0; t<=1; t+=0.05){
+      const wob = Math.sin(t*Math.PI*2 + tick*0.08 + s) * 38;
+      const px = cx + s*(30 + t*85) + wob*0.6;
+      const py = cy + t*85;
+      ctx.lineTo(px, py);
+    }
+    for(let t=1; t>=0; t-=0.05){
+      const wob = Math.sin(t*Math.PI*2 + tick*0.08 + s) * 38;
+      const px = cx + s*(15 + t*60) + wob*0.4;
+      const py = cy + t*85;
+      ctx.lineTo(px, py);
+    }
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  // tons de cabelo mais escuro
+  ctx.fillStyle = "rgba(8,145,178,0.6)";
+  ctx.beginPath();
+  ctx.ellipse(cx + swayX, cy - 12, 33, 24, 0, 0, Math.PI*2);
+  ctx.fill();
+
+  // ===== ROSTO =====
+  ctx.fillStyle = "#fde68a";
+  ctx.beginPath();
+  ctx.arc(cx + swayX, cy, 20, 0, Math.PI*2);
+  ctx.fill();
+
+  // olhos fechados (ela canta)
+  ctx.strokeStyle = "#0c4a6e";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.arc(cx + swayX - 6, cy - 2, 3, 0.1, Math.PI - 0.1);
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.arc(cx + swayX + 6, cy - 2, 3, 0.1, Math.PI - 0.1);
+  ctx.stroke();
+
+  // cílios decorativos
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.moveTo(cx + swayX - 9, cy - 4); ctx.lineTo(cx + swayX - 11, cy - 6);
+  ctx.moveTo(cx + swayX + 9, cy - 4); ctx.lineTo(cx + swayX + 11, cy - 6);
+  ctx.stroke();
+
+  // boca cantando (forma de O)
+  ctx.fillStyle = "#be185d";
+  ctx.beginPath();
+  ctx.ellipse(cx + swayX, cy + 8, 3, 4 + Math.abs(Math.sin(tick*0.12))*2.5, 0, 0, Math.PI*2);
+  ctx.fill();
+
+  // ===== CABELO POR CIMA =====
+  ctx.fillStyle = "#0e7490";
+  ctx.beginPath();
+  ctx.arc(cx + swayX, cy - 12, 21, Math.PI*1.05, Math.PI*1.95);
+  ctx.fill();
+
+  // mecha lateral
+  ctx.fillStyle = "#0891b2";
+  ctx.beginPath();
+  ctx.ellipse(cx + swayX - 18, cy - 4, 6, 14, -0.3, 0, Math.PI*2);
+  ctx.fill();
+  ctx.beginPath();
+  ctx.ellipse(cx + swayX + 18, cy - 4, 6, 14, 0.3, 0, Math.PI*2);
+  ctx.fill();
+
+  // ===== BUSTO + OMBROS =====
+  // pescoço
+  ctx.fillStyle = "#fde68a";
+  ctx.fillRect(cx + swayX - 5, cy + 17, 10, 7);
+
+  // busto/torso (escamas/conchinha)
+  ctx.fillStyle = "#7dd3fc";
+  ctx.beginPath();
+  ctx.moveTo(cx + swayX - 20, cy + 24);
+  ctx.lineTo(cx + swayX + 20, cy + 24);
+  ctx.lineTo(cx + swayX + 14, cy + 48);
+  ctx.lineTo(cx + swayX - 14, cy + 48);
+  ctx.closePath();
+  ctx.fill();
+
+  // detalhe de escamas no busto
+  ctx.fillStyle = "rgba(8,145,178,0.5)";
+  for(let r=0; r<3; r++){
+    for(let cc=-1; cc<=1; cc++){
+      ctx.beginPath();
+      ctx.arc(cx + swayX + cc*9, cy + 30 + r*6, 4, Math.PI, 0);
+      ctx.fill();
+    }
+  }
+
+  // ondas musicais saindo (notas vibrando)
+  for(let i=1;i<=3;i++){
+    const r = 38 + i*12 + (tick%30)*0.6;
+    const op = Math.max(0, 0.5 - (tick%30)*0.012 - i*0.05);
+    ctx.strokeStyle = `rgba(165,243,252,${op})`;
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.arc(cx + swayX, cy + 8, r, -Math.PI*0.7, -Math.PI*0.3);
+    ctx.stroke();
+  }
+}
+
+function drawNote(x, y){
+  // gota de água com brilho
+  ctx.save();
+  ctx.shadowBlur = 25;
+  ctx.shadowColor = "#22d3ee";
+
+  // forma da gota (círculo + ponta superior)
+  const grad = ctx.createRadialGradient(x-6, y-3, 1, x, y+3, 26);
+  grad.addColorStop(0, "#ffffff");
+  grad.addColorStop(0.4, "#a5f3fc");
+  grad.addColorStop(1, "#0891b2");
+  ctx.fillStyle = grad;
+
+  ctx.beginPath();
+  ctx.moveTo(x, y - 22);
+  ctx.bezierCurveTo(x + 22, y - 9, x + 22, y + 16, x, y + 22);
+  ctx.bezierCurveTo(x - 22, y + 16, x - 22, y - 9, x, y - 22);
+  ctx.closePath();
+  ctx.fill();
+
+  // brilho destacado
+  ctx.fillStyle = "rgba(255,255,255,0.7)";
+  ctx.beginPath();
+  ctx.ellipse(x - 6, y - 6, 4, 8, -0.3, 0, Math.PI*2);
+  ctx.fill();
+
+  ctx.restore();
+}
+
+function drawParallaxIara(){
+  // Camada 1 (mais profunda) — silhuetas escuras de plantas oscilando
+  ctx.fillStyle = "rgba(8,47,73,0.55)";
+  for(let i=0;i<7;i++){
+    const baseX = i*90 + 20;
+    const sway = Math.sin(tick*0.015 + i*1.3) * 8;
+    ctx.beginPath();
+    ctx.moveTo(baseX, 780);
+    ctx.quadraticCurveTo(baseX + sway, 680, baseX + sway*1.5, 600);
+    ctx.quadraticCurveTo(baseX + sway*0.5, 520, baseX + 6, 460);
+    ctx.quadraticCurveTo(baseX - 8, 540, baseX - 4, 620);
+    ctx.quadraticCurveTo(baseX - sway, 700, baseX - 5, 780);
+    ctx.fill();
+  }
+
+  // Camada 2 — peixes passando lentamente (silhuetas)
+  for(let i=0;i<5;i++){
+    const speed = 0.3 + i*0.15;
+    const py = 220 + i*90;
+    const px = ((tick*speed + i*200) % (560+120)) - 60;
+    ctx.fillStyle = `rgba(8,80,110,${0.4 - i*0.05})`;
+    ctx.beginPath();
+    ctx.ellipse(px, py + Math.sin(tick*0.04 + i)*3, 14 - i*1.5, 6 - i*0.5, 0, 0, Math.PI*2);
+    ctx.fill();
+    // cauda
+    ctx.beginPath();
+    ctx.moveTo(px - 14 + i*1.5, py);
+    ctx.lineTo(px - 22 + i*1.5, py - 5);
+    ctx.lineTo(px - 22 + i*1.5, py + 5);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  // Camada 3 — bolhas pequenas subindo no canvas
+  for(let i=0;i<18;i++){
+    const baseX = (i*37 + 20) % 560;
+    const speed = 0.6 + (i%4)*0.3;
+    const py = ((780 - tick*speed - i*47) % 800 + 800) % 800;
+    const drift = Math.sin(tick*0.02 + i) * 6;
+    ctx.fillStyle = `rgba(165,243,252,${0.15 + (i%3)*0.05})`;
+    ctx.beginPath();
+    ctx.arc(baseX + drift, py, 2 + (i%3), 0, Math.PI*2);
+    ctx.fill();
+  }
+}
+
+function draw(){
+  tick++;
+
+  // fundo aquático
+  ctx.fillStyle="rgba(0,50,80,0.3)";
+  ctx.fillRect(0,0,560,780);
+
+  drawParallaxIara();
+
+  // raios de luz vindos de cima
+  for(let i=0;i<4;i++){
+    const lx = 70 + i*140 + Math.sin(tick*0.02 + i)*20;
+    ctx.fillStyle = `rgba(165,243,252,${0.04 + Math.sin(tick*0.03 + i)*0.02})`;
+    ctx.beginPath();
+    ctx.moveTo(lx - 40, 0);
+    ctx.lineTo(lx + 40, 0);
+    ctx.lineTo(lx + 110, 780);
+    ctx.lineTo(lx - 110, 780);
+    ctx.closePath();
+    ctx.fill();
+  }
+
+  // Iara no topo (fica fixa, "soltando" as notas)
+  drawIara();
+
+  // Linha de acerto com brilho
+  let grad = ctx.createLinearGradient(0, HIT_LINE-3, 560, HIT_LINE+3);
+  grad.addColorStop(0,"rgba(34,211,238,0.3)");
+  grad.addColorStop(0.5,"rgba(34,211,238,1)");
+  grad.addColorStop(1,"rgba(34,211,238,0.3)");
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, HIT_LINE-3, 560, 8);
+
+  // marcadores das lanes na linha de acerto
+  ctx.strokeStyle = "rgba(165,243,252,0.6)";
+  ctx.lineWidth = 2;
+  for(const lx of lanes){
+    ctx.beginPath();
+    ctx.arc(lx, HIT_LINE, 22, 0, Math.PI*2);
+    ctx.stroke();
+  }
+
+  ctx.fillStyle="white";
+  ctx.font="42px Arial";
+  ctx.textAlign = "center";
+  ctx.fillText("⬅️", lanes[0], 740);
+  ctx.fillText("⬇️", lanes[1], 740);
+  ctx.fillText("⬆️", lanes[2], 740);
+  ctx.fillText("➡️", lanes[3], 740);
+  ctx.textAlign = "start";
+
+  // Notas como gotas de água
+  for(let i = notes.length - 1; i >= 0; i--){
+    let n = notes[i];
+    if(!gameOver && !vitoria){ n.y += NOTE_SPEED; }
+    drawNote(n.x, n.y);
+
+    if(n.y > 780){
+      notes.splice(i,1);
+      if(!gameOver && !vitoria){
+        show("MISS","#fca5a5");
+        perderVida();
+      }
+    }
+  }
+
+  requestAnimationFrame(draw);
+}
+
+function show(text,color){
+  let fb = document.getElementById("feedback");
+  fb.innerText = text;
+  fb.style.color = color;
+  fb.style.animation = "none";
+  void fb.offsetWidth;
+  fb.style.animation = "popIn 0.3s ease";
+  setTimeout(()=>{ if(fb.innerText===text) fb.innerText=""; },400);
+}
+
+function hit(laneIndex){
+  if(gameOver || vitoria) return;
+  let target = lanes[laneIndex];
+  let acertou = false;
+
+  for(let i = notes.length - 1; i >= 0; i--){
+    let n = notes[i];
+    if(Math.abs(n.x - target) < 14){
+      if(n.y > HIT_LINE - 25 && n.y < HIT_LINE + 25){
+        score += 100;
+        show("PERFECT","#22d3ee");
+        notes.splice(i,1);
+        acertou = true;
+      } else if(n.y > HIT_LINE - 60){
+        score += 50;
+        show("GOOD","#a5f3fc");
+        notes.splice(i,1);
+        acertou = true;
+      }
+      if(acertou) break;
+    }
+  }
+
+  if(!acertou) show("MISS","#fca5a5");
+  document.getElementById("score").innerText = score;
+}
+
+document.addEventListener("keydown", e=>{
+  let map = {ArrowLeft:0, ArrowDown:1, ArrowUp:2, ArrowRight:3};
+  let i = map[e.key];
+  if(i === undefined) return;
+  hit(i);
+});
+
+document.querySelectorAll(".lane-buttons button").forEach(btn=>{
+  let lane = parseInt(btn.dataset.lane);
+  btn.addEventListener("touchstart", e=>{ e.preventDefault(); hit(lane); }, {passive:false});
+  btn.addEventListener("click", ()=>hit(lane));
+});
+
+document.getElementById("muteBtn").addEventListener("click", toggleMute);
+document.getElementById("muteBtn").addEventListener("touchstart", e=>{
+  e.preventDefault(); toggleMute();
+}, {passive:false});
+
+// BOLHAS
+const bubbles = document.getElementById("bubbles");
+for(let i=0; i<20; i++){
+  const b = document.createElement("div");
+  b.className = "bubble";
+  const size = 8 + Math.random()*30;
+  b.style.width = size+"px";
+  b.style.height = size+"px";
+  b.style.left = Math.random()*100+"%";
+  b.style.animationDuration = (8 + Math.random()*10)+"s";
+  b.style.animationDelay = Math.random()*8+"s";
+  bubbles.appendChild(b);
+}
+</script>
+
+</body>
+</html>

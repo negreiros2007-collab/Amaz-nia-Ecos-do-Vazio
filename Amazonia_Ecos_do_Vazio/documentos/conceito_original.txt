@@ -1,0 +1,343 @@
+Nome do projeto: Amazônia: Ecos do Vazio
+Storytelling :Uma criança do interior da Amazônia encontra um antigo totem na borda da floresta durante uma noite de chuva. Ao tocá-lo, é transportada para o Mundo das Lendas — uma dimensão espiritual que reflete a própria Amazônia.
+
+Mas esse mundo está corrompido por uma força chamada O Vazio, que está apagando memórias, espíritos e as próprias lendas da floresta.
+
+A criança descobre que as lendas não são apenas mitos: elas são entidades vivas ligadas à existência da Amazônia. Porém, corrompidas pelo Vazio, agora atacam tudo o que encontram.
+
+Usando o totem, a criança precisa sobreviver, purificar essas lendas e absorver seus poderes para avançar pelo mundo em ruínas.
+
+Conforme progride, ela entende a verdade: o Vazio nasceu do esquecimento da floresta no mundo real.
+
+No final, resta apenas uma escolha: fugir e esquecer tudo, ou se tornar parte do Mundo das Lendas para manter a Amazônia viva
+
+PERSONAGENS:🧒 Protagonista
+A Criança (Jogador)
+Uma criança humana comum que é transportada para o Mundo das Lendas ao tocar um antigo totem.
+Não é uma escolhida — apenas alguém sensível ao chamado da floresta.
+🪵 Artefato central
+Totem da Floresta
+Um artefato ancestral que conecta a criança ao mundo espiritual.
+Funciona como:
+arma,
+escudo,
+e canal de poderes das lendas purificadas.
+🌿 Lendas / Chefes (corrompidas pelo Vazio)
+Curupira
+
+Guardião da floresta agora distorcido e hostil.
+
+Iara
+
+Espírito dos rios, corrompido por memórias e ilusões.
+
+Boitatá
+
+Serpente de fogo que consome tudo para “purificar” a floresta.
+
+Mapinguari
+
+Criatura gigante guiada apenas pela dor e corrupção.
+
+Anhangá
+
+Espírito protetor distorcido pelo esquecimento da floresta.
+
+Boto-cor-de-rosa
+
+Entidade entre humano e espírito, ligada a memórias humanas perdidas.
+
+🌫️ Entidade principal antagonista
+O Vazio
+Força invisível que corrompe tudo no Mundo das Lendas.
+Ele:
+apaga memórias,
+distorce lendas,
+transforma natureza em nada.
+🌳 Espíritos aliados
+Espírito da Chuva — ajuda a purificar áreas queimadas
+Espírito das Árvores — guarda memórias antigas da floresta
+Crianças da Mata — fragmentos de esperança e renascimento
+Pajé Esquecido — guia espiritual que explica o mundo das lendas
+🌑 Entidades neutras
+Cobra Grande
+
+Ser ancestral dos rios, reage às ações do jogador.
+
+Matinta Perera
+
+Espírito misterioso que pode ajudar ou enganar.
+
+Homem da Mata
+
+Figura silenciosa que observa a criança em alguns momentos-chave.
+
+🌫️ Criaturas corrompidas
+Onças vazias (animais distorcidos pelo Vazio)
+Pássaros de cinza (mensageiros de destruição)
+Árvores vivas hostis (floresta consciente corrompida)
+Madeireiros fantasma (memória da destruição repetida)
+
+
+FASES:
+🌑 FASE 1 — O CHAMADO DA MATA
+Tema: Iniciação / Mistério
+Personagens que aparecem:
+A Criança (protagonista)
+Totem da Floresta
+Curupira (forma corrompida leve)
+Espíritos da Chuva (guia tutorial)
+Pássaros de cinza (ameaça ambiental leve)
+O que acontece:
+Introdução ao Mundo das Lendas
+Primeiros sinais do Vazio
+Tutorial de movimento e uso do totem
+Primeira fuga do Curupira corrompido
+Boss da fase:
+
+Curupira (forma instável)
+
+Recompensa:
+
+Poder: Passos da Mata (teleporte entre árvores)
+
+🌊 FASE 2 — RIO ESQUECIDO
+Tema: Ilusão / Memória
+Personagens:
+Iara
+Cobra Grande
+Espíritos das Águas
+Crianças da Mata
+O que acontece:
+Rios invertidos e corrompidos
+Memórias falsas surgem no ambiente
+Jogador começa a duvidar da realidade
+Boss:
+
+Iara corrompida (usa ilusões sonoras e visuais)
+
+Recompensa:
+
+Poder: Voz das Águas (ver memórias escondidas e atravessar água)
+
+🔥 FASE 3 — FLORESTA EM CINZAS
+Tema: Destruição / Sacrifício
+Personagens:
+Boitatá
+Madeireiros Fantasma
+Espíritos das Árvores
+O que acontece:
+Área em chamas permanentes
+A floresta reage como se estivesse viva e sofrendo
+O fogo não apaga sozinho
+Boss:
+
+Boitatá (forma agressiva e instável)
+
+Recompensa:
+
+Poder: Chama Espiritual (purificar corrupção e iluminar o Vazio)
+
+🌫️ FASE 4 — FLORESTA QUEBRADA
+Tema: Horror / Instabilidade
+Personagens:
+Mapinguari
+Homem da Mata
+Criaturas corrompidas do Vazio
+O que acontece:
+Física distorcida (árvores invertidas, chão irregular)
+Sombras que seguem o jogador
+Realidade começa a falhar visualmente
+Boss:
+
+Mapinguari (forma colossal e lenta)
+
+Recompensa:
+
+Poder: Rugido Ancestral (quebrar corrupção e abrir caminhos)
+
+🌑 FASE FINAL — O CORAÇÃO DO VAZIO
+Tema: Revelação / Escolha final
+Personagens:
+Anhangá (forma residual)
+Matinta Perera
+Pajé Esquecido
+O Vazio (forma final)
+Todas as lendas purificadas (fragmentos)
+O que acontece:
+O jogador descobre a origem do Vazio
+Lendas começam a desaparecer em tempo real
+O mundo colapsa conforme a memória da floresta some
+Boss final:
+
+O Vazio (entidade sem forma fixa)
+
+Final:
+fugir e esquecer o mundo das lendas
+ou
+se tornar parte dele como nova lenda guardiã
+
+MAPA :
+🌍 Mapa do Mundo — Amazônia: Ecos da Mata
+(estrutura de mundo aberto interligado)
+
+O mundo não é uma linha reta — ele é um ecossistema espiritual contínuo, onde tudo se conecta ao Coração da Mata.
+
+🧭 Estrutura geral do mapa
+
+O mapa é dividido em 5 grandes regiões interligadas em círculo, como um organismo vivo:
+
+        🌫️ Floresta Quebrada (Horror)
+               ↑
+🌊 Rio Esquecido ← 🌳 Coração da Mata → 🔥 Floresta em Cinzas
+               ↓
+        🌿 Mata Viva (Início)
+
+No centro de tudo:
+
+🌳 Coração da Mata (hub principal)
+🌳 1. Coração da Mata (Hub central)
+Função:
+ponto de retorno
+evolução do totem
+memória das lendas
+evolução narrativa
+Características:
+árvore gigantesca espiritual
+raízes que conectam todas as regiões
+espíritos vagando lentamente
+mudanças visuais conforme corrupção aumenta
+Narrativa:
+
+Aqui o jogador entende que:
+
+o mundo inteiro depende dessa árvore para existir.
+
+🌿 2. Mata Viva (Região inicial)
+Tema:
+
+Iniciação / beleza / presságio
+
+Conexões:
+conecta ao Coração da Mata
+abre caminho para o Rio Esquecido
+Elementos:
+floresta densa e viva
+espíritos amigáveis
+ruídos naturais fortes
+Entidades:
+Curupira (versão corrompida inicial)
+Espíritos da Chuva
+Crianças da Mata
+Gameplay:
+exploração leve
+primeiros sustos do Vazio
+tutorial de movimento por visão
+🌊 3. Rio Esquecido
+Tema:
+
+Memória / ilusão / profundidade
+
+Conexões:
+liga ao Coração da Mata
+conecta com Floresta em Cinzas
+Elementos:
+rios flutuantes e invertidos
+água escura com reflexos errados
+sons distorcidos
+Entidades:
+Iara
+Cobra Grande
+Gameplay:
+navegação aquática VR
+escolhas por som
+ilusões ambientais
+🔥 4. Floresta em Cinzas
+Tema:
+
+Destruição / sacrifício
+
+Conexões:
+liga ao Coração da Mata
+conecta com Floresta Quebrada
+Elementos:
+fogo constante (não apaga)
+árvores queimadas vivas
+céu avermelhado
+Entidades:
+Boitatá
+Madeireiros Fantasma
+Gameplay:
+áreas de risco térmico
+fogo como mecânica e obstáculo
+luz e escuridão extremas
+🌫️ 5. Floresta Quebrada
+Tema:
+
+Horror psicológico / distorção
+
+Conexões:
+liga ao Coração da Mata
+conecta diretamente ao Vazio final
+Elementos:
+árvores invertidas
+gravidade instável
+som que desaparece
+espaços vazios no mapa
+Entidades:
+Mapinguari
+Homem da Mata
+Criaturas do Vazio
+Gameplay:
+exploração lenta e tensa
+realidade instável (o mapa muda ao olhar)
+🌑 6. O Vazio (Zona final dinâmica)
+Tema:
+
+Colapso / apagamento
+
+Conexões:
+cresce entre todas as regiões
+invade o mapa conforme progresso
+Elementos:
+áreas “sem textura”
+som reduzido ao mínimo
+falhas visuais no VR
+apagamento de partes do mapa
+Entidade:
+O Vazio (antagonista principal)
+Gameplay:
+perseguição dinâmica
+o mapa se destrói enquanto o jogador explora
+🔗 Como o mundo se conecta (design importante)
+1. Movimento livre
+
+O jogador pode:
+
+ir de qualquer região ao centro
+desbloquear atalhos espirituais
+abrir caminhos com poderes das lendas
+2. Progressão orgânica
+
+Cada região libera acesso à próxima:
+
+Mata Viva → desbloqueia Rio Esquecido
+Rio Esquecido → desbloqueia Cinzas
+Cinzas → desbloqueia Quebrada
+Todas → acesso ao Vazio final
+3. Mundo vivo
+
+O mapa muda conforme:
+
+lendas purificadas
+corrupção do Vazio
+escolhas do jogador
+🧠 Ideia central do mapa
+
+O mundo não é apenas um cenário.
+
+Ele é um organismo vivo.
+
+E o Coração da Mata é literalmente:
+
+a memória da Amazônia tentando não desaparecer.

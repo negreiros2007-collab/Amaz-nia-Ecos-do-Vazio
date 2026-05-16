@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Lenda do Boto Cor-de-Rosa · Party</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --rosa:#ec4899;
+  --rosa-claro:#fbcfe8;
+  --rosa-escuro:#9d174d;
+  --dourado:#facc15;
+  --terra:#7c2d12;
+  --vermelho:#dc2626;
+}
+
+html, body{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  overscroll-behavior:none;
+  touch-action:manipulation;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:
+    radial-gradient(ellipse at 30% 80%,rgba(236,72,153,0.2),transparent 60%),
+    radial-gradient(ellipse at 70% 20%,rgba(250,204,21,0.15),transparent 60%),
+    linear-gradient(180deg,#1e1b4b 0%,#3b0764 50%,#7c2d12 100%);
+  color:white;
+  text-align:center;
+  user-select:none;
+  -webkit-user-select:none;
+  -webkit-tap-highlight-color:transparent;
+  overflow-y:auto;
+}
+
+/* MENU */
+.tela{
+  position:relative;
+  z-index:5;
+  width:100%;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:60px 20px 40px;
+  animation:fadeIn 0.8s ease;
+}
+@keyframes fadeIn{
+  from{ opacity:0; transform:translateY(20px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+.badge{
+  display:inline-block;
+  padding:6px 18px;
+  background:rgba(236,72,153,0.15);
+  border:1px solid rgba(236,72,153,0.5);
+  border-radius:20px;
+  font-size:11px;
+  letter-spacing:3px;
+  color:var(--rosa-claro);
+  margin-bottom:18px;
+  text-transform:uppercase;
+}
+h1.titulo{
+  font-family:'Cinzel',serif;
+  font-size:clamp(28px,6vw,52px);
+  font-weight:700;
+  letter-spacing:2px;
+  margin-bottom:18px;
+  background:linear-gradient(90deg,#fbcfe8,#ec4899,#facc15);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 25px rgba(236,72,153,0.5));
+}
+.boto-emoji{
+  font-size:120px;
+  margin:10px;
+  filter:drop-shadow(0 0 35px rgba(236,72,153,0.6));
+  animation:floatImg 4s ease-in-out infinite;
+}
+@keyframes floatImg{
+  0%,100%{ transform:translateY(0); }
+  50%{ transform:translateY(-12px); }
+}
+.historia{
+  max-width:540px;
+  margin:20px auto 10px;
+  background:rgba(20,5,30,0.65);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  padding:20px 24px;
+  border-radius:18px;
+  border:1px solid rgba(236,72,153,0.3);
+  box-shadow:0 0 40px rgba(236,72,153,0.2),inset 0 0 20px rgba(236,72,153,0.05);
+  font-size:14px;
+  line-height:1.65;
+  color:#fce7f3;
+  font-weight:300;
+}
+.dicas{
+  max-width:540px;
+  margin:14px auto 0;
+  text-align:left;
+  background:rgba(20,5,30,0.5);
+  border:1px dashed rgba(250,204,21,0.4);
+  border-radius:14px;
+  padding:14px 20px;
+  font-size:13px;
+  color:#fef3c7;
+  line-height:1.7;
+}
+.dicas b{ color:var(--dourado); letter-spacing:1px; }
+
+.btn-comecar{
+  margin-top:24px;
+  padding:14px 36px;
+  border:none;
+  border-radius:14px;
+  background:linear-gradient(90deg,var(--rosa-escuro),var(--rosa));
+  color:white;
+  font-size:15px;
+  font-weight:600;
+  font-family:'Inter',sans-serif;
+  letter-spacing:1px;
+  cursor:pointer;
+  text-transform:uppercase;
+  box-shadow:0 8px 30px -8px rgba(236,72,153,0.7);
+  transition:all 0.3s;
+}
+.btn-comecar:hover{
+  transform:translateY(-3px);
+  box-shadow:0 12px 40px -8px rgba(236,72,153,0.9);
+}
+
+.voltar{
+  position:fixed;
+  top:16px;
+  left:16px;
+  padding:10px 16px;
+  background:rgba(20,5,30,0.7);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(236,72,153,0.4);
+  color:var(--rosa-claro);
+  border-radius:12px;
+  cursor:pointer;
+  font-size:13px;
+  font-weight:500;
+  z-index:50;
+  font-family:'Inter',sans-serif;
+  transition:all 0.3s;
+}
+.voltar:hover{
+  background:rgba(236,72,153,0.2);
+  color:white;
+}
+
+/* GAME */
+#game{
+  display:none;
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  height:100dvh;
+}
+canvas{
+  width:100%;
+  height:100%;
+  display:block;
+  touch-action:none;
+  cursor:crosshair;
+}
+
+/* HUDs */
+.hud-top{
+  position:absolute;
+  top:14px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:10px;
+  z-index:10;
+  flex-wrap:wrap;
+  justify-content:center;
+  align-items:center;
+}
+.hud-pill{
+  background:rgba(20,5,30,0.78);
+  backdrop-filter:blur(10px);
+  padding:8px 16px;
+  border-radius:30px;
+  font-family:'Cinzel',serif;
+  font-size:13px;
+  letter-spacing:1.5px;
+  border:1px solid rgba(236,72,153,0.3);
+  color:var(--rosa-claro);
+  white-space:nowrap;
+}
+
+/* Barra de suspeita */
+.susp-wrap{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  background:rgba(20,5,30,0.78);
+  backdrop-filter:blur(10px);
+  padding:6px 14px;
+  border-radius:30px;
+  border:1px solid rgba(220,38,38,0.4);
+}
+.susp-label{
+  font-family:'Cinzel',serif;
+  font-size:11px;
+  letter-spacing:1.5px;
+  color:#fca5a5;
+}
+.susp-bar{
+  width:120px;
+  height:8px;
+  background:rgba(0,0,0,0.5);
+  border-radius:6px;
+  overflow:hidden;
+  border:1px solid rgba(220,38,38,0.3);
+}
+.susp-fill{
+  height:100%;
+  width:0%;
+  background:linear-gradient(90deg,#facc15,#fb923c,#dc2626);
+  transition:width 0.2s;
+  border-radius:6px;
+}
+.susp-fill.alta{ animation:pulseRed 0.6s ease-in-out infinite; }
+@keyframes pulseRed{
+  0%,100%{ box-shadow:0 0 4px #dc2626; }
+  50%{ box-shadow:0 0 14px #ef4444; }
+}
+
+/* feedback central */
+.feedback{
+  position:absolute;
+  top:35%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-family:'Cinzel',serif;
+  font-size:36px;
+  font-weight:700;
+  letter-spacing:3px;
+  pointer-events:none;
+  z-index:20;
+  text-shadow:0 0 30px currentColor;
+  animation:fbPop 0.8s ease forwards;
+}
+@keyframes fbPop{
+  0%{ transform:translate(-50%,-50%) scale(0.4); opacity:0; }
+  20%{ transform:translate(-50%,-50%) scale(1.15); opacity:1; }
+  80%{ opacity:1; }
+  100%{ transform:translate(-50%,-50%) scale(1); opacity:0; }
+}
+
+/* dicas no jogo */
+.dicas-jogo{
+  position:absolute;
+  bottom:14px;
+  left:50%;
+  transform:translateX(-50%);
+  background:rgba(20,5,30,0.78);
+  backdrop-filter:blur(10px);
+  padding:8px 16px;
+  border-radius:14px;
+  border:1px solid rgba(250,204,21,0.4);
+  font-size:11px;
+  color:#fef3c7;
+  z-index:10;
+  text-align:center;
+  max-width:90vw;
+  line-height:1.5;
+  letter-spacing:0.5px;
+}
+.dicas-jogo b{ color:var(--dourado); letter-spacing:1px; }
+
+/* D-PAD */
+.dpad{
+  position:absolute;
+  bottom:30px;
+  left:20px;
+  display:none;
+  grid-template-columns:48px 48px 48px;
+  grid-template-rows:48px 48px 48px;
+  gap:4px;
+  z-index:30;
+  touch-action:none;
+}
+.dpad button{
+  background:rgba(20,5,30,0.7);
+  border:1px solid rgba(236,72,153,0.4);
+  color:white;
+  border-radius:10px;
+  font-size:18px;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  touch-action:none;
+}
+.dpad button:active{ background:rgba(236,72,153,0.4); }
+.dpad .up   { grid-area:1/2/2/3; }
+.dpad .left { grid-area:2/1/3/2; }
+.dpad .right{ grid-area:2/3/3/4; }
+.dpad .down { grid-area:3/2/4/3; }
+
+/* BOTÃO DE AÇÃO */
+.acao-btn{
+  position:absolute;
+  bottom:36px;
+  right:24px;
+  width:80px;
+  height:80px;
+  border-radius:50%;
+  background:linear-gradient(135deg,#ec4899,#9d174d);
+  border:2px solid rgba(255,255,255,0.4);
+  color:white;
+  font-size:34px;
+  cursor:pointer;
+  z-index:30;
+  display:none;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 6px 24px rgba(236,72,153,0.5);
+  -webkit-tap-highlight-color:transparent;
+  touch-action:none;
+  transition:transform 0.1s;
+}
+.acao-btn:active{ transform:scale(0.92); }
+.acao-btn.cooling{
+  background:rgba(60,30,40,0.6);
+  border-color:rgba(120,80,90,0.4);
+}
+
+/* visível em mobile / touch */
+@media (pointer: coarse), (max-width: 900px){
+  .dpad{ display:grid; }
+  .acao-btn{ display:flex; }
+  .dicas-jogo{ display:none; }
+}
+
+/* OVERLAY game over */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.85);
+  backdrop-filter:blur(8px);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  z-index:100;
+  color:white;
+  text-align:center;
+  padding:20px;
+  animation:fadeIn 0.4s ease;
+}
+.overlay.show{ display:flex; }
+.overlay h2{
+  font-family:'Cinzel',serif;
+  font-size:36px;
+  margin:10px;
+  background:linear-gradient(90deg,#fbcfe8,#ec4899);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.overlay p{ color:#fce7f3; margin-bottom:8px; font-size:16px; }
+.overlay button{
+  margin:8px;
+  padding:14px 28px;
+  font-size:14px;
+  font-weight:600;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  background:linear-gradient(90deg,var(--rosa-escuro),var(--rosa));
+  border:none;
+  border-radius:12px;
+  color:white;
+  cursor:pointer;
+  box-shadow:0 6px 20px -5px rgba(236,72,153,0.6);
+  transition:transform 0.2s;
+}
+.overlay button:hover{ transform:translateY(-2px); }
+
+/* MOBILE */
+@media (max-width:600px){
+  .voltar{ top:8px; left:8px; padding:7px 12px; font-size:11px; }
+  .hud-top{ top:50px; gap:6px; }
+  .hud-pill{ padding:6px 12px; font-size:11px; letter-spacing:1px; }
+  .susp-bar{ width:80px; height:7px; }
+  .susp-wrap{ padding:5px 10px; }
+  .susp-label{ font-size:10px; }
+  .feedback{ font-size:26px; }
+  .historia{ font-size:13px; padding:16px 18px; }
+  .boto-emoji{ font-size:90px; }
+  .acao-btn{ width:72px; height:72px; font-size:30px; bottom:24px; right:14px; }
+  .dpad{ grid-template-columns:42px 42px 42px; grid-template-rows:42px 42px 42px; bottom:20px; left:12px; }
+  .dpad button{ font-size:16px; }
+}
+
+/* === OTIMIZACAO MOBILE === */
+@media (max-width: 900px), (pointer: coarse){
+  *{ backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+  .titulo, .voltar, .hud-pill, .acao-btn, .dpad button{ filter: none !important; }
+  .btn-comecar{ box-shadow: 0 4px 12px rgba(0,0,0,.4) !important; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ===== MENU ===== -->
+<div id="menu" class="tela">
+  <button class="voltar" onclick="voltar()">← Menu</button>
+  <div class="badge">✦ Lenda Amazônica ✦</div>
+  <div class="boto-emoji">🐬</div>
+  <h1 class="titulo">Boto na Festa</h1>
+  <div class="historia">
+    Você é o <b>Boto cor-de-rosa</b> em forma humana, infiltrado na festa
+    junina à beira do rio. Sua missão: <b>levar todos os festeiros embora</b>
+    sem ser desmascarado. Aproxime-se de alguém isolado e use a <b>AÇÃO</b>
+    para seduzir — fique parado até o golpe se completar. Mas se outro
+    festeiro estiver olhando, a <b>SUSPEITA</b> sobe... e os caçadores virão
+    atrás de você.
+  </div>
+  <div class="dicas">
+    🎮 <b>WASD / Setas</b> para mover · <b>ESPAÇO</b> para seduzir<br>
+    📱 No mobile: D-pad e botão 💋<br>
+    👁️ Cuidado com o <b>raio de visão</b> dos festeiros (círculos rosa)<br>
+    🚨 Se a suspeita encher, <b>caçadores</b> virão te perseguir
+  </div>
+  <button class="btn-comecar" onclick="start()">Começar Festa</button>
+</div>
+
+<!-- ===== GAME ===== -->
+<div id="game">
+  <button class="voltar" onclick="voltar()">← Menu</button>
+  <canvas id="c"></canvas>
+
+  <div class="hud-top">
+    <div class="hud-pill">🐬 <span id="seduzidos">0</span>/<span id="meta">10</span></div>
+    <div class="susp-wrap">
+      <span class="susp-label">SUSPEITA</span>
+      <div class="susp-bar"><div class="susp-fill" id="suspFill"></div></div>
+    </div>
+  </div>
+
+  <div class="dicas-jogo">
+    <b>WASD/Setas</b> mover · <b>ESPAÇO</b> seduzir · não deixe ninguém ver
+  </div>
+
+  <!-- D-PAD MOBILE -->
+  <div class="dpad">
+    <button class="up"    data-dir="up">⬆️</button>
+    <button class="left"  data-dir="left">⬅️</button>
+    <button class="right" data-dir="right">➡️</button>
+    <button class="down"  data-dir="down">⬇️</button>
+  </div>
+
+  <!-- BOTÃO DE AÇÃO MOBILE -->
+  <button class="acao-btn" id="acaoBtn" type="button">💋</button>
+</div>
+
+<!-- ===== GAME OVER ===== -->
+<div id="overlay" class="overlay">
+  <h2 id="goTitle">🐬 Festa encerrada!</h2>
+  <p id="goMsg">Você foi descoberto!</p>
+  <p>Festeiros levados: <span id="finalScore">0</span>/<span id="finalMeta">10</span></p>
+  <button onclick="reiniciar()">🔄 Tentar de novo</button>
+  <button onclick="voltar()">← Menu</button>
+</div>
+
+<script>
+// ===== SETUP =====
+const c = document.getElementById("c");
+const ctx = c.getContext("2d");
+
+// === OTIMIZACAO MOBILE: desabilita shadowBlur (custa MUITO em GPU mobile) ===
+const IS_MOBILE = window.matchMedia('(pointer: coarse), (max-width: 900px)').matches;
+if(IS_MOBILE){
+  let _sb=0,_sc='transparent';
+  Object.defineProperty(ctx,'shadowBlur',{get:()=>_sb,set:v=>{_sb=0;}});
+  Object.defineProperty(ctx,'shadowColor',{get:()=>_sc,set:v=>{_sc='transparent';}});
+}
+
+let w, h;
+function resize(){
+  const vv = window.visualViewport;
+  w = Math.round(vv ? vv.width  : window.innerWidth);
+  h = Math.round(vv ? vv.height : window.innerHeight);
+  c.width=w; c.height=h;
+}
+window.addEventListener("resize", resize);
+window.addEventListener("orientationchange", ()=>setTimeout(resize, 150));
+if(window.visualViewport){
+  window.visualViewport.addEventListener("resize", resize);
+}
+
+// ===== CONSTANTES =====
+const META_FESTEIROS = 16;
+const SEDUCAO_TICKS  = 100;   // ~1.7s a 60fps
+const SUSP_MAX       = 100;
+const RAIO_ACAO      = 42;    // distância p/ seduzir
+const RAIO_VISAO_NPC = 55;    // raio em que NPC vê seduções (menor = mais stealth)
+const RAIO_TESTEMUNHA= 62;    // raio em que NPC vê o Boto antes da sedução começar
+const COR_FESTEIROS  = ["#fde68a","#fda4af","#a7f3d0","#bae6fd","#ddd6fe","#fed7aa","#fbcfe8","#bbf7d0"];
+const COR_PELE       = ["#fde68a","#f5d0a9","#d8a878","#b8865a","#8b5a3c","#5e3a23"];
+const COR_CABELO     = ["#1f2937","#451a03","#78350f","#a16207","#fbbf24","#475569"];
+
+// ===== ESTADO =====
+let player, npcs, obstaculos, cacadores, particulas, feedbackEl;
+let seduzidos, suspeita, gameOver, vitoria, rodando, tick;
+let teclas = { up:false, down:false, left:false, right:false };
+
+// ===== CRIAÇÃO =====
+function criarObstaculos(){
+  obstaculos = [];
+  // PALCO no topo
+  obstaculos.push({x:w*0.5-80, y:50, w:160, h:48, tipo:'palco'});
+  // FOGUEIRA central
+  obstaculos.push({x:w*0.5-28, y:h*0.55-28, w:56, h:56, tipo:'fogueira'});
+  // MESAS espalhadas
+  obstaculos.push({x:w*0.18, y:h*0.32, w:70, h:44, tipo:'mesa'});
+  obstaculos.push({x:w*0.78, y:h*0.32, w:70, h:44, tipo:'mesa'});
+  obstaculos.push({x:w*0.22, y:h*0.72, w:70, h:44, tipo:'mesa'});
+  obstaculos.push({x:w*0.72, y:h*0.72, w:70, h:44, tipo:'mesa'});
+  // RIO no fundo (decorativo)
+  obstaculos.push({x:0, y:h-30, w:w, h:30, tipo:'rio'});
+}
+
+function criarFesteiros(){
+  npcs = [];
+  for(let i=0; i<META_FESTEIROS; i++){
+    let x, y, tries=0;
+    do{
+      x = 50 + Math.random()*(w-100);
+      y = 120 + Math.random()*(h-200);
+      tries++;
+    } while(tries < 30 && (colideObstaculo(x,y,18) || Math.hypot(x-player.x, y-player.y) < 100));
+    const a = Math.random()*Math.PI*2;
+    npcs.push({
+      x, y,
+      vx: Math.cos(a)*0.6,
+      vy: Math.sin(a)*0.6,
+      cor: COR_FESTEIROS[Math.floor(Math.random()*COR_FESTEIROS.length)],
+      pele: COR_PELE[Math.floor(Math.random()*COR_PELE.length)],
+      cabelo: COR_CABELO[Math.floor(Math.random()*COR_CABELO.length)],
+      estado: 'andando',          // andando | dancando | parado | panico
+      timerEstado: 60 + Math.random()*180,
+      vivo: true,
+      faceX: Math.cos(a),
+      faceY: Math.sin(a),
+      bobOffset: Math.random()*Math.PI*2,
+      alvoX: 0, alvoY: 0,
+      timerPanico: 0
+    });
+  }
+}
+
+function reset(){
+  player = {
+    x: w/2, y: h*0.85,
+    speed: 3.2,
+    seduzindo: null,
+    sedTimer: 0,
+    faceX: 0, faceY: -1,
+    moveX: 0, moveY: 0,
+    invuln: 0
+  };
+  cacadores = [];
+  particulas = [];
+  seduzidos = 0;
+  suspeita = 0;
+  gameOver = false;
+  vitoria = false;
+  tick = 0;
+  criarObstaculos();
+  criarFesteiros();
+
+  document.getElementById('seduzidos').innerText = seduzidos;
+  document.getElementById('meta').innerText = META_FESTEIROS;
+  document.getElementById('finalMeta').innerText = META_FESTEIROS;
+  atualizarSuspBar();
+  document.getElementById('overlay').classList.remove('show');
+}
+
+function start(){
+  document.getElementById("menu").style.display = "none";
+  document.getElementById("game").style.display = "block";
+  resize();
+  reset();
+  if(!rodando){ rodando = true; loop(); }
+}
+
+function voltar(){ window.location.href = "index.html"; }
+function reiniciar(){ reset(); }
+
+// ===== COLISÃO =====
+function colideObstaculo(x, y, raio){
+  for(const o of obstaculos){
+    if(o.tipo === 'rio') continue;
+    if(x + raio > o.x && x - raio < o.x + o.w &&
+       y + raio > o.y && y - raio < o.y + o.h) return true;
+  }
+  return false;
+}
+
+function empurrarFora(ent, raio){
+  for(const o of obstaculos){
+    if(o.tipo === 'rio') continue;
+    if(ent.x + raio > o.x && ent.x - raio < o.x + o.w &&
+       ent.y + raio > o.y && ent.y - raio < o.y + o.h){
+      const cx = o.x + o.w/2, cy = o.y + o.h/2;
+      const dx = ent.x - cx, dy = ent.y - cy;
+      const px = (o.w/2 + raio) - Math.abs(dx);
+      const py = (o.h/2 + raio) - Math.abs(dy);
+      if(px < py){ ent.x += dx > 0 ? px : -px; }
+      else        { ent.y += dy > 0 ? py : -py; }
+    }
+  }
+}
+
+// ===== AÇÃO: TENTAR SEDUZIR =====
+function tentarSeduzir(){
+  if(player.seduzindo || gameOver || vitoria) return;
+  let alvo = null, melhorD = RAIO_ACAO;
+  for(const n of npcs){
+    if(!n.vivo || n.estado === 'panico') continue;
+    const d = Math.hypot(player.x - n.x, player.y - n.y);
+    if(d < melhorD){ melhorD = d; alvo = n; }
+  }
+  if(!alvo){
+    flashFeedback('🤷 Ninguém perto', '#fbcfe8');
+    return;
+  }
+  // Verificar testemunhas
+  for(const n of npcs){
+    if(!n.vivo || n === alvo) continue;
+    const d = Math.hypot(player.x - n.x, player.y - n.y);
+    if(d < RAIO_TESTEMUNHA){
+      // alguém está perto → não pode começar
+      flashFeedback('👀 Alguém viu!', '#fca5a5');
+      suspeita = Math.min(SUSP_MAX, suspeita + 12);
+      atualizarSuspBar();
+      // o que viu fica suspeito brevemente
+      n.estado = 'parado';
+      n.timerEstado = 60;
+      return;
+    }
+  }
+  // Ok, começar sedução
+  player.seduzindo = alvo;
+  player.sedTimer  = 0;
+  alvo.vx = 0; alvo.vy = 0;
+  alvo.estado = 'parado';
+  alvo.timerEstado = SEDUCAO_TICKS + 30;
+}
+
+// ===== UPDATE =====
+function update(){
+  tick++;
+  // Movimento do player
+  let mx = 0, my = 0;
+  if(teclas.up)    my -= 1;
+  if(teclas.down)  my += 1;
+  if(teclas.left)  mx -= 1;
+  if(teclas.right) mx += 1;
+
+  if(player.seduzindo){
+    mx = 0; my = 0;
+  }
+
+  if(mx !== 0 || my !== 0){
+    const len = Math.hypot(mx, my);
+    mx /= len; my /= len;
+    player.x += mx * player.speed;
+    player.y += my * player.speed;
+    player.faceX = mx; player.faceY = my;
+    player.moveX = mx; player.moveY = my;
+  } else {
+    player.moveX = 0; player.moveY = 0;
+  }
+
+  // Bordas
+  player.x = Math.max(20, Math.min(w-20, player.x));
+  player.y = Math.max(110, Math.min(h-50, player.y));
+  empurrarFora(player, 14);
+
+  // === SEDUÇÃO EM ANDAMENTO ===
+  if(player.seduzindo){
+    const alvo = player.seduzindo;
+    if(!alvo.vivo){
+      player.seduzindo = null; player.sedTimer = 0;
+    } else {
+      // checar se alguém entrou no raio durante a sedução
+      let visto = false;
+      for(const n of npcs){
+        if(!n.vivo || n === alvo) continue;
+        const d = Math.hypot(player.x - n.x, player.y - n.y);
+        if(d < RAIO_VISAO_NPC){
+          visto = true;
+          // testemunha entra em pânico
+          n.estado = 'panico';
+          n.alvoX = n.x < w/2 ? 30 : w - 30;
+          n.alvoY = n.y < h/2 ? 130 : h - 60;
+          n.timerPanico = 240;
+          suspeita = Math.min(SUSP_MAX, suspeita + 25);
+          atualizarSuspBar();
+          flashFeedback('🚨 Te viram!', '#fca5a5');
+          break;
+        }
+      }
+      if(visto){
+        player.seduzindo = null;
+        player.sedTimer = 0;
+        alvo.estado = 'andando';
+        alvo.timerEstado = 60;
+      } else {
+        player.sedTimer++;
+        if(player.sedTimer >= SEDUCAO_TICKS){
+          // SEDUZIDO!
+          alvo.vivo = false;
+          spawnHearts(alvo.x, alvo.y);
+          seduzidos++;
+          document.getElementById('seduzidos').innerText = seduzidos;
+          player.seduzindo = null;
+          player.sedTimer  = 0;
+          if(seduzidos >= META_FESTEIROS){ vencer(); return; }
+        }
+      }
+    }
+  }
+
+  // === NPCs ===
+  for(const n of npcs){
+    if(!n.vivo) continue;
+    n.timerEstado--;
+    if(n.timerEstado <= 0 && n.estado !== 'panico'){
+      const r = Math.random();
+      if(r < 0.55){
+        n.estado = 'andando';
+        const a = Math.random()*Math.PI*2;
+        n.vx = Math.cos(a)*0.6; n.vy = Math.sin(a)*0.6;
+      } else if(r < 0.85){
+        n.estado = 'dancando';
+        n.vx = 0; n.vy = 0;
+      } else {
+        n.estado = 'parado';
+        n.vx = 0; n.vy = 0;
+      }
+      n.timerEstado = 80 + Math.random()*200;
+    }
+
+    if(n.estado === 'andando'){
+      n.x += n.vx;
+      n.y += n.vy;
+      if(n.x < 30 || n.x > w-30) n.vx *= -1;
+      if(n.y < 120 || n.y > h-50) n.vy *= -1;
+      n.faceX = n.vx; n.faceY = n.vy;
+      empurrarFora(n, 13);
+    } else if(n.estado === 'panico'){
+      const dx = n.alvoX - n.x, dy = n.alvoY - n.y;
+      const d = Math.hypot(dx, dy);
+      if(d > 6){
+        n.x += dx/d * 2.4; n.y += dy/d * 2.4;
+        n.faceX = dx/d; n.faceY = dy/d;
+        // Pânico continua subindo suspeita lentamente
+        if(tick % 30 === 0){ suspeita = Math.min(SUSP_MAX, suspeita + 1); }
+      }
+      n.timerPanico--;
+      if(n.timerPanico <= 0){
+        n.estado = 'andando';
+        const a = Math.random()*Math.PI*2;
+        n.vx = Math.cos(a)*0.6; n.vy = Math.sin(a)*0.6;
+        n.timerEstado = 120;
+      }
+      empurrarFora(n, 13);
+    }
+  }
+
+  // === CAÇADORES ===
+  if(suspeita >= SUSP_MAX && cacadores.length === 0){
+    cacadores.push({x: -20,  y: 130, speed: 2.0});
+    cacadores.push({x: w+20, y: h-80, speed: 2.0});
+    flashFeedback('🚨 CAÇADORES!', '#dc2626');
+  }
+  for(const cz of cacadores){
+    const dx = player.x - cz.x, dy = player.y - cz.y;
+    const d = Math.hypot(dx, dy);
+    if(d > 1){ cz.x += dx/d * cz.speed; cz.y += dy/d * cz.speed; }
+    if(d < 26 && player.invuln <= 0){ perder('Os caçadores te pegaram!'); return; }
+    empurrarFora(cz, 14);
+  }
+
+  // Suspeita decai lentamente se sem caçadores ativos e ninguém em pânico
+  const algumPanico = npcs.some(n => n.vivo && n.estado === 'panico');
+  if(suspeita > 0 && cacadores.length === 0 && !algumPanico && tick % 20 === 0){
+    suspeita = Math.max(0, suspeita - 0.5);
+    atualizarSuspBar();
+  }
+
+  // Partículas
+  for(let i=particulas.length-1;i>=0;i--){
+    const p = particulas[i];
+    p.x += p.vx; p.y += p.vy;
+    p.vy += 0.04;
+    p.life--;
+    if(p.life <= 0) particulas.splice(i,1);
+  }
+
+  if(player.invuln > 0) player.invuln--;
+}
+
+function spawnHearts(x, y){
+  for(let i=0;i<8;i++){
+    particulas.push({
+      x, y,
+      vx:(Math.random()-0.5)*2.5,
+      vy:-1 - Math.random()*2,
+      life:50 + Math.random()*30,
+      maxLife:80,
+      cor:'#ec4899',
+      tipo:'heart'
+    });
+  }
+}
+
+function atualizarSuspBar(){
+  const f = document.getElementById('suspFill');
+  const p = (suspeita / SUSP_MAX) * 100;
+  f.style.width = p + '%';
+  if(p > 75) f.classList.add('alta');
+  else f.classList.remove('alta');
+}
+
+function flashFeedback(texto, cor){
+  if(feedbackEl){ feedbackEl.remove(); }
+  const el = document.createElement('div');
+  el.className = 'feedback';
+  el.style.color = cor || '#fbcfe8';
+  el.innerText = texto;
+  document.getElementById('game').appendChild(el);
+  feedbackEl = el;
+  setTimeout(() => { if(el.parentNode) el.remove(); }, 800);
+}
+
+function vencer(){
+  vitoria = true;
+  document.getElementById('goTitle').innerText = '🐬 Festa esvaziada!';
+  document.getElementById('goMsg').innerText = 'Você levou todos pro rio sem ser pego!';
+  document.getElementById('finalScore').innerText = seduzidos;
+  document.getElementById('overlay').classList.add('show');
+}
+
+function perder(msg){
+  if(gameOver) return;
+  gameOver = true;
+  document.getElementById('goTitle').innerText = '🐬 Você foi descoberto!';
+  document.getElementById('goMsg').innerText = msg;
+  document.getElementById('finalScore').innerText = seduzidos;
+  document.getElementById('overlay').classList.add('show');
+}
+
+// ===== RENDER =====
+function render(){
+  // Chão da festa (gradiente terra/areia + tapete dança)
+  const grad = ctx.createLinearGradient(0, 0, 0, h);
+  grad.addColorStop(0, '#3b1d0c');
+  grad.addColorStop(0.5, '#4a2511');
+  grad.addColorStop(1, '#1e1b4b');
+  ctx.fillStyle = grad;
+  ctx.fillRect(0, 0, w, h);
+
+  // Pisca-pisca da festa (linha de luzes no topo)
+  for(let i=0;i<Math.ceil(w/40);i++){
+    const x = i*40 + 20;
+    const blink = (Math.sin(tick*0.1 + i*0.7) + 1)/2;
+    ctx.fillStyle = `rgba(${250+i*0%256},${204-i*10%150},${21+i*30%200},${0.4 + blink*0.5})`;
+    ctx.beginPath();
+    ctx.arc(x, 105, 2.5, 0, Math.PI*2);
+    ctx.fill();
+  }
+
+  // Tapete de dança ao centro
+  ctx.fillStyle = 'rgba(236,72,153,0.06)';
+  ctx.beginPath();
+  ctx.ellipse(w/2, h*0.55, 130, 80, 0, 0, Math.PI*2);
+  ctx.fill();
+
+  // Obstáculos
+  for(const o of obstaculos){
+    if(o.tipo === 'palco'){
+      // palco
+      ctx.fillStyle = '#7c2d12';
+      ctx.fillRect(o.x, o.y, o.w, o.h);
+      ctx.fillStyle = '#451a03';
+      ctx.fillRect(o.x, o.y+o.h-6, o.w, 6);
+      ctx.fillStyle = '#facc15';
+      ctx.font = 'bold 11px Inter';
+      ctx.textAlign = 'center';
+      ctx.fillText('🎵 PALCO 🎵', o.x+o.w/2, o.y+27);
+    } else if(o.tipo === 'fogueira'){
+      const cx = o.x + o.w/2, cy = o.y + o.h/2;
+      // luz no chão
+      const lr = ctx.createRadialGradient(cx, cy, 0, cx, cy, 80);
+      lr.addColorStop(0, 'rgba(251,146,60,0.35)');
+      lr.addColorStop(1, 'rgba(251,146,60,0)');
+      ctx.beginPath(); ctx.arc(cx, cy, 80, 0, Math.PI*2); ctx.fill();
+      // troncos
+      ctx.strokeStyle = '#451a03';
+      ctx.lineWidth = 4;
+      ctx.beginPath();
+      ctx.moveTo(cx-14, cy+12); ctx.lineTo(cx+14, cy-6);
+      ctx.moveTo(cx+14, cy+12); ctx.lineTo(cx-14, cy-6);
+      ctx.stroke();
+      // chama (sem shadowBlur em mobile gracas ao override)
+      ctx.shadowBlur = 22; ctx.shadowColor = '#fb923c';
+      ctx.fillStyle = '#fb923c';
+      ctx.beginPath();
+      const flick = 18 + Math.sin(tick*0.25)*3;
+      ctx.arc(cx, cy-2, flick, 0, Math.PI*2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+      ctx.fillStyle = '#fde047';
+      ctx.beginPath(); ctx.arc(cx, cy-4, 8, 0, Math.PI*2); ctx.fill();
+    } else if(o.tipo === 'mesa'){
+      ctx.fillStyle = '#7c2d12';
+      ctx.fillRect(o.x, o.y, o.w, o.h);
+      ctx.strokeStyle = '#451a03'; ctx.lineWidth = 2;
+      ctx.strokeRect(o.x, o.y, o.w, o.h);
+      ctx.fillStyle = '#facc15';
+      ctx.fillRect(o.x+8, o.y+8, 6, 8);
+      ctx.fillRect(o.x+24, o.y+8, 6, 8);
+      ctx.fillRect(o.x+44, o.y+8, 6, 8);
+      ctx.fillStyle = 'rgba(220,38,38,0.4)';
+      ctx.fillRect(o.x, o.y+22, o.w, 6);
+    } else if(o.tipo === 'rio'){
+      const rg = ctx.createLinearGradient(0, o.y, 0, o.y+o.h);
+      rg.addColorStop(0, '#1e3a8a');
+      rg.addColorStop(1, '#0c1e4a');
+      ctx.fillStyle = rg;
+      ctx.fillRect(0, o.y, w, o.h);
+      ctx.strokeStyle = 'rgba(186,230,253,0.3)';
+      ctx.lineWidth = 1;
+      for(let i=0;i<3;i++){
+        ctx.beginPath();
+        for(let x=0;x<w;x+=10){
+          const yy = o.y + 8 + i*8 + Math.sin((x+tick*2+i*30)*0.05)*2;
+          if(x===0) ctx.moveTo(x, yy);
+          else ctx.lineTo(x, yy);
+        }
+        ctx.stroke();
+      }
+    }
+  }
+
+  // === NPCs ===
+  for(const n of npcs){
+    if(!n.vivo) continue;
+    desenharFesteiro(n);
+  }
+
+  // === RAIO DE ACAO + RAIO DE VISAO durante seducao ===
+  if(player.seduzindo){
+    ctx.strokeStyle = 'rgba(220,38,38,0.45)';
+    ctx.lineWidth = 2;
+    ctx.setLineDash([6, 4]);
+    ctx.beginPath();
+    ctx.arc(player.x, player.y, RAIO_VISAO_NPC, 0, Math.PI*2);
+    ctx.stroke();
+    ctx.setLineDash([]);
+    const prog = player.sedTimer / SEDUCAO_TICKS;
+    ctx.strokeStyle = '#ec4899';
+    ctx.lineWidth = 5;
+    ctx.lineCap = 'round';
+    ctx.beginPath();
+    ctx.arc(player.x, player.y, 30, -Math.PI/2, -Math.PI/2 + prog*Math.PI*2);
+    ctx.stroke();
+    ctx.lineCap = 'butt';
+    if(player.seduzindo.vivo){
+      ctx.strokeStyle = 'rgba(236,72,153,0.5)';
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(player.x, player.y);
+      ctx.lineTo(player.seduzindo.x, player.seduzindo.y);
+      ctx.stroke();
+      ctx.font = '14px sans-serif';
+      ctx.textAlign = 'center';
+      ctx.fillStyle = '#ec4899';
+      const offset = Math.sin(tick*0.2) * 2;
+      ctx.fillText('\u{1f497}', player.seduzindo.x, player.seduzindo.y - 26 + offset);
+    }
+  } else {
+    ctx.strokeStyle = 'rgba(251,207,232,0.18)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.arc(player.x, player.y, RAIO_ACAO, 0, Math.PI*2);
+    ctx.stroke();
+  }
+
+  // === PLAYER ===
+  desenharBoto(player);
+
+  // === CACADORES ===
+  for(const cz of cacadores){
+    desenharCacador(cz);
+  }
+
+  // === PARTICULAS ===
+  for(const p of particulas){
+    const a = p.life / p.maxLife;
+    ctx.globalAlpha = a;
+    ctx.font = '14px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('\u{1f497}', p.x, p.y);
+    ctx.globalAlpha = 1;
+  }
+}
+
+function desenharFesteiro(n){
+  const x = n.x, y = n.y;
+  ctx.fillStyle = 'rgba(0,0,0,0.35)';
+  ctx.beginPath();
+  ctx.ellipse(x, y+18, 13, 4, 0, 0, Math.PI*2);
+  ctx.fill();
+
+  let bobY = 0;
+  if(n.estado === 'dancando'){
+    bobY = Math.sin(tick*0.25 + n.bobOffset) * 3;
+  }
+
+  ctx.fillStyle = n.cor;
+  ctx.fillRect(x-7, y-2 + bobY, 14, 16);
+  ctx.fillStyle = '#1e3a8a';
+  ctx.fillRect(x-7, y+12 + bobY, 6, 8);
+  ctx.fillRect(x+1, y+12 + bobY, 6, 8);
+  ctx.fillStyle = n.pele;
+  if(n.estado === 'dancando'){
+    const armSwing = Math.sin(tick*0.25 + n.bobOffset);
+    ctx.fillRect(x-10, y - armSwing*4 + bobY, 3, 9);
+    ctx.fillRect(x+7,  y + armSwing*4 + bobY, 3, 9);
+  } else {
+    ctx.fillRect(x-10, y+1 + bobY, 3, 9);
+    ctx.fillRect(x+7,  y+1 + bobY, 3, 9);
+  }
+  ctx.fillStyle = n.pele;
+  ctx.beginPath();
+  ctx.arc(x, y-8 + bobY, 6.5, 0, Math.PI*2);
+  ctx.fill();
+  ctx.fillStyle = n.cabelo;
+  ctx.beginPath();
+  ctx.arc(x, y-10 + bobY, 6.5, Math.PI, 0);
+  ctx.fill();
+
+  if(n.estado === 'panico'){
+    ctx.fillStyle = '#fca5a5';
+    ctx.font = 'bold 14px sans-serif';
+    ctx.textAlign = 'center';
+    ctx.fillText('!', x, y - 18 + bobY);
+    ctx.strokeStyle = 'rgba(220,38,38,0.25)';
+    ctx.lineWidth = 1;
+    ctx.beginPath();
+    ctx.arc(x, y, 30, 0, Math.PI*2);
+    ctx.stroke();
+  }
+
+  if(n.estado === 'dancando' && Math.random() < 0.04){
+    ctx.fillStyle = '#facc15';
+    ctx.font = '8px sans-serif';
+    ctx.fillText('✦', x + (Math.random()-0.5)*20, y - 8 + bobY);
+  }
+}
+
+function desenharBoto(p){
+  const x = p.x, y = p.y;
+  ctx.fillStyle = 'rgba(0,0,0,0.4)';
+  ctx.beginPath();
+  ctx.ellipse(x, y+18, 14, 4, 0, 0, Math.PI*2);
+  ctx.fill();
+
+  ctx.shadowBlur = 16; ctx.shadowColor = '#ec4899';
+  ctx.fillStyle = '#fef9c3';
+  ctx.fillRect(x-8, y-2, 16, 17);
+  ctx.shadowBlur = 0;
+  ctx.fillStyle = '#ec4899';
+  ctx.beginPath();
+  ctx.moveTo(x, y);
+  ctx.lineTo(x-2, y+5);
+  ctx.lineTo(x+2, y+5);
+  ctx.closePath();
+  ctx.fill();
+  ctx.fillRect(x-2, y+5, 4, 8);
+  ctx.fillStyle = '#1e293b';
+  ctx.fillRect(x-7, y+13, 6, 8);
+  ctx.fillRect(x+1, y+13, 6, 8);
+  ctx.fillStyle = '#fef9c3';
+  ctx.fillRect(x-11, y+1, 3, 10);
+  ctx.fillRect(x+8,  y+1, 3, 10);
+  ctx.fillStyle = '#fde68a';
+  ctx.beginPath();
+  ctx.arc(x, y-8, 6.8, 0, Math.PI*2);
+  ctx.fill();
+  ctx.fillStyle = '#7c2d12';
+  ctx.fillRect(x-10, y-13, 20, 2);
+  ctx.fillStyle = '#9d174d';
+  ctx.fillRect(x-7, y-19, 14, 7);
+  ctx.fillStyle = '#ec4899';
+  ctx.fillRect(x-7, y-14, 14, 1.5);
+}
+
+function desenharCacador(cz){
+  const x = cz.x, y = cz.y;
+  ctx.fillStyle = 'rgba(0,0,0,0.4)';
+  ctx.beginPath();
+  ctx.ellipse(x, y+20, 14, 4, 0, 0, Math.PI*2);
+  ctx.fill();
+  ctx.fillStyle = '#1e293b';
+  ctx.fillRect(x-8, y-2, 16, 18);
+  ctx.fillStyle = '#facc15';
+  ctx.fillRect(x-8, y+10, 16, 2);
+  ctx.fillStyle = '#0f172a';
+  ctx.fillRect(x-8, y+14, 7, 8);
+  ctx.fillRect(x+1, y+14, 7, 8);
+  ctx.fillStyle = '#d8a878';
+  ctx.beginPath();
+  ctx.arc(x, y-8, 6.8, 0, Math.PI*2);
+  ctx.fill();
+  ctx.fillStyle = '#451a03';
+  ctx.fillRect(x-9, y-14, 18, 3);
+  ctx.fillRect(x-6, y-20, 12, 6);
+  ctx.fillStyle = '#dc2626';
+  ctx.font = 'bold 14px sans-serif';
+  ctx.textAlign = 'center';
+  ctx.fillText('!', x, y-26);
+}
+
+// ===== LOOP =====
+function loop(){
+  if(!gameOver && !vitoria) update();
+  render();
+  requestAnimationFrame(loop);
+}
+
+// ===== INPUT =====
+window.addEventListener('keydown', e => {
+  const k = e.key.toLowerCase();
+  if(k === 'arrowup' || k === 'w') teclas.up = true;
+  if(k === 'arrowdown' || k === 's') teclas.down = true;
+  if(k === 'arrowleft' || k === 'a') teclas.left = true;
+  if(k === 'arrowright' || k === 'd') teclas.right = true;
+  if(k === ' ' || k === 'enter' || k === 'e'){ e.preventDefault(); tentarSeduzir(); }
+});
+window.addEventListener('keyup', e => {
+  const k = e.key.toLowerCase();
+  if(k === 'arrowup' || k === 'w') teclas.up = false;
+  if(k === 'arrowdown' || k === 's') teclas.down = false;
+  if(k === 'arrowleft' || k === 'a') teclas.left = false;
+  if(k === 'arrowright' || k === 'd') teclas.right = false;
+});
+
+document.querySelectorAll('.dpad button').forEach(btn => {
+  const dir = btn.dataset.dir;
+  const setOn  = e => { e.preventDefault(); teclas[dir] = true; };
+  const setOff = e => { e.preventDefault(); teclas[dir] = false; };
+  btn.addEventListener('touchstart', setOn,  { passive:false });
+  btn.addEventListener('touchend',   setOff, { passive:false });
+  btn.addEventListener('touchcancel',setOff, { passive:false });
+  btn.addEventListener('mousedown',  setOn);
+  btn.addEventListener('mouseup',    setOff);
+  btn.addEventListener('mouseleave', setOff);
+});
+
+const acaoBtn = document.getElementById('acaoBtn');
+acaoBtn.addEventListener('touchstart', e => { e.preventDefault(); tentarSeduzir(); }, { passive:false });
+acaoBtn.addEventListener('mousedown',  e => { e.preventDefault(); tentarSeduzir(); });
+
+c.addEventListener('click', e => {
+  if(IS_MOBILE) return;
+  tentarSeduzir();
+});
+</script>
+
+</body>
+</html>
+});
+</script>
+
+</body>
+</html>
