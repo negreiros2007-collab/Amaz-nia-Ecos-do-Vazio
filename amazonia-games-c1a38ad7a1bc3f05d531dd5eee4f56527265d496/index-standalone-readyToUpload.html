@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#1B4332">
+  <title>Amazônia: Ecos do Vazio</title>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <style>
+    body { margin: 0; background: #000; overflow: hidden; }
+    #loader {
+      position: fixed; inset: 0;
+      background: radial-gradient(ellipse at center, #1B4332 0%, #000 100%);
+      color: #A8E6CF; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; font-family: serif;
+      z-index: 2147483647; transition: opacity 1s;
+      pointer-events: auto; touch-action: manipulation;
+      padding: 20px; text-align: center;
+    }
+    #loader h1 { font-size: 2em; margin: 0; letter-spacing: 0.1em; }
+    #loader p { font-style: italic; opacity: 0.7; margin-top: 1em; }
+    #start-btn {
+      margin-top: 2em; padding: 1.2em 2em; background: #1B4332;
+      border: 2px solid #A8E6CF; color: #A8E6CF; font-size: 1.1em;
+      cursor: pointer; letter-spacing: 0.1em;
+      pointer-events: auto; touch-action: manipulation;
+      -webkit-tap-highlight-color: rgba(168,230,207,0.4);
+      position: relative; z-index: 2; min-width: 80%;
+    }
+    #start-btn:active, #start-btn:hover { background: #A8E6CF; color: #1B4332; }
+  </style>
+</head>
+<body>
+  <div id="loader">
+    <h1>AMAZÔNIA</h1>
+    <p>Ecos do Vazio</p>
+    <button id="start-btn">ENTRAR NO MUNDO DAS LENDAS</button>
+    <p style="font-size:0.85em; margin-top:2em; opacity:0.5;">
+      Em VR: encaixe o celular no Cardboard depois de entrar.<br>
+      Sem VR: arraste o mouse para olhar; espaço/clique = totem.
+    </p>
+  </div>
+
+  <script>
+  // ========== GAZE CURSOR ==========
+  AFRAME.registerComponent('gaze-cursor', {
+    schema: { fuseTimeout: { type: 'number', default: 2000 }, color: { type: 'color', default: '#FFFFFF' }, activeColor: { type: 'color', default: '#FFD700' } },
+    init: function() {
+      var el = this.el;
+      this.fuseStart = null; this.target = null;
+      el.setAttribute('geometry', 'primitive: ring; radiusInner: 0.012; radiusOuter: 0.02');
+      el.setAttribute('material', 'color: ' + this.data.color + '; shader: flat; opacity: 0.9; transparent: true');
+      el.setAttribute('position', '0 0 -0.6');
+      el.setAttribute('raycaster', 'objects: .gaze-target; far: 50');
+      var ring = document.createElement('a-entity');
+      ring.setAttribute('geometry', 'primitive: ring; radiusInner: 0.014; radiusOuter: 0.018; thetaLength: 0');
+      ring.setAttribute('material', 'color: ' + this.data.activeColor + '; shader: flat; side: double');
+      ring.setAttribute('rotation', '0 0 90');
+      el.appendChild(ring);
+      this.progressRing = ring;
+      var self = this;
+      el.addEventListener('raycaster-intersection', function(e){
+        var hit = e.detail.els[0];
+        if (!hit || !hit.classList.contains('gaze-target')) return;
+        self.target = hit; self.fuseStart = performance.now();
+        hit.emit('gaze-enter');
+      });
+      el.addEventListener('raycaster-intersection-cleared', function(){
+        if (self.target) { self.target.emit('gaze-leave'); self.target = null; }
+        self.fuseStart = null;
+        self.progressRing.setAttribute('geometry', 'thetaLength', 0);
+      });
+    },
+    tick: function() {
+      if (!this.target || !this.fuseStart) return;
+      var elapsed = performance.now() - this.fuseStart;
+      var progress = Math.min(elapsed / this.data.fuseTimeout, 1);
+      this.progressRing.setAttribute('geometry', 'thetaLength', progress * 360);
+      this.target.emit('gaze-progress', { progress: progress });
+      if (progress >= 1) {
+        this.target.emit('gaze-fire');
+        this.target.emit('click');
+        this.fuseStart = performance.now() + 99999;
+      }
+    }
+  });
+
+  AFRAME.registerComponent('gaze-target', {
+    schema: { hoverScale: { type: 'number', default: 1.15 } },
+    init: function() {
+      var el = this.el;
+      el.classList.add('gaze-target');
+      el.addEventListener('gaze-enter', function(){ el.setAttribute('animation__hover', 'property: scale; to: 1.1 1.1 1.1; dur: 200'); });
+      el.addEventListener('gaze-leave', function(){ el.setAttribute('animation__hover', 'property: scale; to: 1 1 1; dur: 200'); });
+    }
+  });
+
+  // ========== GREAT TREE ==========
+  AFRAME.registerComponent('great-tree', {
+    init: function() {
+      var el = this.el, i, angle, x, z;
+      for (i = 0; i < 6; i++) {
+        angle = (i / 6) * Math.PI * 2;
+        var root = document.createElement('a-cone');
+        root.setAttribute('radius-bottom', 0.25); root.setAttribute('radius-top', 0.05);
+        root.setAttribute('height', 1.5); root.setAttribute('segments-radial', 5);
+        root.setAttribute('color', '#3E2723');
+        x = Math.cos(angle) * 1.5; z = Math.sin(angle) * 1.5;
+        root.setAttribute('position', x + ' 0.3 ' + z);
+        root.setAttribute('rotation', (-Math.sin(angle) * 45) + ' ' + (-angle * 180/Math.PI) + ' ' + (Math.cos(angle) * 45));
+        el.appendChild(root);
+      }
+      var trunk = document.createElement('a-cylinder');
+      trunk.setAttribute('radius', 1.2); trunk.setAttribute('height', 8);
+      trunk.setAttribute('segments-radial', 8); trunk.setAttribute('position', '0 4 0');
+      trunk.setAttribute('color', '#5D4037'); trunk.setAttribute('material', 'roughness: 0.95');
+      el.appendChild(trunk);
+      var layers = [{y:9,r:4.5,c:'#2E5D31',d:4000},{y:11,r:3.8,c:'#3F7042',d:4500},{y:12.5,r:2.5,c:'#52A256',d:5000}];
+      layers.forEach(function(l){
+        var leaves = document.createElement('a-sphere');
+        leaves.setAttribute('radius', l.r); leaves.setAttribute('segments-width', 10); leaves.setAttribute('segments-height', 6);
+        leaves.setAttribute('position', '0 ' + l.y + ' 0'); leaves.setAttribute('color', l.c);
+        leaves.setAttribute('material', 'roughness: 0.9; flatShading: true');
+        leaves.setAttribute('animation__breath', 'property: scale; from: 1 1 1; to: 1.04 1.04 1.04; dir: alternate; loop: true; dur: ' + l.d + '; easing: easeInOutSine');
+        el.appendChild(leaves);
+      });
+      var aura = document.createElement('a-light');
+      aura.setAttribute('type', 'point'); aura.setAttribute('color', '#A8E6CF');
+      aura.setAttribute('intensity', 0.8); aura.setAttribute('distance', 20); aura.setAttribute('position', '0 11 0');
+      el.appendChild(aura);
+    }
+  });
+
+  // ========== PORTAL ==========
+  AFRAME.registerComponent('portal', {
+    schema: { destination: {type:'string',default:''}, color: {type:'color',default:'#7FFFD4'}, label: {type:'string',default:'Arena'}, locked: {type:'boolean',default:false} },
+    init: function() {
+      var el = this.el, c = this.data.color, self = this;
+      var ring = document.createElement('a-torus');
+      ring.setAttribute('radius', 1.2); ring.setAttribute('radius-tubular', 0.08);
+      ring.setAttribute('segments-radial', 8); ring.setAttribute('segments-tubular', 24);
+      ring.setAttribute('color', c);
+      ring.setAttribute('material', 'emissive: ' + c + '; emissiveIntensity: 0.7; metalness: 0.3');
+      ring.setAttribute('animation', 'property: rotation; to: 0 0 360; loop: true; dur: 8000; easing: linear');
+      el.appendChild(ring);
+      var disc = document.createElement('a-circle');
+      disc.setAttribute('radius', 1.1); disc.setAttribute('color', c);
+      disc.setAttribute('material', 'emissive: ' + c + '; emissiveIntensity: 0.4; opacity: 0.35; transparent: true; side: double; shader: flat');
+      el.appendChild(disc);
+      if (this.data.locked) {
+        ring.setAttribute('material', 'color: #555555; emissive: #222222; opacity: 0.6; transparent: true');
+        disc.setAttribute('material', 'color: #333333; opacity: 0.3; transparent: true');
+      }
+      var hit = document.createElement('a-circle');
+      hit.setAttribute('radius', 1.2);
+      hit.setAttribute('material', 'opacity: 0; transparent: true');
+      hit.classList.add('gaze-target');
+      hit.setAttribute('gaze-target', '');
+      el.appendChild(hit);
+      var label = document.createElement('a-text');
+      label.setAttribute('value', this.data.locked ? this.data.label + ' (?)' : this.data.label);
+      label.setAttribute('align', 'center'); label.setAttribute('color', '#FFFFFF');
+      label.setAttribute('width', 4); label.setAttribute('position', '0 1.8 0'); label.setAttribute('visible', false);
+      el.appendChild(label);
+      hit.addEventListener('gaze-enter', function(){ label.setAttribute('visible', true); });
+      hit.addEventListener('gaze-leave', function(){ label.setAttribute('visible', false); });
+      hit.addEventListener('gaze-fire', function(){
+        if (self.data.locked) {
+          self.el.sceneEl.emit('hub-message', { text: 'Este caminho ainda não se abriu.' });
+        } else {
+          self.el.sceneEl.emit('hub-message', { text: 'Indo para ' + self.data.label + '...' });
+        }
+      });
+    }
+  });
+
+  // ========== PAJE ==========
+  AFRAME.registerComponent('paje', {
+    init: function() {
+      var el = this.el;
+      var robe = document.createElement('a-cone');
+      robe.setAttribute('radius-bottom', 0.5); robe.setAttribute('radius-top', 0.18);
+      robe.setAttribute('height', 1.4); robe.setAttribute('segments-radial', 8);
+      robe.setAttribute('position', '0 0.7 0'); robe.setAttribute('color', '#3D2817');
+      el.appendChild(robe);
+      var head = document.createElement('a-sphere');
+      head.setAttribute('radius', 0.16); head.setAttribute('position', '0 1.55 0');
+      head.setAttribute('color', '#8B5A3C');
+      el.appendChild(head);
+      for (var i = -2; i <= 2; i++) {
+        var f = document.createElement('a-cone');
+        f.setAttribute('radius-bottom', 0.025); f.setAttribute('radius-top', 0.005);
+        f.setAttribute('height', 0.28); f.setAttribute('segments-radial', 4);
+        f.setAttribute('position', (i*0.045) + ' 1.85 -0.05');
+        f.setAttribute('rotation', (i*-5) + ' 0 0');
+        var cols = ['#D62828','#F77F00','#FCBF49','#F77F00','#D62828'];
+        f.setAttribute('color', cols[i+2]);
+        el.appendChild(f);
+      }
+      var staff = document.createElement('a-cylinder');
+      staff.setAttribute('radius', 0.025); staff.setAttribute('height', 1.5);
+      staff.setAttribute('position', '0.4 0.75 0'); staff.setAttribute('rotation', '0 0 -5');
+      staff.setAttribute('color', '#5D4037');
+      el.appendChild(staff);
+      var stone = document.createElement('a-sphere');
+      stone.setAttribute('radius', 0.06); stone.setAttribute('position', '0.46 1.5 0');
+      stone.setAttribute('color', '#7FFFD4');
+      stone.setAttribute('material', 'emissive: #7FFFD4; emissiveIntensity: 0.7');
+      el.appendChild(stone);
+      var hit = document.createElement('a-cylinder');
+      hit.setAttribute('radius', 0.6); hit.setAttribute('height', 2); hit.setAttribute('position', '0 1 0');
+      hit.setAttribute('material', 'opacity: 0; transparent: true');
+      hit.classList.add('gaze-target'); hit.setAttribute('gaze-target', '');
+      el.appendChild(hit);
+      this.lines = ['A floresta não esqueceu de você... ainda.','Cada lenda guarda um pedaço da Mata.','O Vazio cresce com nosso silêncio.','O totem é a memória — segure-o firme.'];
+      this.idx = 0;
+      var self = this;
+      hit.addEventListener('gaze-fire', function(){
+        var line = self.lines[self.idx % self.lines.length]; self.idx++;
+        self.el.sceneEl.emit('hub-message', { text: 'Pajé: "' + line + '"' });
+        if ('speechSynthesis' in window) {
+          var u = new SpeechSynthesisUtterance(line); u.lang='pt-BR'; u.rate=0.85; u.pitch=0.7;
+          speechSynthesis.cancel(); speechSynthesis.speak(u);
+        }
+      });
+    }
+  });
+
+  // ========== TOTEM ==========
+  AFRAME.registerComponent('totem', {
+    schema: { energy:{type:'number',default:100}, maxEnergy:{type:'number',default:100} },
+    init: function() {
+      var el = this.el;
+      this._ray = new THREE.Raycaster(); this._v = new THREE.Vector3(); this._d = new THREE.Vector3();
+      var body = document.createElement('a-cylinder');
+      body.setAttribute('radius', 0.06); body.setAttribute('height', 0.4); body.setAttribute('segments-radial', 6);
+      body.setAttribute('color', '#6B3410');
+      el.appendChild(body);
+      var crystal = document.createElement('a-octahedron');
+      crystal.setAttribute('radius', 0.05); crystal.setAttribute('position', '0 0.25 0');
+      crystal.setAttribute('color', '#7FFFD4');
+      crystal.setAttribute('material', 'emissive: #7FFFD4; emissiveIntensity: 0.8; opacity: 0.85; transparent: true');
+      crystal.setAttribute('animation', 'property: rotation; to: 0 360 0; loop: true; dur: 4000');
+      el.appendChild(crystal);
+      var beam = document.createElement('a-cylinder');
+      beam.setAttribute('radius', 0.015); beam.setAttribute('height', 8); beam.setAttribute('position', '0 4.25 0');
+      beam.setAttribute('color', '#7FFFD4');
+      beam.setAttribute('material', 'emissive: #7FFFD4; emissiveIntensity: 1; opacity: 0.6; transparent: true; shader: flat');
+      beam.setAttribute('visible', false);
+      el.appendChild(beam);
+      this.beam = beam; this.active = false; this.energy = 100;
+      var self = this;
+      var fire = function(on){ self._setBeam(on); };
+      window.addEventListener('mousedown', function(){ fire(true); });
+      window.addEventListener('mouseup', function(){ fire(false); });
+      window.addEventListener('touchstart', function(e){ if (!document.getElementById('loader')) { e.preventDefault(); fire(true); } }, { passive: false });
+      window.addEventListener('touchend', function(){ fire(false); });
+      window.addEventListener('keydown', function(e){ if (e.code==='Space') fire(true); });
+      window.addEventListener('keyup', function(e){ if (e.code==='Space') fire(false); });
+    },
+    _setBeam: function(on) {
+      if (this.energy <= 0) on = false;
+      this.active = on;
+      this.beam.setAttribute('visible', on);
+    },
+    tick: function(t, dt) {
+      if (this.active) {
+        this.energy = Math.max(0, this.energy - (dt/1000)*8);
+        if (this.energy <= 0) this._setBeam(false);
+        this._damage(dt);
+      } else {
+        this.energy = Math.min(100, this.energy + (dt/1000)*5);
+      }
+      this.el.emit('totem-energy', { value: this.energy, max: 100 });
+    },
+    _damage: function(dt) {
+      var cam = this.el.sceneEl.camera; if (!cam) return;
+      cam.getWorldPosition(this._v); cam.getWorldDirection(this._d);
+      this._ray.set(this._v, this._d); this._ray.far = 20;
+      var els = document.querySelectorAll('.damageable');
+      var objs = []; for (var i=0;i<els.length;i++) if (els[i].object3D) objs.push(els[i].object3D);
+      var hits = this._ray.intersectObjects(objs, true);
+      if (!hits.length) return;
+      var hitEl = null;
+      for (var j=0;j<hits.length;j++) {
+        var o = hits[j].object;
+        while (o && !o.el) o = o.parent;
+        if (o && o.el && o.el.classList.contains('damageable')) { hitEl = o.el; break; }
+      }
+      if (!hitEl) return;
+      var c = hitEl.components['corruption-spot'];
+      if (c && c.takeDamage) c.takeDamage((dt/1000)*30);
+    }
+  });
+
+  // ========== CORRUPTION SPOT ==========
+  AFRAME.registerComponent('corruption-spot', {
+    schema: { radius: { type: 'number', default: 0.6 } },
+    init: function() {
+      var el = this.el;
+      el.classList.add('damageable', 'corruption');
+      var blob = document.createElement('a-circle');
+      blob.setAttribute('radius', this.data.radius); blob.setAttribute('rotation', '-90 0 0');
+      blob.setAttribute('color', '#1A0033');
+      blob.setAttribute('material', 'opacity: 0.85; transparent: true; shader: flat; side: double');
+      blob.setAttribute('animation__pulse', 'property: scale; from: 1 1 1; to: 1.15 1.15 1.15; dir: alternate; loop: true; dur: 1200');
+      el.appendChild(blob);
+      var tendril = document.createElement('a-cone');
+      tendril.setAttribute('radius-bottom', this.data.radius*0.3); tendril.setAttribute('radius-top', 0.05);
+      tendril.setAttribute('height', 1.5); tendril.setAttribute('position', '0 0.75 0');
+      tendril.setAttribute('color', '#1A0033');
+      tendril.setAttribute('material', 'opacity: 0.5; transparent: true; shader: flat');
+      tendril.setAttribute('animation', 'property: rotation; to: 0 360 0; loop: true; dur: 6000; easing: linear');
+      el.appendChild(tendril);
+      this.hp = 100;
+    },
+    takeDamage: function(amt) {
+      this.hp -= amt;
+      if (this.hp <= 0) this._purify();
+    },
+    _purify: function() {
+      var pos = this.el.object3D.position;
+      var parent = this.el.parentNode;
+      for (var i=0;i<14;i++) {
+        var p = document.createElement('a-sphere');
+        p.setAttribute('radius', 0.06); p.setAttribute('color', '#FFFFE0');
+        p.setAttribute('material', 'emissive: #FFFFE0; emissiveIntensity: 1; shader: flat; opacity: 1; transparent: true');
+        p.setAttribute('position', pos.x + ' ' + (pos.y+0.3) + ' ' + pos.z);
+        p.setAttribute('animation__m', 'property: position; to: ' + (pos.x+(Math.random()-0.5)*3) + ' ' + (pos.y+2+Math.random()*2) + ' ' + (pos.z+(Math.random()-0.5)*3) + '; dur: 1200');
+        p.setAttribute('animation__f', 'property: material.opacity; to: 0; dur: 1200');
+        parent.appendChild(p);
+        (function(p){ setTimeout(function(){ p.parentNode && p.parentNode.removeChild(p); }, 1300); })(p);
+      }
+      this.el.parentNode && this.el.parentNode.removeChild(this.el);
+    }
+  });
+
+  // ========== SPIRITS ==========
+  AFRAME.registerComponent('spirits', {
+    schema: { count:{type:'number',default:8}, radius:{type:'number',default:12}, color:{type:'color',default:'#B0E0E6'} },
+    init: function() {
+      for (var i=0;i<this.data.count;i++) {
+        var orbit = document.createElement('a-entity');
+        var r = this.data.radius * (0.4 + Math.random()*0.6);
+        var y = 1 + Math.random()*5;
+        var speed = 6000 + Math.random()*6000;
+        var dir = Math.random() > 0.5 ? 360 : -360;
+        orbit.setAttribute('animation', 'property: rotation; to: 0 ' + dir + ' 0; loop: true; dur: ' + speed + '; easing: linear');
+        var s = document.createElement('a-sphere');
+        s.setAttribute('radius', 0.08); s.setAttribute('color', this.data.color);
+        s.setAttribute('material', 'emissive: ' + this.data.color + '; emissiveIntensity: 1; shader: flat; opacity: 0.85; transparent: true');
+        s.setAttribute('position', r + ' ' + y + ' 0');
+        orbit.appendChild(s);
+        this.el.appendChild(orbit);
+      }
+    }
+  });
+
+  // ========== AMBIENT AUDIO ==========
+  AFRAME.registerComponent('ambient-audio', {
+    schema: { volume: { type: 'number', default: 0.2 } },
+    init: function() {
+      var self = this; this.started = false;
+      var start = function() {
+        if (self.started) return; self.started = true;
+        self._setup();
+        window.removeEventListener('click', start);
+        window.removeEventListener('touchstart', start);
+      };
+      window.addEventListener('click', start);
+      window.addEventListener('touchstart', start);
+    },
+    _setup: function() {
+      var ctx = new (window.AudioContext || window.webkitAudioContext)();
+      var master = ctx.createGain(); master.gain.value = this.data.volume; master.connect(ctx.destination);
+      var bufSize = 2 * ctx.sampleRate;
+      var buf = ctx.createBuffer(1, bufSize, ctx.sampleRate);
+      var d = buf.getChannelData(0);
+      for (var i=0;i<bufSize;i++) d[i] = Math.random()*2-1;
+      var noise = ctx.createBufferSource(); noise.buffer = buf; noise.loop = true;
+      var filter = ctx.createBiquadFilter(); filter.type = 'lowpass'; filter.frequency.value = 600;
+      var g = ctx.createGain(); g.gain.value = 0.35;
+      noise.connect(filter).connect(g).connect(master);
+      noise.start();
+      var ringChime = function() {
+        var now = ctx.currentTime;
+        var osc = ctx.createOscillator(); var env = ctx.createGain();
+        osc.frequency.value = 880 + Math.random()*440; osc.type = 'sine';
+        env.gain.setValueAtTime(0, now);
+        env.gain.linearRampToValueAtTime(0.15, now+0.05);
+        env.gain.exponentialRampToValueAtTime(0.001, now+3.5);
+        osc.connect(env).connect(master); osc.start(now); osc.stop(now+3.5);
+        setTimeout(ringChime, 8000 + Math.random()*7000);
+      };
+      setTimeout(ringChime, 2000);
+    }
+  });
+
+  // ========== HUB MANAGER ==========
+  AFRAME.registerComponent('hub-manager', {
+    init: function() {
+      var self = this;
+      this.el.sceneEl.addEventListener('hub-message', function(e){ self._toast(e.detail.text); });
+    },
+    _toast: function(text) {
+      var t = document.querySelector('#toast');
+      if (!t) return;
+      t.setAttribute('value', text); t.setAttribute('visible', true);
+      clearTimeout(this._tt);
+      this._tt = setTimeout(function(){ t.setAttribute('visible', false); }, 3000);
+    }
+  });
+  </script>
+
+  <a-scene
+    fog="type: linear; color: #6B9A6B; near: 15; far: 60"
+    renderer="antialias: true; colorManagement: true"
+    vr-mode-ui="enabled: true"
+    hub-manager
+    ambient-audio="volume: 0.22">
+
+    <a-sky color="#87A878"></a-sky>
+    <a-circle radius="40" rotation="-90 0 0" color="#3D6B3F" material="shader: flat"></a-circle>
+    <a-entity id="forest-ring"></a-entity>
+
+    <a-light type="ambient" color="#FFFFFF" intensity="1.2"></a-light>
+    <a-light type="directional" color="#FFF8DC" intensity="1.0" position="5 10 5"></a-light>
+    <a-light type="hemisphere" color="#FFFFFF" groundColor="#3D6B3F" intensity="0.6"></a-light>
+
+    <a-entity great-tree position="0 0 0"></a-entity>
+    <a-entity spirits="count: 10; radius: 14; color: #B0E0E6"></a-entity>
+
+    <a-entity corruption-spot position="5 0.01 3"></a-entity>
+    <a-entity corruption-spot position="-4 0.01 5" radius="0.5"></a-entity>
+    <a-entity corruption-spot position="6 0.01 -4" radius="0.7"></a-entity>
+
+    <a-entity paje position="-3 0 -2" rotation="0 30 0"></a-entity>
+
+    <a-entity portal="destination: mata-viva; color: #52A256; label: Mata Viva" position="8 2.5 0" rotation="0 -90 0"></a-entity>
+    <a-entity portal="destination: rio-esquecido; color: #1E88E5; label: Rio Esquecido; locked: true" position="2.5 2.5 7.6" rotation="0 -160 0"></a-entity>
+    <a-entity portal="destination: floresta-cinzas; color: #E53935; label: Floresta em Cinzas; locked: true" position="-6.5 2.5 4.7" rotation="0 -215 0"></a-entity>
+    <a-entity portal="destination: floresta-quebrada; color: #7E57C2; label: Floresta Quebrada; locked: true" position="-6.5 2.5 -4.7" rotation="0 -305 0"></a-entity>
+    <a-entity portal="destination: vazio; color: #1A001F; label: O Vazio; locked: true" position="2.5 2.5 -7.6" rotation="0 -20 0"></a-entity>
+
+    <a-entity id="toast-anchor" position="0 1.5 -2">
+      <a-text id="toast" value="" align="center" color="#FFD700" width="3" visible="false"></a-text>
+    </a-entity>
+
+    <a-entity id="hud-energy" position="0.45 -0.35 -1">
+      <a-plane width="0.4" height="0.04" material="color: #333; opacity: 0.6; transparent: true; shader: flat"></a-plane>
+      <a-plane id="energy-bar" width="0.4" height="0.04" position="0 0 0.001" material="color: #7FFFD4; shader: flat"></a-plane>
+    </a-entity>
+
+    <a-entity id="rig" position="0 1.6 5">
+      <a-camera look-controls="reverseMouseDrag: false; touchEnabled: true" wasd-controls-enabled="false">
+        <a-entity gaze-cursor></a-entity>
+        <a-entity totem position="0.32 -0.32 -0.6" rotation="-15 -10 0"></a-entity>
+      </a-camera>
+    </a-entity>
+  </a-scene>
+
+  <script>
+    function startGame(e) {
+      if (e) { e.preventDefault(); e.stopPropagation(); }
+      var loader = document.getElementById('loader');
+      var scene = document.querySelector('a-scene');
+      var hide = function(){ if (loader) { loader.style.opacity = '0'; setTimeout(function(){ loader.remove(); }, 1000); } };
+      if (scene.hasLoaded) hide(); else { scene.addEventListener('loaded', hide, {once:true}); setTimeout(hide, 5000); }
+      setTimeout(function(){
+        scene.emit('hub-message', { text: 'Você chegou ao Coração da Mata. Olhe ao redor.' });
+      }, 1500);
+    }
+    var btn = document.getElementById('start-btn');
+    btn.addEventListener('click', startGame);
+    btn.addEventListener('touchend', startGame);
+
+    window.addEventListener('load', function () {
+      var ring = document.getElementById('forest-ring');
+      if (!ring) return;
+      for (var i=0;i<24;i++) {
+        var a = (i/24)*Math.PI*2;
+        var r = 18 + Math.random()*6;
+        var x = Math.cos(a)*r, z = Math.sin(a)*r;
+        var h = 4 + Math.random()*3;
+        var t = document.createElement('a-cylinder');
+        t.setAttribute('radius', 0.25); t.setAttribute('height', h); t.setAttribute('segments-radial', 5);
+        t.setAttribute('position', x + ' ' + (h/2) + ' ' + z); t.setAttribute('color', '#3E2723');
+        ring.appendChild(t);
+        var top = document.createElement('a-cone');
+        top.setAttribute('radius-bottom', 1.4); top.setAttribute('radius-top', 0.1);
+        top.setAttribute('height', 2.5); top.setAttribute('segments-radial', 6);
+        top.setAttribute('position', x + ' ' + (h+1) + ' ' + z);
+        var sh = ['#1F4020','#2E5D31','#3F7042','#264C28'];
+        top.setAttribute('color', sh[i%4]); top.setAttribute('material', 'flatShading: true');
+        ring.appendChild(top);
+      }
+    });
+
+    document.querySelector('a-scene').addEventListener('totem-energy', function(e){
+      var bar = document.getElementById('energy-bar'); if (!bar) return;
+      var pct = e.detail.value / e.detail.max;
+      bar.setAttribute('width', 0.4*pct);
+      bar.setAttribute('position', (-0.2 + (0.4*pct)/2) + ' 0 0.001');
+      var col = pct > 0.5 ? '#7FFFD4' : pct > 0.2 ? '#FFD700' : '#FF6B6B';
+      bar.setAttribute('material', 'color: ' + col + '; shader: flat');
+    });
+  </script>
+</body>
+</html>

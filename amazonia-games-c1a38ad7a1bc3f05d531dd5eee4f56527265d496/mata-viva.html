@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+  <title>Mata Viva — Amazônia: Ecos do Vazio</title>
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+  <script src="../js/components/gaze-cursor.js"></script>
+  <script src="../js/components/totem.js"></script>
+  <style>
+    body { margin: 0; background: #000; overflow: hidden; }
+    #back { position: fixed; top: 10px; left: 10px; z-index: 100;
+            padding: 8px 16px; background: rgba(0,0,0,0.6); color: #A8E6CF;
+            border: 1px solid #A8E6CF; text-decoration: none; font-family: sans-serif; }
+  </style>
+</head>
+<body>
+  <a href="../index.html" id="back">← Voltar ao Hub</a>
+
+  <a-scene fog="type: exponential; color: #1A2E1A; density: 0.018"
+           background="color: #2A4A2A"
+           renderer="antialias: false">
+
+    <a-light type="ambient" color="#4A6B4A" intensity="0.6"></a-light>
+    <a-light type="directional" color="#FFF8DC" intensity="0.8" position="3 8 2"></a-light>
+
+    <!-- Chão -->
+    <a-circle radius="30" rotation="-90 0 0" color="#2D4A2F"></a-circle>
+
+    <!-- Aviso de obra -->
+    <a-text value="ARENA: MATA VIVA\n(em construção - dia 4)"
+            align="center" color="#A8E6CF" width="6"
+            position="0 2.5 -3"></a-text>
+
+    <a-entity id="rig" position="0 1.6 0">
+      <a-camera look-controls touch-enabled="true" wasd-controls-enabled="false">
+        <a-entity gaze-cursor></a-entity>
+        <a-entity totem position="0.32 -0.32 -0.6" rotation="-15 -10 0"></a-entity>
+      </a-camera>
+    </a-entity>
+  </a-scene>
+</body>
+</html>

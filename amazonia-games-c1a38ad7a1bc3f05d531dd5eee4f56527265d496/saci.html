@@ -1,0 +1,1294 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Lenda do Saci</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --vermelho:#dc2626;
+  --vermelho-claro:#fca5a5;
+  --dourado:#facc15;
+  --dourado-claro:#fef08a;
+}
+
+html, body{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  overscroll-behavior:none;
+  touch-action:manipulation;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:
+    radial-gradient(ellipse at 20% 10%,rgba(250,204,21,0.15),transparent 60%),
+    radial-gradient(ellipse at 80% 90%,rgba(220,38,38,0.25),transparent 60%),
+    linear-gradient(180deg,#0a1f1c 0%,#1a0f08 60%,#3f1d10 100%);
+  color:white;
+  text-align:center;
+  user-select:none;
+  -webkit-user-select:none;
+  -webkit-tap-highlight-color:transparent;
+  overflow-y:auto;
+}
+
+/* VAGALUMES / FAÍSCAS */
+.fireflies{
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  z-index:1;
+  overflow:hidden;
+}
+
+.firefly{
+  position:absolute;
+  width:6px;
+  height:6px;
+  background:radial-gradient(circle,#fef08a,#facc15 60%,transparent 80%);
+  border-radius:50%;
+  filter:blur(0.5px);
+  animation:firefly linear infinite;
+  box-shadow:0 0 12px #facc15;
+}
+
+@keyframes firefly{
+  0%{ transform:translate(0,0); opacity:0; }
+  10%{ opacity:1; }
+  50%{ transform:translate(80px,-120px); opacity:0.8; }
+  90%{ opacity:0.5; }
+  100%{ transform:translate(-50px,-300px); opacity:0; }
+}
+
+/* MENU / LENDA */
+.tela{
+  position:relative;
+  z-index:5;
+  width:100%;
+  min-height:100vh;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  align-items:center;
+  padding:60px 20px 40px;
+  animation:fadeIn 0.8s ease;
+}
+
+@keyframes fadeIn{
+  from{ opacity:0; transform:translateY(20px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+
+.badge{
+  display:inline-block;
+  padding:6px 18px;
+  background:rgba(250,204,21,0.12);
+  border:1px solid rgba(250,204,21,0.5);
+  border-radius:20px;
+  font-size:11px;
+  letter-spacing:3px;
+  color:var(--dourado);
+  margin-bottom:18px;
+  text-transform:uppercase;
+}
+
+h1.titulo{
+  font-family:'Cinzel',serif;
+  font-size:clamp(34px,6vw,52px);
+  font-weight:700;
+  letter-spacing:2px;
+  margin-bottom:30px;
+  background:linear-gradient(90deg,#fef08a,#facc15,#fca5a5);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 25px rgba(250,204,21,0.5));
+}
+
+.saci-img{
+  width:240px;
+  max-width:60vw;
+  margin:10px;
+  border-radius:16px;
+  filter:drop-shadow(0 0 30px rgba(250,204,21,0.6));
+  animation:floatImg 4s ease-in-out infinite;
+  border:2px solid rgba(250,204,21,0.4);
+}
+
+@keyframes floatImg{
+  0%,100%{ transform:translateY(0) rotate(-1deg); }
+  50%{ transform:translateY(-12px) rotate(1deg); }
+}
+
+.historia{
+  max-width:520px;
+  margin:30px auto 10px;
+  background:rgba(20,10,5,0.6);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  padding:24px 28px;
+  border-radius:18px;
+  border:1px solid rgba(250,204,21,0.3);
+  box-shadow:0 0 40px rgba(250,204,21,0.2),inset 0 0 20px rgba(250,204,21,0.05);
+  font-size:15px;
+  line-height:1.7;
+  color:#fef9c3;
+  font-weight:300;
+}
+
+.historia::before{
+  content:"❝";
+  display:block;
+  font-family:'Cinzel',serif;
+  font-size:48px;
+  color:var(--dourado);
+  line-height:0.4;
+  margin-bottom:8px;
+  opacity:0.6;
+}
+
+.btn-comecar{
+  margin-top:30px;
+  padding:16px 40px;
+  border:none;
+  border-radius:14px;
+  background:linear-gradient(90deg,var(--vermelho),#f97316);
+  color:white;
+  font-size:16px;
+  font-weight:600;
+  font-family:'Inter',sans-serif;
+  letter-spacing:1px;
+  cursor:pointer;
+  text-transform:uppercase;
+  box-shadow:0 8px 30px -8px rgba(220,38,38,0.7);
+  transition:all 0.3s;
+}
+
+.btn-comecar:hover{
+  transform:translateY(-3px);
+  box-shadow:0 12px 40px -8px rgba(220,38,38,0.9);
+}
+
+.voltar{
+  position:fixed;
+  top:16px;
+  left:16px;
+  padding:10px 16px;
+  background:rgba(20,10,5,0.7);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(250,204,21,0.4);
+  color:var(--dourado-claro);
+  border-radius:12px;
+  cursor:pointer;
+  font-size:13px;
+  font-weight:500;
+  z-index:50;
+  font-family:'Inter',sans-serif;
+  transition:all 0.3s;
+}
+
+.voltar:hover{
+  background:rgba(250,204,21,0.2);
+  color:white;
+}
+
+/* GAME */
+#game{
+  display:none;
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  height:100dvh;
+}
+
+canvas{
+  width:100%;
+  height:100%;
+  background:radial-gradient(ellipse at center,#1a0f08,#020617);
+  display:block;
+  touch-action:none;
+}
+
+.ui{
+  position:absolute;
+  top:16px;
+  left:130px;
+  background:rgba(20,10,5,0.7);
+  backdrop-filter:blur(10px);
+  padding:10px 18px;
+  border-radius:30px;
+  z-index:10;
+  font-family:'Cinzel',serif;
+  font-size:14px;
+  letter-spacing:2px;
+  color:var(--dourado-claro);
+  border:1px solid rgba(250,204,21,0.3);
+}
+
+.powers{
+  position:absolute;
+  bottom:20px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:10px;
+  z-index:10;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+
+.powers button{
+  position:relative;
+  padding:10px 14px 8px;
+  border:none;
+  border-radius:12px;
+  background:linear-gradient(135deg,rgba(220,38,38,0.85),rgba(249,115,22,0.85));
+  backdrop-filter:blur(8px);
+  color:white;
+  cursor:pointer;
+  font-weight:600;
+  letter-spacing:0.5px;
+  border:1px solid rgba(250,204,21,0.3);
+  box-shadow:0 4px 20px -5px rgba(220,38,38,0.5);
+  transition:transform 0.15s;
+  overflow:hidden;
+  min-width:120px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:2px;
+  line-height:1.2;
+}
+.powers button:active{ transform:scale(0.95); }
+/* todos os spans dentro do botão deixam o clique passar para o button */
+.powers button > span{ pointer-events:none; }
+.powers button .power-name{
+  font-size:13px;
+}
+.powers button .power-desc{
+  font-size:10px;
+  font-weight:400;
+  letter-spacing:0;
+  opacity:0.9;
+  color:#fef9c3;
+}
+.powers button .power-key{
+  position:absolute;
+  top:4px;
+  right:6px;
+  font-size:9px;
+  font-weight:700;
+  color:rgba(254,240,138,0.7);
+  background:rgba(0,0,0,0.3);
+  padding:1px 5px;
+  border-radius:4px;
+  letter-spacing:0.5px;
+}
+
+/* Barra de cooldown que escorre da direita para a esquerda */
+.powers button .cd-overlay{
+  position:absolute;
+  inset:0;
+  background:rgba(0,0,0,0.65);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-family:'Cinzel',serif;
+  font-size:16px;
+  font-weight:700;
+  color:#fde68a;
+  pointer-events:none;
+  letter-spacing:1px;
+  text-shadow:0 0 8px rgba(0,0,0,0.8);
+  opacity:0;
+  transition:opacity 0.2s;
+}
+.powers button .cd-fill{
+  position:absolute;
+  left:0; top:0; bottom:0;
+  background:linear-gradient(90deg,rgba(15,118,110,0.3),rgba(34,211,238,0.4));
+  width:0%;
+  transition:width 0.1s linear;
+  pointer-events:none;
+}
+.powers button.on-cooldown{
+  background:linear-gradient(135deg,rgba(75,85,99,0.85),rgba(55,65,81,0.85));
+  cursor:not-allowed;
+  box-shadow:none;
+}
+.powers button.on-cooldown .cd-overlay{ opacity:1; }
+.powers button.on-cooldown:active{ transform:none; }
+
+/* HUD do próximo caçador */
+.spawn-hud{
+  position:absolute;
+  top:16px;
+  right:16px;
+  background:rgba(20,10,5,0.7);
+  backdrop-filter:blur(10px);
+  padding:8px 16px;
+  border-radius:30px;
+  z-index:10;
+  font-family:'Cinzel',serif;
+  font-size:12px;
+  letter-spacing:1.5px;
+  color:#fca5a5;
+  border:1px solid rgba(220,38,38,0.4);
+  display:flex;
+  align-items:center;
+  gap:6px;
+}
+
+/* DPAD */
+.dpad{
+  position:absolute;
+  bottom:90px;
+  left:20px;
+  display:grid;
+  grid-template-columns:60px 60px 60px;
+  grid-template-rows:60px 60px 60px;
+  gap:6px;
+  z-index:10;
+}
+
+.dpad button{
+  width:60px;
+  height:60px;
+  font-size:22px;
+  background:rgba(220,38,38,0.6);
+  backdrop-filter:blur(8px);
+  border:1px solid rgba(250,204,21,0.3);
+  border-radius:14px;
+  color:white;
+  transition:transform 0.1s;
+}
+.dpad button:active{ background:#dc2626; transform:scale(0.92); }
+.dpad .up{ grid-column:2; grid-row:1; }
+.dpad .left{ grid-column:1; grid-row:2; }
+.dpad .right{ grid-column:3; grid-row:2; }
+.dpad .down{ grid-column:2; grid-row:3; }
+
+/* OVERLAY GAME OVER */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,0.85);
+  backdrop-filter:blur(8px);
+  display:none;
+  justify-content:center;
+  align-items:center;
+  flex-direction:column;
+  z-index:100;
+  color:white;
+  text-align:center;
+  padding:20px;
+  animation:fadeIn 0.4s ease;
+}
+.overlay.show{ display:flex; }
+.overlay h2{
+  font-family:'Cinzel',serif;
+  font-size:38px;
+  margin:10px;
+  background:linear-gradient(90deg,#fca5a5,#facc15);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.overlay p{ color:#fde68a; margin-bottom:20px; font-size:18px; }
+.overlay button{
+  margin:8px;
+  padding:14px 28px;
+  font-size:14px;
+  font-weight:600;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  background:linear-gradient(90deg,var(--vermelho),#f97316);
+  border:none;
+  border-radius:12px;
+  color:white;
+  cursor:pointer;
+  box-shadow:0 6px 20px -5px rgba(220,38,38,0.6);
+  transition:transform 0.2s;
+}
+.overlay button:hover{ transform:translateY(-2px); }
+
+/* ============================================
+   MOBILE — telas pequenas (até ~600px)
+   ============================================ */
+@media (max-width: 600px){
+  .voltar{
+    top:10px; left:10px;
+    padding:7px 12px;
+    font-size:11px;
+  }
+  .ui{
+    top:10px;
+    left:auto;
+    right:auto;
+    left:50%;
+    transform:translateX(-50%);
+    padding:7px 14px;
+    font-size:11px;
+    letter-spacing:1px;
+  }
+  .spawn-hud{
+    top:50px;        /* abaixo do score, lado direito */
+    right:10px;
+    padding:6px 10px;
+    font-size:10px;
+    letter-spacing:1px;
+  }
+  /* dpad menor */
+  .dpad{
+    bottom:80px; left:10px;
+    grid-template-columns:46px 46px 46px;
+    grid-template-rows:46px 46px 46px;
+    gap:4px;
+  }
+  .dpad button{
+    width:46px; height:46px;
+    font-size:16px;
+    border-radius:10px;
+  }
+
+  /* powers — esconde a descrição, deixa só ícone+nome */
+  .powers{
+    bottom:14px;
+    gap:6px;
+    width:auto;
+    flex-wrap:nowrap;
+  }
+  .powers button{
+    min-width:0;
+    padding:8px 10px;
+    flex:1 1 0;
+  }
+  .powers button .power-desc{ display:none; }
+  .powers button .power-name{ font-size:12px; }
+  .powers button .power-key{
+    top:2px; right:3px;
+    font-size:8px; padding:0 4px;
+  }
+  .powers button .cd-overlay{ font-size:13px; }
+
+  /* menu */
+  .historia{ padding:18px 20px; font-size:14px; }
+  .saci-img{ width:200px; }
+}
+
+/* Telas muito pequenas (até ~380px) */
+@media (max-width: 380px){
+  .ui{ font-size:10px; padding:6px 10px; }
+  .spawn-hud{ font-size:9px; padding:5px 8px; }
+  .voltar{ font-size:10px; padding:6px 10px; }
+  .dpad{
+    grid-template-columns:40px 40px 40px;
+    grid-template-rows:40px 40px 40px;
+  }
+  .dpad button{ width:40px; height:40px; font-size:14px; }
+  .powers button .power-name{ font-size:10px; }
+  .powers button{ padding:6px 8px; }
+}
+
+/* === OTIMIZACAO MOBILE === */
+@media (max-width: 900px), (pointer: coarse){
+  *{ backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+  .titulo, .voltar, .ui, .dpad button, .powers button{ filter: none !important; }
+  .btn-comecar{ box-shadow: 0 4px 12px rgba(0,0,0,.4) !important; }
+}
+</style>
+</head>
+
+<body>
+
+<!-- VAGALUMES -->
+<div class="fireflies" id="fireflies"></div>
+
+<!-- BOTÃO VOLTAR -->
+<button class="voltar" onclick="voltar()">← Menu</button>
+
+<!-- MENU -->
+<div id="menu" class="tela">
+  <div class="badge">✦ Lenda Amazônica ✦</div>
+  <h1 class="titulo">🌪️ Lenda do Saci</h1>
+
+  <img src="saci.png" class="saci-img" alt="Saci">
+
+  <div class="historia">
+    O Saci é um menino travesso de uma perna só, com gorro vermelho mágico e
+    cachimbo. Aparece em redemoinhos pela floresta amazônica, fazendo
+    traquinagens e fugindo dos caçadores. Use seus poderes — Vento, Teleporte
+    e Redemoinho — para sobreviver o máximo possível!
+  </div>
+
+  <button class="btn-comecar" onclick="start()">Começar</button>
+</div>
+
+<!-- GAME -->
+<div id="game">
+
+  <div class="ui">🌪️ SACI · <span id="pontos">0</span></div>
+  <div class="spawn-hud">🎯 <span id="cacadores">1</span> · próximo em <span id="spawnTimer">30</span>s</div>
+
+  <div class="dpad">
+    <button class="up"    data-dir="up">⬆️</button>
+    <button class="left"  data-dir="left">⬅️</button>
+    <button class="right" data-dir="right">➡️</button>
+    <button class="down"  data-dir="down">⬇️</button>
+  </div>
+
+  <div class="powers">
+    <button id="btn-vento" type="button">
+      <span class="cd-fill"></span>
+      <span class="power-key">Q</span>
+      <span class="power-name">🌪️ Vento</span>
+      <span class="power-desc">Empurra inimigos e tiros para longe</span>
+      <span class="cd-overlay"></span>
+    </button>
+    <button id="btn-teleporte" type="button">
+      <span class="cd-fill"></span>
+      <span class="power-key">E</span>
+      <span class="power-name">🌀 Teleporte</span>
+      <span class="power-desc">Some e reaparece em outro lugar</span>
+      <span class="cd-overlay"></span>
+    </button>
+    <button id="btn-redemoinho" type="button">
+      <span class="cd-fill"></span>
+      <span class="power-key">R</span>
+      <span class="power-name">💨 Redemoinho</span>
+      <span class="power-desc">Escudo que desvia tiros (3s)</span>
+      <span class="cd-overlay"></span>
+    </button>
+  </div>
+
+  <canvas id="c"></canvas>
+</div>
+
+<!-- GAME OVER -->
+<div id="overlay" class="overlay">
+  <h2>💀 Capturado!</h2>
+  <p>Pontuação: <span id="finalScore">0</span></p>
+  <button onclick="reiniciar()">🔄 Tentar de novo</button>
+  <button onclick="voltar()">← Menu</button>
+</div>
+
+<script>
+const c=document.getElementById("c");
+const ctx=c.getContext("2d");
+
+// === OTIMIZACAO MOBILE: desabilita shadowBlur (custa MUITO em GPU mobile) ===
+const IS_MOBILE = window.matchMedia('(pointer: coarse), (max-width: 900px)').matches;
+if(IS_MOBILE){
+  let _sb=0,_sc='transparent';
+  Object.defineProperty(ctx,'shadowBlur',{get:()=>_sb,set:v=>{_sb=0;}});
+  Object.defineProperty(ctx,'shadowColor',{get:()=>_sc,set:v=>{_sc='transparent';}});
+}
+
+let w,h;
+function resize(){
+  const vv = window.visualViewport;
+  w = Math.round(vv ? vv.width  : window.innerWidth);
+  h = Math.round(vv ? vv.height : window.innerHeight);
+  c.width=w; c.height=h;
+}
+window.addEventListener("resize", resize);
+window.addEventListener("orientationchange", ()=>setTimeout(resize, 150));
+if(window.visualViewport) window.visualViewport.addEventListener("resize", resize);
+resize();
+
+let saci, inimigos, tiros, redemoinhoAtivo, pontos, sobrevivenciaTimer, gameOver;
+let efeitos = [];                 // efeitos visuais ativos
+let spawnTimer = 0;               // ticks até o próximo caçador
+let teclas = { up:false, down:false, left:false, right:false };
+let rodando = false;
+let tick = 0;
+
+// Cooldowns (em ticks, ~60fps)
+const FPS = 60;
+const COOLDOWN_VENTO       = 4 * FPS;   //  4s
+const COOLDOWN_TELEPORTE   = 6 * FPS;   //  6s
+const COOLDOWN_REDEMOINHO  = 10 * FPS;  // 10s
+const SPAWN_INTERVAL       = 30 * FPS;  // 30s
+const MAX_CACADORES        = 6;
+let cooldowns = { vento:0, teleporte:0, redemoinho:0 };
+
+function novoInimigo(){
+  // nasce numa borda aleatória pra ficar dramático
+  let edge = Math.floor(Math.random()*4);
+  let x, y;
+  if(edge===0){ x = Math.random()*w; y = -40; }
+  else if(edge===1){ x = Math.random()*w; y = h + 40; }
+  else if(edge===2){ x = -40; y = Math.random()*h; }
+  else { x = w + 40; y = Math.random()*h; }
+  return { x, y, tiroTimer: Math.floor(Math.random()*240), spawnAge:0 };
+}
+
+function reset(){
+  saci={x:w/2, y:h/2, s:25};
+  inimigos=[ {x:100, y:100, tiroTimer:0, spawnAge:60} ]; // começa com 1
+  tiros=[]; efeitos=[];
+  redemoinhoAtivo=false;
+  pontos=0; sobrevivenciaTimer=0; gameOver=false;
+  spawnTimer=0;
+  cooldowns = { vento:0, teleporte:0, redemoinho:0 };
+  document.getElementById("pontos").innerText=pontos;
+  document.getElementById("cacadores").innerText=inimigos.length;
+  document.getElementById("spawnTimer").innerText=Math.ceil(SPAWN_INTERVAL/FPS);
+  document.getElementById("overlay").classList.remove("show");
+  ['vento','teleporte','redemoinho'].forEach(p=>{
+    const b=document.getElementById('btn-'+p);
+    b.classList.remove('on-cooldown');
+    b.querySelector('.cd-fill').style.width = '0%';
+    b.querySelector('.cd-overlay').textContent = '';
+  });
+}
+
+function start(){
+  document.getElementById("menu").style.display="none";
+  document.getElementById("game").style.display="block";
+  resize(); reset();
+  if(!rodando){ rodando = true; loop(); }
+}
+
+function voltar(){ window.location.href = "index.html"; }
+function reiniciar(){ reset(); }
+
+window.addEventListener("keydown",(e)=>{
+  if(e.key=="ArrowUp"||e.key=="w") teclas.up=true;
+  if(e.key=="ArrowDown"||e.key=="s") teclas.down=true;
+  if(e.key=="ArrowLeft"||e.key=="a") teclas.left=true;
+  if(e.key=="ArrowRight"||e.key=="d") teclas.right=true;
+  if(e.key=="q") vento();
+  if(e.key=="e") teleporte();
+  if(e.key=="r") redemoinho();
+});
+window.addEventListener("keyup",(e)=>{
+  if(e.key=="ArrowUp"||e.key=="w") teclas.up=false;
+  if(e.key=="ArrowDown"||e.key=="s") teclas.down=false;
+  if(e.key=="ArrowLeft"||e.key=="a") teclas.left=false;
+  if(e.key=="ArrowRight"||e.key=="d") teclas.right=false;
+});
+
+document.querySelectorAll(".dpad button").forEach(btn=>{
+  const dir = btn.dataset.dir;
+  const press = e=>{ e.preventDefault(); teclas[dir]=true; };
+  const release = e=>{ e.preventDefault(); teclas[dir]=false; };
+  btn.addEventListener("touchstart", press, {passive:false});
+  btn.addEventListener("touchend", release, {passive:false});
+  btn.addEventListener("touchcancel", release, {passive:false});
+  btn.addEventListener("mousedown", press);
+  btn.addEventListener("mouseup", release);
+  btn.addEventListener("mouseleave", release);
+});
+
+// Botões dos poderes — listeners robustos (click + touch)
+[['btn-vento', vento], ['btn-teleporte', teleporte], ['btn-redemoinho', redemoinho]].forEach(([id, fn])=>{
+  const btn = document.getElementById(id);
+  if(!btn) return;
+  let usedTouch = false;
+  btn.addEventListener("touchstart", e=>{
+    e.preventDefault();
+    usedTouch = true;
+    fn();
+  }, {passive:false});
+  btn.addEventListener("click", e=>{
+    if(usedTouch){ usedTouch = false; return; }  // evita disparo duplo
+    fn();
+  });
+});
+
+function moverSaci(){
+  const v = 6;
+  if(teclas.up) saci.y -= v;
+  if(teclas.down) saci.y += v;
+  if(teclas.left) saci.x -= v;
+  if(teclas.right) saci.x += v;
+  saci.x = Math.max(0, Math.min(w - saci.s, saci.x));
+  saci.y = Math.max(0, Math.min(h - saci.s, saci.y));
+}
+
+function vento(){
+  if(gameOver || cooldowns.vento > 0) return;
+  cooldowns.vento = COOLDOWN_VENTO;
+
+  const cx = saci.x + saci.s/2, cy = saci.y + saci.s/2;
+  // efeito visual: onda expansiva
+  efeitos.push({tipo:'vento', x:cx, y:cy, raio:0, vidaMax:35, vida:35});
+
+  // empurra todos os caçadores no raio
+  inimigos.forEach(i=>{
+    let dx = i.x - saci.x, dy = i.y - saci.y;
+    let d = Math.sqrt(dx*dx + dy*dy);
+    if(d < 280 && d > 0){
+      i.x += (dx/d) * 130;
+      i.y += (dy/d) * 130;
+    }
+  });
+
+  // empurra os tiros para fora
+  tiros.forEach(t=>{
+    let tdx = t.x - saci.x, tdy = t.y - saci.y;
+    let td = Math.sqrt(tdx*tdx + tdy*tdy) || 1;
+    t.vx += (tdx/td)*5; t.vy += (tdy/td)*5;
+  });
+}
+
+function teleporte(){
+  if(gameOver || cooldowns.teleporte > 0) return;
+  cooldowns.teleporte = COOLDOWN_TELEPORTE;
+
+  // efeito de partida no local atual
+  efeitos.push({tipo:'tp_saida', x:saci.x+saci.s/2, y:saci.y+saci.s/2, vida:30, vidaMax:30});
+
+  saci.x = Math.random()*(w - saci.s);
+  saci.y = Math.random()*(h - saci.s);
+
+  // efeito de chegada
+  efeitos.push({tipo:'tp_chegada', x:saci.x+saci.s/2, y:saci.y+saci.s/2, vida:30, vidaMax:30});
+}
+
+function redemoinho(){
+  if(gameOver || cooldowns.redemoinho > 0) return;
+  cooldowns.redemoinho = COOLDOWN_REDEMOINHO;
+  redemoinhoAtivo = true;
+  setTimeout(()=>{ redemoinhoAtivo = false; }, 3000);
+}
+
+function atirar(inimigo){
+  let dx = saci.x - inimigo.x, dy = saci.y - inimigo.y;
+  let d = Math.sqrt(dx*dx+dy*dy) || 1;
+  tiros.push({x:inimigo.x, y:inimigo.y, vx:dx/d*5, vy:dy/d*5});
+}
+
+function updateEnemies(){
+  // 1. Movimento em direção ao Saci
+  inimigos.forEach(i=>{
+    i.spawnAge++;
+    // velocidade é menor enquanto entra (efeito "surgindo")
+    const vel = i.spawnAge < 30 ? 0.005 : 0.012;
+    i.x += (saci.x - i.x) * vel;
+    i.y += (saci.y - i.y) * vel;
+    i.tiroTimer++;
+    // mais caçadores = ataques um pouco mais frequentes
+    const intervalo = Math.max(180, 360 - inimigos.length*15);
+    if(i.tiroTimer >= intervalo){
+      atirar(i);
+      i.tiroTimer = 0;
+    }
+  });
+
+  // 2. Separação: caçadores empurram uns aos outros para não se sobreporem
+  const SEP_DIST = 56;   // distância mínima entre dois caçadores
+  for(let a = 0; a < inimigos.length; a++){
+    for(let b = a + 1; b < inimigos.length; b++){
+      const A = inimigos[a], B = inimigos[b];
+      const dx = B.x - A.x, dy = B.y - A.y;
+      const d = Math.sqrt(dx*dx + dy*dy);
+      if(d > 0 && d < SEP_DIST){
+        const overlap = (SEP_DIST - d) / 2;
+        const nx = dx / d, ny = dy / d;
+        A.x -= nx * overlap;
+        A.y -= ny * overlap;
+        B.x += nx * overlap;
+        B.y += ny * overlap;
+      }
+    }
+    // mantém o caçador dentro da tela
+    inimigos[a].x = Math.max(-30, Math.min(w + 30, inimigos[a].x));
+    inimigos[a].y = Math.max(-30, Math.min(h + 30, inimigos[a].y));
+  }
+}
+
+function updateSpawn(){
+  spawnTimer++;
+  if(inimigos.length < MAX_CACADORES && spawnTimer >= SPAWN_INTERVAL){
+    inimigos.push(novoInimigo());
+    spawnTimer = 0;
+    // efeito visual no novo caçador (fumaça surgindo)
+    const novo = inimigos[inimigos.length-1];
+    efeitos.push({tipo:'spawn', x:novo.x, y:novo.y, vida:40, vidaMax:40});
+  }
+  // atualiza HUD
+  document.getElementById('cacadores').innerText = inimigos.length;
+  const restante = inimigos.length < MAX_CACADORES
+    ? Math.max(0, Math.ceil((SPAWN_INTERVAL - spawnTimer)/FPS))
+    : '∞';
+  document.getElementById('spawnTimer').innerText = restante;
+}
+
+function updateCooldowns(){
+  for(const k in cooldowns) if(cooldowns[k] > 0) cooldowns[k]--;
+  ['vento','teleporte','redemoinho'].forEach(p=>{
+    const btn = document.getElementById('btn-'+p);
+    const max = p==='vento' ? COOLDOWN_VENTO : (p==='teleporte' ? COOLDOWN_TELEPORTE : COOLDOWN_REDEMOINHO);
+    const cd  = cooldowns[p];
+    if(cd > 0){
+      btn.classList.add('on-cooldown');
+      btn.querySelector('.cd-fill').style.width = (cd/max*100) + '%';
+      btn.querySelector('.cd-overlay').textContent = (cd/FPS).toFixed(1) + 's';
+    } else {
+      btn.classList.remove('on-cooldown');
+      btn.querySelector('.cd-fill').style.width = '0%';
+      btn.querySelector('.cd-overlay').textContent = '';
+    }
+  });
+}
+
+function updateEfeitos(){
+  for(let i=efeitos.length-1; i>=0; i--){
+    const e = efeitos[i];
+    e.vida--;
+    if(e.tipo === 'vento') e.raio += 14;
+    if(e.vida <= 0) efeitos.splice(i,1);
+  }
+}
+
+function updateTiros(){
+  for(let i = tiros.length-1; i>=0; i--){
+    let t = tiros[i];
+    if(redemoinhoAtivo){
+      let dx=t.x-saci.x, dy=t.y-saci.y;
+      let d=Math.sqrt(dx*dx+dy*dy) || 1;
+      t.vx += (dx/d)*0.6; t.vy += (dy/d)*0.6;
+    }
+    t.x+=t.vx; t.y+=t.vy;
+    if(t.x<-50 || t.x>w+50 || t.y<-50 || t.y>h+50) tiros.splice(i,1);
+  }
+}
+
+function colisao(){
+  // colisão com tiros
+  for(let t of tiros){
+    let dx=t.x-saci.x, dy=t.y-saci.y;
+    if(Math.sqrt(dx*dx+dy*dy) < 20){ perderJogo(); return; }
+  }
+  // colisão direta com caçador
+  for(let i of inimigos){
+    if(i.spawnAge < 60) continue; // imune enquanto está "entrando"
+    let dx = (i.x+15)-(saci.x+saci.s/2), dy = (i.y+15)-(saci.y+saci.s/2);
+    if(Math.sqrt(dx*dx+dy*dy) < 28){ perderJogo(); return; }
+  }
+}
+
+function perderJogo(){
+  gameOver = true;
+  document.getElementById("finalScore").innerText = pontos;
+  document.getElementById("overlay").classList.add("show");
+}
+
+function atualizarPontos(){
+  sobrevivenciaTimer++;
+  if(sobrevivenciaTimer>=30){
+    pontos++;
+    document.getElementById("pontos").innerText=pontos;
+    sobrevivenciaTimer=0;
+  }
+}
+
+// ===== PARALLAX — floresta noturna em camadas =====
+function drawParallax(){
+  // Camada 1 — sombras grandes de árvores ao fundo
+  const off1x = -saci.x * 0.05, off1y = -saci.y * 0.05;
+  ctx.fillStyle = "rgba(20,15,10,0.55)";
+  for(let i=0; i<7; i++){
+    const baseX = (i*200) % (w+400);
+    const baseY = ((i*113) % (h+200));
+    let x = baseX + (off1x % (w+400));
+    let y = baseY + (off1y % (h+200));
+    x = ((x % (w+400)) + (w+400)) % (w+400) - 200;
+    y = ((y % (h+200)) + (h+200)) % (h+200) - 100;
+    ctx.beginPath();
+    ctx.ellipse(x, y, 100, 80, 0, 0, Math.PI*2);
+    ctx.fill();
+  }
+
+  // Camada 2 — copas vermelho-amarronzadas (tom outono)
+  const off2x = -saci.x * 0.18, off2y = -saci.y * 0.18;
+  ctx.fillStyle = "rgba(120,40,20,0.4)";
+  for(let i=0; i<12; i++){
+    const baseX = (i*145 + 30) % (w+260);
+    const baseY = ((i*73 + 60) % (h+260));
+    let x = baseX + (off2x % (w+260));
+    let y = baseY + (off2y % (h+260));
+    x = ((x % (w+260)) + (w+260)) % (w+260) - 130;
+    y = ((y % (h+260)) + (h+260)) % (h+260) - 130;
+    ctx.beginPath();
+    ctx.ellipse(x, y, 50, 38, 0, 0, Math.PI*2);
+    ctx.fill();
+  }
+
+  // Camada 3 — pontos dourados (vagalumes/faíscas perto)
+  const off3x = -saci.x * 0.4, off3y = -saci.y * 0.4;
+  for(let i=0; i<35; i++){
+    const baseX = (i*53 + 13) % (w+60);
+    const baseY = ((i*89 + 17) % (h+60));
+    let x = baseX + (off3x % (w+60));
+    let y = baseY + (off3y % (h+60));
+    x = ((x % (w+60)) + (w+60)) % (w+60) - 30;
+    y = ((y % (h+60)) + (h+60)) % (h+60) - 30;
+    const blink = (Math.sin(tick*0.06 + i*0.7) + 1) / 2;
+    ctx.fillStyle = `rgba(254,215,90,${0.2 + blink*0.4})`;
+    ctx.beginPath();
+    ctx.arc(x, y, 1.8 + blink*1, 0, Math.PI*2);
+    ctx.fill();
+  }
+}
+
+function draw(){
+  ctx.clearRect(0,0,w,h);
+  tick++;
+
+  drawParallax();
+
+  // ===== SACI — menino travesso de uma perna só =====
+  const sx = saci.x + saci.s/2;
+  const sy = saci.y + saci.s/2;
+  const bob = Math.sin(tick*0.18) * 3;       // saltitar
+  const legSwing = Math.sin(tick*0.3) * 6;   // perna pulando
+
+  // Redemoinho que sempre acompanha o Saci (lenda diz que ele sempre vem em redemoinho)
+  ctx.strokeStyle = "rgba(203,213,225,0.35)";
+  ctx.lineWidth = 2;
+  for(let i=0;i<3;i++){
+    const ang = tick*0.05 + i*Math.PI*2/3;
+    ctx.beginPath();
+    ctx.arc(sx, sy + 8 + bob, 22 + i*3, ang, ang + Math.PI*1.3);
+    ctx.stroke();
+  }
+
+  // sombra
+  ctx.fillStyle = "rgba(0,0,0,0.45)";
+  ctx.beginPath();
+  ctx.ellipse(sx, sy + 28, 16, 4, 0, 0, Math.PI*2);
+  ctx.fill();
+
+  // CORPO — camisa
+  ctx.fillStyle = "#fbbf24";
+  ctx.beginPath();
+  ctx.moveTo(sx - 11, sy - 4 + bob);
+  ctx.lineTo(sx + 11, sy - 4 + bob);
+  ctx.lineTo(sx + 9,  sy + 12 + bob);
+  ctx.lineTo(sx - 9,  sy + 12 + bob);
+  ctx.closePath();
+  ctx.fill();
+
+  // BRAÇO segurando o cachimbo
+  ctx.strokeStyle = "#fde68a";
+  ctx.lineWidth = 4;
+  ctx.lineCap = "round";
+  ctx.beginPath();
+  ctx.moveTo(sx + 8, sy - 2 + bob);
+  ctx.lineTo(sx + 16, sy + 2 + bob);
+  ctx.stroke();
+
+  // outro braço
+  ctx.beginPath();
+  ctx.moveTo(sx - 8, sy - 2 + bob);
+  ctx.lineTo(sx - 14, sy + 6 + bob);
+  ctx.stroke();
+  ctx.lineCap = "butt";
+
+  // CACHIMBO
+  ctx.strokeStyle = "#451a03";
+  ctx.lineWidth = 2;
+  ctx.beginPath();
+  ctx.moveTo(sx + 16, sy + 2 + bob);
+  ctx.lineTo(sx + 22, sy - 2 + bob);
+  ctx.stroke();
+  ctx.fillStyle = "#1c0a02";
+  ctx.fillRect(sx + 21, sy - 6 + bob, 4, 4);
+  // fumaça do cachimbo
+  ctx.fillStyle = `rgba(255,255,255,${0.3 + Math.sin(tick*0.2)*0.15})`;
+  ctx.beginPath();
+  ctx.arc(sx + 23, sy - 10 + bob - (tick%30)*0.3, 2 + (tick%30)*0.05, 0, Math.PI*2);
+  ctx.fill();
+
+  // CABEÇA
+  ctx.fillStyle = "#78350f";  // pele morena
+  ctx.beginPath();
+  ctx.arc(sx, sy - 12 + bob, 9, 0, Math.PI*2);
+  ctx.fill();
+
+  // OLHOS travessos
+  ctx.fillStyle = "#fff";
+  ctx.beginPath(); ctx.arc(sx - 3, sy - 13 + bob, 2, 0, Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.arc(sx + 3, sy - 13 + bob, 2, 0, Math.PI*2); ctx.fill();
+  ctx.fillStyle = "#000";
+  ctx.beginPath(); ctx.arc(sx - 3, sy - 13 + bob, 1, 0, Math.PI*2); ctx.fill();
+  ctx.beginPath(); ctx.arc(sx + 3, sy - 13 + bob, 1, 0, Math.PI*2); ctx.fill();
+
+  // sorriso traquina
+  ctx.strokeStyle = "#000";
+  ctx.lineWidth = 1.5;
+  ctx.beginPath();
+  ctx.arc(sx, sy - 9 + bob, 3, 0.1, Math.PI - 0.1);
+  ctx.stroke();
+
+  // GORRO VERMELHO MÁGICO
+  ctx.shadowBlur = 12;
+  ctx.shadowColor = "#dc2626";
+  ctx.fillStyle = "#dc2626";
+  ctx.beginPath();
+  ctx.moveTo(sx - 11, sy - 17 + bob);
+  ctx.lineTo(sx + 11, sy - 17 + bob);
+  ctx.lineTo(sx + 4,  sy - 30 + bob);
+  ctx.closePath();
+  ctx.fill();
+  // pompom dobrado pro lado
+  ctx.beginPath();
+  ctx.arc(sx + 5, sy - 30 + bob, 3, 0, Math.PI*2);
+  ctx.fill();
+  ctx.shadowBlur = 0;
+  // detalhe do gorro
+  ctx.fillStyle = "#7f1d1d";
+  ctx.fillRect(sx - 11, sy - 17 + bob, 22, 2);
+
+  // PERNA ÚNICA (a esquerda, como conta a lenda)
+  ctx.strokeStyle = "#78350f";
+  ctx.lineWidth = 5;
+  ctx.lineCap = "round";
+  ctx.beginPath();
+  ctx.moveTo(sx, sy + 12 + bob);
+  ctx.lineTo(sx - 2, sy + 22 + bob + Math.abs(legSwing)*0.3);
+  ctx.stroke();
+  // pé descalço
+  ctx.fillStyle = "#78350f";
+  ctx.beginPath();
+  ctx.ellipse(sx - 3, sy + 24 + bob + Math.abs(legSwing)*0.3, 5, 3, 0, 0, Math.PI*2);
+  ctx.fill();
+  ctx.lineCap = "butt";
+
+  // ===== CAÇADORES (todos) =====
+  inimigos.forEach(inimigo=>{
+    const ix = inimigo.x + 15;
+    const iy = inimigo.y + 15;
+    // alpha "fade-in" enquanto entra
+    const fade = Math.min(1, inimigo.spawnAge / 60);
+    ctx.globalAlpha = fade;
+
+    // sombra
+    ctx.fillStyle = "rgba(0,0,0,0.4)";
+    ctx.beginPath();
+    ctx.ellipse(ix, iy + 20, 13, 3, 0, 0, Math.PI*2);
+    ctx.fill();
+
+    // pernas
+    ctx.fillStyle = "#1e3a8a";
+    ctx.fillRect(ix - 7, iy + 4, 5, 14);
+    ctx.fillRect(ix + 2, iy + 4, 5, 14);
+
+    // corpo (camisa azul)
+    ctx.fillStyle = "#3b82f6";
+    ctx.fillRect(ix - 9, iy - 8, 18, 14);
+
+    // bandoleira
+    ctx.strokeStyle = "#7c2d12";
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.moveTo(ix - 9, iy - 6);
+    ctx.lineTo(ix + 9, iy + 4);
+    ctx.stroke();
+
+    // cabeça
+    ctx.fillStyle = "#fbbf24";
+    ctx.beginPath();
+    ctx.arc(ix, iy - 14, 7, 0, Math.PI*2);
+    ctx.fill();
+
+    // olhos sérios
+    ctx.fillStyle = "#000";
+    ctx.fillRect(ix - 4, iy - 15, 2, 1);
+    ctx.fillRect(ix + 2, iy - 15, 2, 1);
+
+    // chapéu de caçador (bem-largo)
+    ctx.fillStyle = "#1f2937";
+    ctx.beginPath();
+    ctx.ellipse(ix, iy - 19, 12, 3, 0, 0, Math.PI*2);
+    ctx.fill();
+    ctx.fillRect(ix - 6, iy - 25, 12, 6);
+
+    // espingarda apontada para o Saci
+    const angI = Math.atan2(saci.y - inimigo.y, saci.x - inimigo.x);
+    ctx.save();
+    ctx.translate(ix, iy);
+    ctx.rotate(angI);
+    ctx.fillStyle = "#1c1917";
+    ctx.fillRect(0, -2, 20, 3);
+    ctx.fillStyle = "#78350f";
+    ctx.fillRect(-4, -3, 8, 5);
+    ctx.restore();
+
+    ctx.globalAlpha = 1;
+  });
+
+  // ===== TIROS — pedras =====
+  tiros.forEach(t=>{
+    ctx.shadowBlur = 8;
+    ctx.shadowColor = "#facc15";
+    ctx.fillStyle = "#78716c";
+    ctx.beginPath();
+    ctx.arc(t.x, t.y, 5, 0, Math.PI*2);
+    ctx.fill();
+    ctx.fillStyle = "#a8a29e";
+    ctx.beginPath();
+    ctx.arc(t.x - 1, t.y - 1, 2, 0, Math.PI*2);
+    ctx.fill();
+  });
+  ctx.shadowBlur = 0;
+
+  // ===== EFEITOS VISUAIS DOS PODERES =====
+  efeitos.forEach(e=>{
+    const op = e.vida / e.vidaMax;
+
+    if(e.tipo === 'vento'){
+      // onda expansiva ciano
+      ctx.shadowBlur = 18;
+      ctx.shadowColor = "#22d3ee";
+      ctx.strokeStyle = `rgba(165,243,252,${op*0.8})`;
+      ctx.lineWidth = 5;
+      ctx.beginPath();
+      ctx.arc(e.x, e.y, e.raio, 0, Math.PI*2);
+      ctx.stroke();
+      // segunda onda interna
+      ctx.strokeStyle = `rgba(34,211,238,${op*0.5})`;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.arc(e.x, e.y, Math.max(0, e.raio - 18), 0, Math.PI*2);
+      ctx.stroke();
+      // riscos de vento radiais
+      ctx.strokeStyle = `rgba(255,255,255,${op*0.5})`;
+      ctx.lineWidth = 2;
+      for(let a=0; a<8; a++){
+        const ang = (a/8)*Math.PI*2 + tick*0.05;
+        const r1 = e.raio - 8;
+        const r2 = e.raio + 6;
+        ctx.beginPath();
+        ctx.moveTo(e.x + Math.cos(ang)*r1, e.y + Math.sin(ang)*r1);
+        ctx.lineTo(e.x + Math.cos(ang)*r2, e.y + Math.sin(ang)*r2);
+        ctx.stroke();
+      }
+      ctx.shadowBlur = 0;
+    }
+
+    if(e.tipo === 'tp_saida' || e.tipo === 'tp_chegada'){
+      const expand = e.tipo === 'tp_saida' ? (1-op) : op;
+      ctx.shadowBlur = 25;
+      ctx.shadowColor = "#facc15";
+
+      // espiral dourada
+      ctx.strokeStyle = `rgba(254,240,138,${op})`;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      for(let a=0; a<Math.PI*5; a+=0.18){
+        const rad = a*4 + expand*15;
+        const px = e.x + Math.cos(a + tick*0.15)*rad;
+        const py = e.y + Math.sin(a + tick*0.15)*rad;
+        if(a===0) ctx.moveTo(px,py); else ctx.lineTo(px,py);
+      }
+      ctx.stroke();
+
+      // partículas faiscantes ao redor
+      for(let i=0; i<10; i++){
+        const ang = (i/10)*Math.PI*2 + tick*0.1;
+        const dist = expand*45 + 6;
+        ctx.fillStyle = `rgba(254,240,138,${op})`;
+        ctx.beginPath();
+        ctx.arc(e.x + Math.cos(ang)*dist, e.y + Math.sin(ang)*dist, 3 + op*2, 0, Math.PI*2);
+        ctx.fill();
+      }
+
+      // flash central
+      ctx.fillStyle = `rgba(255,255,255,${op*0.6})`;
+      ctx.beginPath();
+      ctx.arc(e.x, e.y, 18*op, 0, Math.PI*2);
+      ctx.fill();
+      ctx.shadowBlur = 0;
+    }
+
+    if(e.tipo === 'spawn'){
+      // fumaça vermelha pro novo caçador
+      ctx.fillStyle = `rgba(220,38,38,${op*0.5})`;
+      for(let i=0; i<6; i++){
+        const ang = (i/6)*Math.PI*2;
+        const dist = (1-op)*25;
+        ctx.beginPath();
+        ctx.arc(e.x + Math.cos(ang)*dist, e.y + Math.sin(ang)*dist, 8, 0, Math.PI*2);
+        ctx.fill();
+      }
+    }
+  });
+
+  // ===== REDEMOINHO de proteção =====
+  if(redemoinhoAtivo){
+    ctx.shadowBlur = 28;
+    ctx.shadowColor = "#22d3ee";
+    // 4 espirais girando
+    for(let i=0;i<4;i++){
+      const ang = tick*0.22 + i*Math.PI/2;
+      ctx.strokeStyle = `rgba(165,243,252,${0.75 - i*0.12})`;
+      ctx.lineWidth = 5 - i;
+      ctx.beginPath();
+      ctx.arc(sx, sy + bob, 64 + i*5, ang, ang + Math.PI*1.5);
+      ctx.stroke();
+    }
+    // anel pulsante externo
+    const pulse = 0.5 + Math.sin(tick*0.3)*0.3;
+    ctx.strokeStyle = `rgba(34,211,238,${pulse})`;
+    ctx.lineWidth = 2;
+    ctx.beginPath();
+    ctx.arc(sx, sy + bob, 88 + Math.sin(tick*0.3)*4, 0, Math.PI*2);
+    ctx.stroke();
+    // partículas voando
+    for(let i=0;i<8;i++){
+      const ang = tick*0.15 + i*Math.PI/4;
+      const r = 70 + Math.sin(tick*0.2 + i)*8;
+      ctx.fillStyle = "rgba(255,255,255,0.7)";
+      ctx.beginPath();
+      ctx.arc(sx + Math.cos(ang)*r, sy + bob + Math.sin(ang)*r, 2.5, 0, Math.PI*2);
+      ctx.fill();
+    }
+    ctx.shadowBlur = 0;
+  }
+}
+
+function loop(){
+  if(!gameOver){
+    moverSaci();
+    updateEnemies();
+    updateSpawn();
+    updateCooldowns();
+    updateEfeitos();
+    updateTiros();
+    colisao();
+    atualizarPontos();
+  }
+  draw();
+  requestAnimationFrame(loop);
+}
+
+// VAGALUMES
+const ff = document.getElementById("fireflies");
+for(let i=0; i<25; i++){
+  const f = document.createElement("div");
+  f.className = "firefly";
+  f.style.left = Math.random()*100+"%";
+  f.style.top = (60 + Math.random()*40)+"%";
+  f.style.animationDuration = (5 + Math.random()*7)+"s";
+  f.style.animationDelay = Math.random()*8+"s";
+  ff.appendChild(f);
+}
+</script>
+
+</body>
+</html>

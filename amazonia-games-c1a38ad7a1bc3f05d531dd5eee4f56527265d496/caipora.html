@@ -1,0 +1,1163 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Lenda da Caipora</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0;}
+:root{
+  --verde:#16a34a;
+  --verde-claro:#86efac;
+  --verde-escuro:#14532d;
+  --terra:#92400e;
+  --dourado:#facc15;
+}
+
+html, body{
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  overflow:hidden;
+  overscroll-behavior:none;
+  touch-action:manipulation;
+}
+
+body{
+  font-family:'Inter',sans-serif;
+  background:
+    radial-gradient(ellipse at 30% 20%,rgba(22,163,74,0.2),transparent 60%),
+    radial-gradient(ellipse at 70% 80%,rgba(120,53,15,0.3),transparent 60%),
+    linear-gradient(180deg,#052e16 0%,#14532d 50%,#365314 100%);
+  color:white;
+  text-align:center;
+  user-select:none;
+  -webkit-user-select:none;
+  -webkit-tap-highlight-color:transparent;
+  overflow-y:auto;
+}
+
+/* PARTÍCULAS — folhas */
+.particles{
+  position:fixed; inset:0;
+  pointer-events:none; z-index:1; overflow:hidden;
+}
+.leaf{
+  position:absolute; font-size:18px;
+  opacity:0.4; animation:fall linear infinite;
+}
+@keyframes fall{
+  0%{ transform:translateY(-50px) rotate(0deg); opacity:0; }
+  10%{ opacity:0.5; }
+  100%{ transform:translateY(110vh) rotate(720deg); opacity:0; }
+}
+
+/* MENU */
+.tela{
+  position:relative; z-index:5;
+  width:100%; min-height:100vh;
+  display:flex; flex-direction:column;
+  justify-content:center; align-items:center;
+  padding:60px 20px 40px;
+  animation:fadeIn 0.8s ease;
+}
+@keyframes fadeIn{
+  from{ opacity:0; transform:translateY(20px); }
+  to{ opacity:1; transform:translateY(0); }
+}
+.badge{
+  display:inline-block;
+  padding:6px 18px;
+  background:rgba(22,163,74,0.15);
+  border:1px solid rgba(22,163,74,0.5);
+  border-radius:20px;
+  font-size:11px;
+  letter-spacing:3px;
+  color:var(--verde-claro);
+  margin-bottom:18px;
+  text-transform:uppercase;
+}
+h1.titulo{
+  font-family:'Cinzel',serif;
+  font-size:clamp(28px,6vw,52px);
+  font-weight:700;
+  letter-spacing:2px;
+  margin-bottom:18px;
+  background:linear-gradient(90deg,#86efac,#16a34a,#facc15);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+  filter:drop-shadow(0 0 25px rgba(34,197,94,0.5));
+}
+.cai-emoji{
+  font-size:120px;
+  margin:10px;
+  filter:drop-shadow(0 0 35px rgba(22,163,74,0.6));
+  animation:floatImg 4s ease-in-out infinite;
+}
+@keyframes floatImg{
+  0%,100%{ transform:translateY(0); }
+  50%{ transform:translateY(-12px); }
+}
+.historia{
+  max-width:540px;
+  margin:20px auto 10px;
+  background:rgba(5,30,15,0.65);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  padding:20px 24px;
+  border-radius:18px;
+  border:1px solid rgba(22,163,74,0.3);
+  box-shadow:0 0 40px rgba(22,163,74,0.2);
+  font-size:14px;
+  line-height:1.65;
+  color:#dcfce7;
+  font-weight:300;
+}
+.historia::before{
+  content:"❝";
+  display:block;
+  font-family:'Cinzel',serif;
+  font-size:42px;
+  color:var(--verde);
+  line-height:0.4;
+  margin-bottom:6px;
+  opacity:0.6;
+}
+.dicas{
+  max-width:540px;
+  margin:14px auto 0;
+  text-align:left;
+  background:rgba(5,30,15,0.5);
+  border:1px dashed rgba(250,204,21,0.4);
+  border-radius:14px;
+  padding:14px 20px;
+  font-size:13px;
+  color:#fef3c7;
+  line-height:1.7;
+}
+.dicas b{ color:var(--dourado); letter-spacing:1px; }
+
+.btn-comecar{
+  margin-top:24px;
+  padding:14px 36px;
+  border:none;
+  border-radius:14px;
+  background:linear-gradient(90deg,var(--verde-escuro),var(--verde));
+  color:white;
+  font-size:15px;
+  font-weight:600;
+  font-family:'Inter',sans-serif;
+  letter-spacing:1px;
+  cursor:pointer;
+  text-transform:uppercase;
+  box-shadow:0 8px 30px -8px rgba(22,163,74,0.7);
+  transition:all 0.3s;
+}
+.btn-comecar:hover{
+  transform:translateY(-3px);
+  box-shadow:0 12px 40px -8px rgba(22,163,74,0.9);
+}
+
+.voltar{
+  position:fixed;
+  top:16px; left:16px;
+  padding:10px 16px;
+  background:rgba(5,30,15,0.7);
+  backdrop-filter:blur(10px);
+  border:1px solid rgba(22,163,74,0.4);
+  color:var(--verde-claro);
+  border-radius:12px;
+  cursor:pointer;
+  font-size:13px;
+  font-weight:500;
+  z-index:50;
+  transition:all 0.3s;
+}
+.voltar:hover{
+  background:rgba(22,163,74,0.2);
+  color:white;
+}
+
+/* GAME */
+#game{
+  display:none;
+  position:fixed;
+  inset:0;
+  width:100%;
+  height:100%;
+  height:100dvh;
+}
+canvas{
+  width:100%;
+  height:100%;
+  display:block;
+  background:radial-gradient(ellipse at center,#14532d 0%,#052e16 100%);
+  touch-action:none;
+}
+
+/* HUD topo */
+.hud-top{
+  position:absolute;
+  top:14px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:8px;
+  z-index:10;
+  flex-wrap:wrap;
+  justify-content:center;
+}
+.hud-pill{
+  background:rgba(5,30,15,0.78);
+  backdrop-filter:blur(10px);
+  padding:8px 16px;
+  border-radius:30px;
+  font-family:'Cinzel',serif;
+  font-size:13px;
+  letter-spacing:1.5px;
+  border:1px solid rgba(22,163,74,0.3);
+  color:var(--verde-claro);
+}
+.hud-pill.semente{ color:#fef08a; border-color:rgba(250,204,21,0.4); }
+.hud-pill.vida{ color:#fca5a5; border-color:rgba(239,68,68,0.4); }
+
+/* Painel inferior — seleção de armadilhas */
+.armadilhas{
+  position:absolute;
+  bottom:14px;
+  left:50%;
+  transform:translateX(-50%);
+  display:flex;
+  gap:8px;
+  z-index:10;
+  background:rgba(5,30,15,0.78);
+  backdrop-filter:blur(10px);
+  padding:10px 12px;
+  border-radius:14px;
+  border:1px solid rgba(22,163,74,0.3);
+  flex-wrap:wrap;
+  justify-content:center;
+  max-width:96vw;
+}
+.armadilhas .arm{
+  position:relative;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:2px;
+  padding:8px 12px;
+  background:rgba(22,163,74,0.2);
+  border:2px solid rgba(22,163,74,0.5);
+  border-radius:12px;
+  cursor:pointer;
+  transition:all 0.15s;
+  min-width:70px;
+}
+.armadilhas .arm:active{ transform:scale(0.94); }
+.armadilhas .arm.selected{
+  background:rgba(250,204,21,0.3);
+  border-color:rgba(250,204,21,0.9);
+  box-shadow:0 0 15px rgba(250,204,21,0.5);
+}
+.armadilhas .arm.bloqueado{
+  opacity:0.4;
+  cursor:not-allowed;
+  filter:saturate(0.4);
+}
+.arm-emoji{ font-size:24px; line-height:1; }
+.arm-name{ font-size:10px; letter-spacing:1px; color:#dcfce7; font-weight:600; }
+.arm-cost{ font-size:10px; color:#fef08a; font-family:'Cinzel',serif; }
+
+.btn-onda{
+  position:absolute;
+  bottom:120px;
+  right:16px;
+  padding:12px 22px;
+  background:linear-gradient(90deg,var(--verde-escuro),var(--verde));
+  border:1px solid rgba(250,204,21,0.4);
+  color:white;
+  font-weight:700;
+  font-family:'Cinzel',serif;
+  letter-spacing:2px;
+  font-size:14px;
+  border-radius:12px;
+  cursor:pointer;
+  z-index:10;
+  box-shadow:0 6px 20px -5px rgba(22,163,74,0.6);
+  text-transform:uppercase;
+  transition:all 0.2s;
+}
+.btn-onda:hover{ transform:translateY(-2px); }
+.btn-onda:disabled{ opacity:0.5; cursor:not-allowed; }
+.btn-onda.pulse{
+  animation:pulse 1.5s ease-in-out infinite;
+}
+@keyframes pulse{
+  0%,100%{ box-shadow:0 6px 20px -5px rgba(22,163,74,0.6); }
+  50%{ box-shadow:0 8px 30px -3px rgba(34,197,94,1); }
+}
+
+/* feedback */
+.feedback{
+  position:absolute;
+  top:50%;
+  left:50%;
+  transform:translate(-50%,-50%);
+  font-family:'Cinzel',serif;
+  font-size:48px;
+  font-weight:700;
+  letter-spacing:4px;
+  pointer-events:none;
+  z-index:20;
+  text-shadow:0 0 30px currentColor;
+  display:none;
+}
+.feedback.show{ display:block; animation:fbPop 0.7s ease; }
+@keyframes fbPop{
+  0%{ transform:translate(-50%,-50%) scale(0.4); opacity:0; }
+  30%{ transform:translate(-50%,-50%) scale(1.2); opacity:1; }
+  100%{ transform:translate(-50%,-50%) scale(1); opacity:0; }
+}
+
+/* Game Over */
+.overlay{
+  position:fixed; inset:0;
+  background:rgba(0,0,0,0.85);
+  backdrop-filter:blur(8px);
+  display:none;
+  justify-content:center; align-items:center;
+  flex-direction:column;
+  z-index:100; color:white; text-align:center; padding:20px;
+  animation:fadeIn 0.4s ease;
+}
+.overlay.show{ display:flex; }
+.overlay h2{
+  font-family:'Cinzel',serif;
+  font-size:36px;
+  margin:10px;
+  background:linear-gradient(90deg,#86efac,#16a34a);
+  -webkit-background-clip:text;
+  background-clip:text;
+  -webkit-text-fill-color:transparent;
+}
+.overlay p{ color:#dcfce7; margin-bottom:16px; font-size:16px; }
+.overlay button{
+  margin:8px;
+  padding:14px 28px;
+  font-size:14px;
+  font-weight:600;
+  letter-spacing:1px;
+  text-transform:uppercase;
+  background:linear-gradient(90deg,var(--verde-escuro),var(--verde));
+  border:none;
+  border-radius:12px;
+  color:white;
+  cursor:pointer;
+  box-shadow:0 6px 20px -5px rgba(22,163,74,0.6);
+  transition:transform 0.2s;
+}
+.overlay button:hover{ transform:translateY(-2px); }
+
+/* MOBILE */
+@media (max-width:600px){
+  .voltar{ top:8px; left:8px; padding:7px 12px; font-size:11px; }
+  .hud-top{ top:50px; gap:6px; }
+  .hud-pill{ padding:6px 12px; font-size:11px; letter-spacing:1px; }
+  .armadilhas{ gap:6px; padding:8px 10px; bottom:10px; }
+  .armadilhas .arm{ padding:6px 10px; min-width:62px; }
+  .arm-emoji{ font-size:20px; }
+  .arm-name{ font-size:9px; }
+  .arm-cost{ font-size:9px; }
+  .btn-onda{ bottom:104px; right:10px; padding:10px 16px; font-size:12px; letter-spacing:1px; }
+  .feedback{ font-size:34px; }
+  .historia{ font-size:13px; padding:16px 18px; }
+  .cai-emoji{ font-size:90px; }
+}
+
+/* === OTIMIZACAO MOBILE === */
+@media (max-width: 900px), (pointer: coarse){
+  *{ backdrop-filter: none !important; -webkit-backdrop-filter: none !important; }
+  .titulo, .voltar, .hud-pill, .btn-onda{ filter: none !important; }
+  .btn-comecar{ box-shadow: 0 4px 12px rgba(0,0,0,.4) !important; }
+}
+</style>
+</head>
+
+<body>
+
+<div class="particles" id="particles"></div>
+<button class="voltar" onclick="voltar()">← Menu</button>
+
+<!-- MENU -->
+<div id="menu" class="tela">
+  <div class="badge">✦ Lenda Amazônica ✦</div>
+  <h1 class="titulo">🌳 Caipora</h1>
+
+  <div class="cai-emoji">🌳</div>
+
+  <div class="historia">
+    A Caipora é a guardiã da floresta e protege os animais da caça. Ela
+    confunde os caçadores e usa as armadilhas naturais da mata para
+    afastá-los. Ajude-a a defender os animais das ondas de caçadores
+    posicionando armadilhas pela floresta.
+  </div>
+
+  <div class="dicas">
+    <b>🌿 COMO JOGAR</b><br>
+    • Selecione uma armadilha e clique no mapa para posicioná-la<br>
+    • Cada armadilha tem alcance e custo em <b>sementes</b><br>
+    • Mate caçadores para ganhar mais sementes<br>
+    • Se um caçador chegar na clareira, mata um animal<br>
+    • Aguente as <b>10 ondas</b> e proteja todos os animais!
+  </div>
+
+  <button class="btn-comecar" onclick="start()">Começar</button>
+</div>
+
+<!-- GAME -->
+<div id="game">
+  <canvas id="c"></canvas>
+
+  <div class="hud-top">
+    <div class="hud-pill">🌊 ONDA <span id="onda">1</span>/10</div>
+    <div class="hud-pill semente">🌰 <span id="sementes">50</span></div>
+    <div class="hud-pill vida">🦌 <span id="vidas">5</span></div>
+  </div>
+
+  <div class="armadilhas" id="armPanel">
+    <div class="arm" data-tipo="cipo">
+      <span class="arm-emoji">🌿</span>
+      <span class="arm-name">CIPÓ</span>
+      <span class="arm-cost">🌰 10</span>
+    </div>
+    <div class="arm" data-tipo="abelha">
+      <span class="arm-emoji">🐝</span>
+      <span class="arm-name">ABELHAS</span>
+      <span class="arm-cost">🌰 18</span>
+    </div>
+    <div class="arm" data-tipo="onca">
+      <span class="arm-emoji">🐯</span>
+      <span class="arm-name">ONÇA</span>
+      <span class="arm-cost">🌰 30</span>
+    </div>
+  </div>
+
+  <button class="btn-onda pulse" id="btnOnda" onclick="iniciarOnda()">▶ Próxima Onda</button>
+
+  <div class="feedback" id="feedback"></div>
+</div>
+
+<!-- OVERLAY -->
+<div id="overlay" class="overlay">
+  <h2 id="goTitle">🌳 A floresta caiu</h2>
+  <p>Onda alcançada: <span id="finalOnda">1</span></p>
+  <p>Animais salvos: <span id="finalAnim">0</span></p>
+  <button onclick="reiniciar()">🔄 Tentar de novo</button>
+  <button onclick="voltar()">← Menu</button>
+</div>
+
+<script>
+const c = document.getElementById("c");
+const ctx = c.getContext("2d");
+
+// === OTIMIZACAO MOBILE: desabilita shadowBlur ===
+const IS_MOBILE = window.matchMedia('(pointer: coarse), (max-width: 900px)').matches;
+if(IS_MOBILE){
+  let _sb=0,_sc='transparent';
+  Object.defineProperty(ctx,'shadowBlur',{get:()=>_sb,set:v=>{_sb=0;}});
+  Object.defineProperty(ctx,'shadowColor',{get:()=>_sc,set:v=>{_sc='transparent';}});
+}
+
+let w, h;
+function resize(){
+  const vv = window.visualViewport;
+  w = Math.round(vv ? vv.width  : window.innerWidth);
+  h = Math.round(vv ? vv.height : window.innerHeight);
+  c.width = w; c.height = h;
+  // recalcula trilha em cima do novo tamanho
+  if(rodando) construirTrilha();
+}
+window.addEventListener("resize", resize);
+window.addEventListener("orientationchange", ()=>setTimeout(resize, 150));
+if(window.visualViewport) window.visualViewport.addEventListener("resize", resize);
+
+// ===== ESTADO =====
+const FPS = 60;
+const MAX_ONDAS = 10;
+let onda = 1;
+let sementes = 50;
+let vidas = 5;
+let inimigos = [];
+let armadilhas = [];
+let projeteis = [];
+let trilha = [];
+let ondaAtiva = false;
+let inimigosPorSpawn = [];
+let spawnTimer = 0;
+let gameOver = false;
+let rodando = false;
+let tick = 0;
+let armSelecionada = null;
+let mouseX = 0, mouseY = 0;
+
+// ===== TIPOS DE ARMADILHA =====
+const ARM_TIPOS = {
+  cipo:   { custo:10, alcance:75,  cooldown:90, dano:0,  slow:0.45, emoji:"🌿", cor:"#22c55e" },
+  abelha: { custo:18, alcance:80,  cooldown:30, dano:6,  slow:0,    emoji:"🐝", cor:"#facc15", area:true },
+  onca:   { custo:30, alcance:130, cooldown:80, dano:55, slow:0,    emoji:"🐯", cor:"#f59e0b" }
+};
+
+// ===== TIPOS DE INIMIGO =====
+const INIM_TIPOS = {
+  normal: { hp:55,  speed:0.8, recompensa:8,  cor:"#3b82f6", emoji:"👤" },
+  rapido: { hp:35,  speed:1.5, recompensa:12, cor:"#f97316", emoji:"🏃" },
+  grosso: { hp:200, speed:0.45,recompensa:22, cor:"#7c2d12", emoji:"💪" },
+  boss:   { hp:1500,speed:0.4, recompensa:200,cor:"#581c87", emoji:"👹" }
+};
+
+// ===== ONDAS =====
+const ONDAS = [
+  // [{tipo, qtd}, ...]
+  [["normal",5]],
+  [["normal",8]],
+  [["normal",6],["rapido",4]],
+  [["normal",10],["rapido",4]],
+  [["normal",8],["rapido",6],["grosso",2]],
+  [["normal",12],["rapido",6],["grosso",3]],
+  [["rapido",10],["grosso",5]],
+  [["normal",15],["rapido",8],["grosso",6]],
+  [["normal",18],["rapido",10],["grosso",8]],
+  [["boss",1],["normal",12],["rapido",8],["grosso",6]]
+];
+
+// ===== TRILHA — zigue-zague pelo mapa =====
+function construirTrilha(){
+  // proporção ajustada ao viewport — entrada no topo, clareira no fundo
+  const m = 80;        // margem
+  const top = 130;
+  const bottom = h - 200;
+  const altura = bottom - top;
+  trilha = [
+    {x: w*0.5, y: -30},
+    {x: w*0.5, y: top + altura*0.05},
+    {x: w*0.85, y: top + altura*0.18},
+    {x: w*0.85, y: top + altura*0.40},
+    {x: w*0.20, y: top + altura*0.52},
+    {x: w*0.20, y: top + altura*0.72},
+    {x: w*0.55, y: top + altura*0.85},
+    {x: w*0.55, y: bottom},   // clareira
+  ];
+}
+
+function distPontoSegmento(p, a, b){
+  const dx = b.x - a.x, dy = b.y - a.y;
+  const lenSq = dx*dx + dy*dy;
+  if(lenSq === 0) return Math.hypot(p.x-a.x, p.y-a.y);
+  let t = ((p.x-a.x)*dx + (p.y-a.y)*dy) / lenSq;
+  t = Math.max(0, Math.min(1, t));
+  const px = a.x + t*dx, py = a.y + t*dy;
+  return Math.hypot(p.x-px, p.y-py);
+}
+
+function distAteATrilha(p){
+  let m = Infinity;
+  for(let i=0;i<trilha.length-1;i++){
+    const d = distPontoSegmento(p, trilha[i], trilha[i+1]);
+    if(d < m) m = d;
+  }
+  return m;
+}
+
+function pontoNaTrilha(prog){
+  // prog é distância acumulada
+  let acc = 0;
+  for(let i=0;i<trilha.length-1;i++){
+    const a = trilha[i], b = trilha[i+1];
+    const seg = Math.hypot(b.x-a.x, b.y-a.y);
+    if(acc + seg >= prog){
+      const t = (prog - acc) / seg;
+      return { x: a.x + t*(b.x-a.x), y: a.y + t*(b.y-a.y), chegou:false };
+    }
+    acc += seg;
+  }
+  return { x: trilha[trilha.length-1].x, y: trilha[trilha.length-1].y, chegou:true };
+}
+
+function comprimentoTrilha(){
+  let total = 0;
+  for(let i=0;i<trilha.length-1;i++){
+    total += Math.hypot(trilha[i+1].x - trilha[i].x, trilha[i+1].y - trilha[i].y);
+  }
+  return total;
+}
+
+// ===== START / RESET =====
+function reset(){
+  // resize garante que trilha use w/h corretos
+  resize();
+  construirTrilha();
+  onda = 1;
+  sementes = 50;
+  vidas = 5;
+  inimigos = [];
+  armadilhas = [];
+  projeteis = [];
+  ondaAtiva = false;
+  inimigosPorSpawn = [];
+  gameOver = false;
+  document.getElementById("onda").innerText = onda;
+  document.getElementById("sementes").innerText = sementes;
+  document.getElementById("vidas").innerText = vidas;
+  document.getElementById("overlay").classList.remove("show");
+  const bo = document.getElementById("btnOnda");
+  bo.style.display = "block";
+  bo.classList.add("pulse");
+  atualizarPainelArm();
+}
+function start(){
+  document.getElementById("menu").style.display = "none";
+  document.getElementById("game").style.display = "block";
+  reset();
+  if(!rodando){ rodando = true; loop(); }
+}
+function reiniciar(){ reset(); }
+function voltar(){ window.location.href = "index.html"; }
+
+// ===== PAINEL DE ARMADILHAS =====
+function atualizarPainelArm(){
+  for(const el of document.querySelectorAll(".armadilhas .arm")){
+    const tipo = el.dataset.tipo;
+    const custo = ARM_TIPOS[tipo].custo;
+    el.classList.toggle("bloqueado", sementes < custo);
+    el.classList.toggle("selected", armSelecionada === tipo);
+  }
+}
+document.querySelectorAll(".armadilhas .arm").forEach(el=>{
+  el.addEventListener("click", e=>{
+    const tipo = el.dataset.tipo;
+    if(sementes < ARM_TIPOS[tipo].custo) return;
+    armSelecionada = (armSelecionada === tipo) ? null : tipo;
+    atualizarPainelArm();
+  });
+});
+
+// ===== CLIQUE NO CANVAS — posiciona armadilha =====
+function tentarPosicionar(x, y){
+  if(!armSelecionada) return;
+  const tipo = ARM_TIPOS[armSelecionada];
+  if(sementes < tipo.custo) return;
+  // não pode em cima da trilha
+  if(distAteATrilha({x,y}) < 40) return;
+  // não pode muito perto de outra armadilha
+  for(const a of armadilhas){
+    if(Math.hypot(a.x - x, a.y - y) < 36) return;
+  }
+  // não pode no painel inferior
+  if(y > h - 110) return;
+  if(y < 100) return;
+  // posiciona
+  sementes -= tipo.custo;
+  armadilhas.push({
+    x, y, tipo:armSelecionada,
+    cooldown:0, lastTarget:null
+  });
+  document.getElementById("sementes").innerText = sementes;
+  if(sementes < tipo.custo) armSelecionada = null;
+  atualizarPainelArm();
+}
+
+c.addEventListener("click", e=>{
+  const r = c.getBoundingClientRect();
+  tentarPosicionar(e.clientX - r.left, e.clientY - r.top);
+});
+c.addEventListener("touchend", e=>{
+  e.preventDefault();
+  if(e.changedTouches.length){
+    const r = c.getBoundingClientRect();
+    tentarPosicionar(e.changedTouches[0].clientX - r.left, e.changedTouches[0].clientY - r.top);
+  }
+}, {passive:false});
+
+c.addEventListener("mousemove", e=>{
+  const r = c.getBoundingClientRect();
+  mouseX = e.clientX - r.left;
+  mouseY = e.clientY - r.top;
+});
+
+// ===== ONDAS =====
+function iniciarOnda(){
+  if(ondaAtiva || gameOver) return;
+  if(onda > MAX_ONDAS) return;
+  ondaAtiva = true;
+  document.getElementById("btnOnda").style.display = "none";
+  // expande lista de spawns
+  inimigosPorSpawn = [];
+  for(const [tipo, qtd] of ONDAS[onda-1]){
+    for(let i=0;i<qtd;i++) inimigosPorSpawn.push(tipo);
+  }
+  // embaralha
+  inimigosPorSpawn.sort(()=>Math.random() - 0.5);
+  spawnTimer = 0;
+}
+
+function spawnarInimigos(){
+  if(!ondaAtiva || inimigosPorSpawn.length === 0) return;
+  spawnTimer++;
+  if(spawnTimer >= 35){
+    spawnTimer = 0;
+    const tipo = inimigosPorSpawn.shift();
+    const t = INIM_TIPOS[tipo];
+    inimigos.push({
+      tipo,
+      hp: t.hp, hpMax: t.hp,
+      speed: t.speed,
+      baseSpeed: t.speed,
+      progresso: 0,
+      slowAte: 0,
+      x: trilha[0].x, y: trilha[0].y
+    });
+  }
+}
+
+function fimDeOnda(){
+  ondaAtiva = false;
+  if(onda >= MAX_ONDAS){
+    vencerJogo();
+    return;
+  }
+  onda++;
+  document.getElementById("onda").innerText = onda;
+  // bônus de fim de onda
+  sementes += 25 + onda*5;
+  document.getElementById("sementes").innerText = sementes;
+  showFeedback("ONDA " + (onda-1) + " VENCIDA!", "#86efac");
+  document.getElementById("btnOnda").style.display = "block";
+  document.getElementById("btnOnda").classList.add("pulse");
+  atualizarPainelArm();
+}
+
+// ===== UPDATE =====
+function update(){
+  if(gameOver) return;
+  tick++;
+  spawnarInimigos();
+
+  // movimentar inimigos
+  for(let i = inimigos.length-1; i >= 0; i--){
+    const ini = inimigos[i];
+    // slow
+    let speedAtual = ini.speed;
+    if(tick < ini.slowAte) speedAtual *= 0.5;
+
+    ini.progresso += speedAtual;
+    const p = pontoNaTrilha(ini.progresso);
+    ini.x = p.x; ini.y = p.y;
+    if(p.chegou){
+      // chegou aos animais
+      vidas--;
+      document.getElementById("vidas").innerText = vidas;
+      inimigos.splice(i, 1);
+      if(vidas <= 0){ perderJogo(); return; }
+    }
+    if(ini.hp <= 0){
+      sementes += INIM_TIPOS[ini.tipo].recompensa;
+      document.getElementById("sementes").innerText = sementes;
+      inimigos.splice(i, 1);
+      atualizarPainelArm();
+    }
+  }
+
+  // armadilhas atacando
+  for(const a of armadilhas){
+    if(a.cooldown > 0) a.cooldown--;
+    const tipo = ARM_TIPOS[a.tipo];
+
+    // encontrar alvo mais próximo no alcance
+    if(a.cooldown <= 0){
+      let alvo = null, alvoD = tipo.alcance;
+      for(const ini of inimigos){
+        const d = Math.hypot(ini.x - a.x, ini.y - a.y);
+        if(d < alvoD){ alvoD = d; alvo = ini; }
+      }
+      if(alvo){
+        a.cooldown = tipo.cooldown;
+        a.lastTarget = alvo;
+        a.tiroEffect = 12;
+
+        if(a.tipo === "cipo"){
+          // slow no alvo
+          alvo.slowAte = tick + 60;
+        } else if(a.tipo === "abelha"){
+          // dano em área
+          for(const ini of inimigos){
+            const d = Math.hypot(ini.x - a.x, ini.y - a.y);
+            if(d < tipo.alcance){
+              ini.hp -= tipo.dano;
+            }
+          }
+        } else {
+          // onça — dano direto no alvo, com projétil visual
+          alvo.hp -= tipo.dano;
+          projeteis.push({
+            x:a.x, y:a.y,
+            tx:alvo.x, ty:alvo.y,
+            from:a.tipo,
+            vida:14
+          });
+        }
+      }
+    }
+    if(a.tiroEffect != null && a.tiroEffect > 0) a.tiroEffect--;
+  }
+
+  // projéteis (visual)
+  for(let i = projeteis.length-1; i >= 0; i--){
+    projeteis[i].vida--;
+    if(projeteis[i].vida <= 0) projeteis.splice(i, 1);
+  }
+
+  // se onda terminou de spawnar e não tem mais inimigos, ondaAtiva = false
+  if(ondaAtiva && inimigosPorSpawn.length === 0 && inimigos.length === 0){
+    fimDeOnda();
+  }
+}
+
+// ===== DERROTA / VITÓRIA =====
+function perderJogo(){
+  gameOver = true;
+  ondaAtiva = false;
+  document.getElementById("finalOnda").innerText = onda;
+  document.getElementById("finalAnim").innerText = vidas;
+  document.getElementById("goTitle").innerText = "🌳 A floresta caiu";
+  setTimeout(()=>document.getElementById("overlay").classList.add("show"), 600);
+}
+function vencerJogo(){
+  gameOver = true;
+  ondaAtiva = false;
+  document.getElementById("finalOnda").innerText = MAX_ONDAS;
+  document.getElementById("finalAnim").innerText = vidas;
+  document.getElementById("goTitle").innerText = "🦌 A floresta venceu!";
+  setTimeout(()=>document.getElementById("overlay").classList.add("show"), 800);
+}
+
+function showFeedback(text, color){
+  const fb = document.getElementById("feedback");
+  fb.style.color = color;
+  fb.textContent = text;
+  fb.classList.remove("show");
+  void fb.offsetWidth;
+  fb.classList.add("show");
+  setTimeout(()=>fb.classList.remove("show"), 700);
+}
+
+// ===== DESENHO =====
+function drawCenario(){
+  // textura de chão de floresta — variações sutis
+  ctx.fillStyle = "rgba(20,80,40,0.15)";
+  for(let i=0;i<40;i++){
+    const fx = ((i*97 + tick*0.05) % w);
+    const fy = ((i*53 + 30) % h);
+    ctx.beginPath();
+    ctx.arc(fx, fy, 14, 0, Math.PI*2);
+    ctx.fill();
+  }
+
+  // TRILHA — desenhar como caminho de terra
+  ctx.lineWidth = 36;
+  ctx.lineCap = "round";
+  ctx.lineJoin = "round";
+  // sombra escura embaixo
+  ctx.strokeStyle = "rgba(20,5,0,0.5)";
+  ctx.beginPath();
+  for(let i=0;i<trilha.length;i++){
+    const p = trilha[i];
+    if(i===0) ctx.moveTo(p.x, p.y);
+    else ctx.lineTo(p.x, p.y);
+  }
+  ctx.stroke();
+  // chão da trilha
+  ctx.lineWidth = 32;
+  ctx.strokeStyle = "#92400e";
+  ctx.beginPath();
+  for(let i=0;i<trilha.length;i++){
+    const p = trilha[i];
+    if(i===0) ctx.moveTo(p.x, p.y);
+    else ctx.lineTo(p.x, p.y);
+  }
+  ctx.stroke();
+  // textura mais clara
+  ctx.lineWidth = 28;
+  ctx.strokeStyle = "rgba(180,100,40,0.5)";
+  ctx.stroke();
+  ctx.lineCap = "butt";
+
+  // CLAREIRA com animais (final da trilha)
+  const fim = trilha[trilha.length-1];
+  // círculo verde claro
+  const cg = ctx.createRadialGradient(fim.x, fim.y + 30, 5, fim.x, fim.y + 30, 80);
+  cg.addColorStop(0, "rgba(134,239,172,0.5)");
+  cg.addColorStop(1, "rgba(134,239,172,0)");
+  ctx.fillStyle = cg;
+  ctx.beginPath();
+  ctx.arc(fim.x, fim.y + 30, 80, 0, Math.PI*2);
+  ctx.fill();
+  // animais (emojis)
+  ctx.font = "26px Arial";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  const animais = ["🦌","🐢","🐒","🦜","🦝"];
+  for(let i=0;i<vidas && i<animais.length;i++){
+    const ang = (i / animais.length) * Math.PI*2 + tick*0.005;
+    const ax = fim.x + Math.cos(ang)*45;
+    const ay = fim.y + 30 + Math.sin(ang)*22;
+    ctx.fillText(animais[i], ax, ay);
+  }
+  ctx.textAlign = "start";
+  ctx.textBaseline = "alphabetic";
+
+  // ENTRADA dos caçadores (porta no topo)
+  const ent = trilha[1];
+  ctx.fillStyle = "rgba(127,29,29,0.6)";
+  ctx.fillRect(ent.x - 30, ent.y - 32, 60, 12);
+  ctx.fillStyle = "#7f1d1d";
+  ctx.font = "11px 'Cinzel', serif";
+  ctx.textAlign = "center";
+  ctx.fillText("ENTRADA", ent.x, ent.y - 22);
+  ctx.textAlign = "start";
+
+  // ÁRVORES espalhadas (decoração) — fora da trilha
+  for(let i=0;i<14;i++){
+    const tx = ((i*113 + 17) % w);
+    const ty = (((i*87 + 23) % (h - 250)) + 130);
+    if(distAteATrilha({x:tx, y:ty}) < 50) continue;
+    if(Math.hypot(tx - fim.x, ty - fim.y) < 90) continue;
+    desenharArvoreSimples(tx, ty, 0.6 + (i%3)*0.15);
+  }
+}
+
+function desenharArvoreSimples(x, y, escala){
+  ctx.fillStyle = "rgba(0,0,0,0.3)";
+  ctx.beginPath();
+  ctx.ellipse(x, y + 18*escala, 14*escala, 4, 0, 0, Math.PI*2);
+  ctx.fill();
+  // tronco
+  ctx.fillStyle = "#451a03";
+  ctx.fillRect(x - 3*escala, y, 6*escala, 16*escala);
+  // copa
+  const fg = ctx.createRadialGradient(x - 6*escala, y - 8*escala, 2, x, y - 4*escala, 22*escala);
+  fg.addColorStop(0, "#22c55e");
+  fg.addColorStop(1, "#14532d");
+  ctx.fillStyle = fg;
+  ctx.beginPath();
+  ctx.arc(x, y - 6*escala, 18*escala, 0, Math.PI*2);
+  ctx.fill();
+}
+
+function drawArmadilhas(){
+  for(const a of armadilhas){
+    const tipo = ARM_TIPOS[a.tipo];
+
+    // alcance ao mostrar (semi-transparente)
+    if(a.tiroEffect > 0 || (mouseX > a.x-25 && mouseX < a.x+25 && mouseY > a.y-25 && mouseY < a.y+25)){
+      ctx.strokeStyle = `rgba(${a.tipo==="cipo"?"34,197,94":a.tipo==="abelha"?"250,204,21":"245,158,11"},0.4)`;
+      ctx.lineWidth = 1.5;
+      ctx.setLineDash([4,4]);
+      ctx.beginPath();
+      ctx.arc(a.x, a.y, tipo.alcance, 0, Math.PI*2);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+
+    // base da armadilha (anel)
+    ctx.fillStyle = "rgba(0,0,0,0.5)";
+    ctx.beginPath();
+    ctx.arc(a.x, a.y + 4, 16, 0, Math.PI*2);
+    ctx.fill();
+    ctx.fillStyle = `rgba(${a.tipo==="cipo"?"34,197,94":a.tipo==="abelha"?"250,204,21":"245,158,11"},0.25)`;
+    ctx.beginPath();
+    ctx.arc(a.x, a.y, 18, 0, Math.PI*2);
+    ctx.fill();
+
+    // emoji
+    ctx.font = "26px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    if(a.tiroEffect > 0){
+      const e = a.tiroEffect/12;
+      ctx.font = (26 + e*8) + "px Arial";
+    }
+    ctx.fillText(tipo.emoji, a.x, a.y);
+    ctx.textAlign = "start";
+    ctx.textBaseline = "alphabetic";
+
+    // se cipó, desenha cipó saindo até o último alvo
+    if(a.tipo === "cipo" && a.lastTarget && a.tiroEffect > 0 && inimigos.includes(a.lastTarget)){
+      ctx.strokeStyle = `rgba(34,197,94,${a.tiroEffect/12})`;
+      ctx.lineWidth = 3;
+      ctx.beginPath();
+      ctx.moveTo(a.x, a.y);
+      // serpenteado
+      const t = a.lastTarget;
+      const mid = { x:(a.x+t.x)/2 + Math.sin(tick*0.3)*15, y:(a.y+t.y)/2 + Math.cos(tick*0.3)*15 };
+      ctx.quadraticCurveTo(mid.x, mid.y, t.x, t.y);
+      ctx.stroke();
+    }
+  }
+}
+
+function drawProjeteis(){
+  for(const p of projeteis){
+    const t = 1 - p.vida/14;
+    const px = p.x + (p.tx - p.x)*t;
+    const py = p.y + (p.ty - p.y)*t;
+    ctx.shadowBlur = 10;
+    ctx.shadowColor = "#facc15";
+    ctx.fillStyle = "#fef08a";
+    ctx.beginPath();
+    ctx.arc(px, py, 4, 0, Math.PI*2);
+    ctx.fill();
+    ctx.shadowBlur = 0;
+  }
+}
+
+function drawInimigos(){
+  for(const ini of inimigos){
+    const t = INIM_TIPOS[ini.tipo];
+    // sombra
+    ctx.fillStyle = "rgba(0,0,0,0.4)";
+    ctx.beginPath();
+    ctx.ellipse(ini.x, ini.y + 14, 10, 3, 0, 0, Math.PI*2);
+    ctx.fill();
+
+    // corpo
+    const bob = Math.sin(tick*0.2 + ini.x*0.1)*1.5;
+    ctx.fillStyle = t.cor;
+    ctx.fillRect(ini.x - 7, ini.y - 4 + bob, 14, 12);
+    // cabeça
+    ctx.fillStyle = "#fbbf24";
+    ctx.beginPath();
+    ctx.arc(ini.x, ini.y - 8 + bob, 5, 0, Math.PI*2);
+    ctx.fill();
+    // chapéu
+    ctx.fillStyle = "#1f2937";
+    ctx.fillRect(ini.x - 7, ini.y - 13 + bob, 14, 2);
+    ctx.fillRect(ini.x - 5, ini.y - 17 + bob, 10, 4);
+
+    // olhinho indignado
+    ctx.fillStyle = "#000";
+    ctx.fillRect(ini.x - 2, ini.y - 9 + bob, 1, 1);
+    ctx.fillRect(ini.x + 1, ini.y - 9 + bob, 1, 1);
+
+    // se rápido — risco de movimento
+    if(ini.tipo === "rapido"){
+      ctx.strokeStyle = "rgba(254,215,170,0.5)";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(ini.x - 14, ini.y);
+      ctx.lineTo(ini.x - 8, ini.y);
+      ctx.stroke();
+    }
+    // se boss — coroa
+    if(ini.tipo === "boss"){
+      ctx.fillStyle = "#facc15";
+      ctx.beginPath();
+      ctx.moveTo(ini.x - 8, ini.y - 18 + bob);
+      ctx.lineTo(ini.x - 4, ini.y - 24 + bob);
+      ctx.lineTo(ini.x, ini.y - 18 + bob);
+      ctx.lineTo(ini.x + 4, ini.y - 24 + bob);
+      ctx.lineTo(ini.x + 8, ini.y - 18 + bob);
+      ctx.closePath();
+      ctx.fill();
+    }
+
+    // marca de slow
+    if(tick < ini.slowAte){
+      ctx.strokeStyle = "rgba(34,197,94,0.7)";
+      ctx.lineWidth = 2;
+      ctx.beginPath();
+      ctx.arc(ini.x, ini.y, 12, 0, Math.PI*2);
+      ctx.stroke();
+    }
+
+    // barra de vida
+    const barW = ini.tipo === "boss" ? 80 : 20;
+    const barH = ini.tipo === "boss" ? 5 : 3;
+    const barY = ini.y - 22;
+    ctx.fillStyle = "rgba(0,0,0,0.6)";
+    ctx.fillRect(ini.x - barW/2, barY, barW, barH);
+    ctx.fillStyle = ini.hp/ini.hpMax > 0.5 ? "#22c55e" : ini.hp/ini.hpMax > 0.25 ? "#facc15" : "#ef4444";
+    ctx.fillRect(ini.x - barW/2, barY, barW * Math.max(0, ini.hp/ini.hpMax), barH);
+  }
+}
+
+function drawPreview(){
+  // ao posicionar uma armadilha, mostra preview no cursor
+  if(!armSelecionada) return;
+  if(mouseX === 0 && mouseY === 0) return;
+  const tipo = ARM_TIPOS[armSelecionada];
+  const valido = distAteATrilha({x:mouseX,y:mouseY}) >= 40
+    && mouseY < h - 110 && mouseY > 100
+    && armadilhas.every(a => Math.hypot(a.x-mouseX, a.y-mouseY) >= 36);
+
+  ctx.strokeStyle = valido ? "rgba(34,197,94,0.6)" : "rgba(239,68,68,0.6)";
+  ctx.lineWidth = 2;
+  ctx.setLineDash([6,6]);
+  ctx.beginPath();
+  ctx.arc(mouseX, mouseY, tipo.alcance, 0, Math.PI*2);
+  ctx.stroke();
+  ctx.setLineDash([]);
+
+  ctx.fillStyle = valido ? "rgba(34,197,94,0.3)" : "rgba(239,68,68,0.3)";
+  ctx.beginPath();
+  ctx.arc(mouseX, mouseY, 20, 0, Math.PI*2);
+  ctx.fill();
+
+  ctx.font = "22px Arial";
+  ctx.textAlign = "center";
+  ctx.textBaseline = "middle";
+  ctx.globalAlpha = 0.8;
+  ctx.fillText(tipo.emoji, mouseX, mouseY);
+  ctx.globalAlpha = 1;
+  ctx.textAlign = "start";
+  ctx.textBaseline = "alphabetic";
+}
+
+function draw(){
+  ctx.clearRect(0,0,w,h);
+  drawCenario();
+  drawArmadilhas();
+  drawInimigos();
+  drawProjeteis();
+  drawPreview();
+}
+
+function loop(){
+  update();
+  draw();
+  requestAnimationFrame(loop);
+}
+
+// FOLHAS (DOM)
+const ff = document.getElementById("particles");
+const leaves = ["🍃","🌿","🍂"];
+for(let i=0;i<15;i++){
+  const f = document.createElement("div");
+  f.className = "leaf";
+  f.textContent = leaves[Math.floor(Math.random()*leaves.length)];
+  f.style.left = Math.random()*100 + "%";
+  f.style.animationDuration = (8 + Math.random()*10) + "s";
+  f.style.animationDelay = Math.random()*10 + "s";
+  f.style.fontSize = (12 + Math.random()*16) + "px";
+  ff.appendChild(f);
+}
+</script>
+
+</body>
+</html>

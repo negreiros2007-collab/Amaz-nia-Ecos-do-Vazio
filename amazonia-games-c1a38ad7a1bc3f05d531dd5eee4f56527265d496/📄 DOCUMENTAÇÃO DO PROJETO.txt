@@ -1,0 +1,117 @@
+📄 DOCUMENTAÇÃO DO PROJETO
+🌿🔥 Amazônia Games — Plataforma de Jogos (Saci & Boitatá)
+1. 📌 Visão Geral do Sistema
+
+O sistema Amazônia Games é uma plataforma web de jogos educativos/temáticos inspirados no folclore brasileiro, com foco em personagens como:
+
+🌪️ Saci (jogo de ação e habilidades)
+🔥 Boitatá (jogo de sobrevivência e combate)
+
+A plataforma é executada diretamente no navegador e suporta dispositivos desktop e mobile.
+
+2. 🎯 Objetivo do Sistema
+
+Criar uma plataforma interativa de jogos leves que:
+
+Funcione sem instalação
+Seja acessível em celular e PC
+Use personagens do folclore brasileiro
+Tenha jogabilidade simples e dinâmica
+Combine ação, habilidade e sobrevivência
+3. 🧠 Levantamento de Requisitos Funcionais (RF)
+🎮 RF01 — Menu principal
+O sistema deve exibir uma tela inicial com cards de jogos.
+O usuário deve conseguir selecionar um jogo.
+🎮 RF02 — Carregamento de jogo
+O sistema deve abrir o jogo selecionado em tela cheia.
+🎮 RF03 — Controle do personagem
+O jogador deve controlar o personagem (Saci ou Boitatá) via teclado.
+Em mobile, deve haver botões virtuais.
+🎮 RF04 — Sistema de pontuação
+O jogo deve contabilizar pontos ao:
+Comer inimigos (Boitatá)
+Sobreviver/desviar (Saci)
+Destruir obstáculos (Boitatá)
+🎮 RF05 — Inimigos dinâmicos
+O sistema deve gerar inimigos automaticamente.
+🎮 RF06 — Obstáculos
+O jogo deve gerar obstáculos aleatórios no mapa.
+🎮 RF07 — Ataques (Boitatá)
+O jogador deve poder disparar bolas de fogo.
+As bolas devem destruir obstáculos.
+🎮 RF08 — Habilidades do Saci
+O Saci deve possuir habilidades especiais:
+Vento
+Teleporte
+Redemoinho
+🎮 RF09 — Colisões
+O sistema deve detectar colisões entre:
+Jogador e inimigos
+Jogador e obstáculos
+Tiros e obstáculos
+🎮 RF10 — Game Over
+O jogo deve reiniciar ao perder.
+4. ⚙️ Levantamento de Requisitos Não Funcionais (RNF)
+🖥️ RNF01 — Responsividade
+O sistema deve funcionar em:
+Desktop (PC)
+Smartphones
+Tablets
+⚡ RNF02 — Performance
+O jogo deve rodar em tempo real com 60 FPS (requestAnimationFrame).
+Sem necessidade de backend.
+🌐 RNF03 — Execução Web
+O sistema deve rodar apenas no navegador (HTML, CSS, JS puro).
+📱 RNF04 — Compatibilidade
+Compatível com navegadores modernos:
+Chrome
+Edge
+Firefox
+Mobile browsers
+🎨 RNF05 — Interface
+Interface deve ser simples e intuitiva.
+Estilo visual inspirado na Amazônia.
+🧠 RNF06 — Baixa complexidade técnica
+Não requer instalação de bibliotecas externas.
+Não depende de banco de dados.
+🔒 RNF07 — Segurança
+Não utiliza dados sensíveis do usuário.
+Execução totalmente client-side.
+5. 🧩 Regras de Negócio
+RN01: O jogador sempre inicia no menu.
+RN02: Apenas um jogo roda por vez.
+RN03: Pontuação é reiniciada ao iniciar novo jogo.
+RN04: Colisão com obstáculos = derrota imediata.
+RN05: Inimigos são removidos ao serem “capturados” ou destruídos.
+6. 🧱 Arquitetura do Sistema
+📦 Amazônia Games
+ ├── index.html (menu principal)
+ ├── saci.html (jogo Saci)
+ ├── boitata.html (jogo Boitatá)
+ ├── style.css (interface)
+ └── script.js (lógica dos jogos)
+7. 🎮 Módulos do Sistema
+🌪️ Módulo Saci
+Movimento livre
+Habilidades especiais
+IA de perseguição inimiga
+Sistema de fuga e sobrevivência
+🔥 Módulo Boitatá
+Movimento em arena
+Inimigos colecionáveis
+Obstáculos destrutíveis
+Sistema de tiro (bola de fogo)
+8. 🚀 Possíveis Expansões
+🏆 Ranking de jogadores
+🔊 Sons e efeitos
+🌲 Mapa de floresta dinâmico
+🧠 IA avançada dos inimigos
+💾 Sistema de salvar progresso
+📱 App (PWA instalável)
+📊 Conclusão
+
+O projeto Amazônia Games é uma plataforma web leve, modular e escalável, com foco em:
+
+Jogabilidade simples
+Acessibilidade (PC e celular)
+Expansão futura para sistema completo de jogos

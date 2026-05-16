@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no, minimum-scale=1, maximum-scale=1">
+  <meta name="theme-color" content="#1B4332">
+  <title>Amazônia: Ecos do Vazio — Coração da Mata</title>
+
+  <!-- A-Frame -->
+  <script src="https://aframe.io/releases/1.5.0/aframe.min.js"></script>
+
+  <!-- Componentes customizados -->
+  <script src="js/components/gaze-cursor.js"></script>
+  <script src="js/components/enemy-base.js"></script>
+  <script src="js/components/corruption-spot.js"></script>
+  <script src="js/components/totem.js"></script>
+  <script src="js/components/portal.js"></script>
+  <script src="js/components/great-tree.js"></script>
+  <script src="js/components/paje.js"></script>
+  <script src="js/components/spirits.js"></script>
+  <script src="js/components/ambient-audio.js"></script>
+  <script src="js/components/hub-manager.js"></script>
+
+  <style>
+    body { margin: 0; background: #000; overflow: hidden; }
+    #loader {
+      position: fixed; inset: 0;
+      background: radial-gradient(ellipse at center, #1B4332 0%, #000 100%);
+      color: #A8E6CF; display: flex; flex-direction: column;
+      align-items: center; justify-content: center; font-family: serif;
+      z-index: 2147483647; transition: opacity 1s;
+      pointer-events: auto;
+      touch-action: manipulation;
+      padding: 20px;
+      text-align: center;
+    }
+    #loader h1 { font-size: 2em; margin: 0; letter-spacing: 0.1em; }
+    #loader p  { font-style: italic; opacity: 0.7; margin-top: 1em; }
+    #start-btn {
+      margin-top: 2em; padding: 1.2em 2em; background: #1B4332;
+      border: 2px solid #A8E6CF; color: #A8E6CF; font-size: 1.1em;
+      cursor: pointer; letter-spacing: 0.1em;
+      pointer-events: auto;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: rgba(168,230,207,0.4);
+      position: relative; z-index: 2;
+      min-width: 80%;
+    }
+    #start-btn:active { background: #A8E6CF; color: #1B4332; }
+    #start-btn:hover  { background: #A8E6CF; color: #1B4332; }
+  </style>
+</head>
+<body>
+
+  <!-- Tela de abertura -->
+  <div id="loader">
+    <h1>AMAZÔNIA</h1>
+    <p>Ecos do Vazio</p>
+    <button id="start-btn">ENTRAR NO MUNDO DAS LENDAS</button>
+    <p style="font-size:0.85em; margin-top:2em; opacity:0.5;">
+      Em VR: encaixe o celular no Google Cardboard depois de entrar.<br>
+      Sem VR: arraste o mouse para olhar; espaço/clique = totem.
+    </p>
+  </div>
+
+  <a-scene
+    fog="type: linear; color: #6B9A6B; near: 15; far: 60"
+    renderer="antialias: true; colorManagement: true"
+    vr-mode-ui="enabled: true"
+    hub-manager
+    ambient-audio="biome: forest; volume: 0.22">
+
+    <!-- Assets -->
+    <a-assets>
+      <!-- Sons embutidos (geração procedural via Web Audio fica para próxima sprint) -->
+    </a-assets>
+
+    <!-- ===== CÉU ===== -->
+    <a-sky color="#87A878"></a-sky>
+
+    <!-- ===== AMBIENTE ===== -->
+    <!-- Chão / floresta -->
+    <a-circle radius="40" rotation="-90 0 0" position="0 0 0"
+              color="#3D6B3F"
+              material="roughness: 1; shader: flat"></a-circle>
+
+    <!-- Anel de árvores menores ao redor (decoração) -->
+    <a-entity id="forest-ring"></a-entity>
+
+    <!-- Iluminação ambiente — bem mais clara -->
+    <a-light type="ambient" color="#FFFFFF" intensity="1.2"></a-light>
+    <a-light type="directional" color="#FFF8DC" intensity="1.0"
+             position="5 10 5"></a-light>
+    <a-light type="hemisphere" color="#FFFFFF" groundColor="#3D6B3F"
+             intensity="0.6"></a-light>
+
+    <!-- ===== ÁRVORE CENTRAL — CORAÇÃO DA MATA ===== -->
+    <a-entity great-tree position="0 0 0"></a-entity>
+
+    <!-- ===== ESPÍRITOS FLUTUANTES (atmosfera) ===== -->
+    <a-entity spirits="count: 10; radius: 14; color: #B0E0E6" position="0 0 0"></a-entity>
+
+    <!-- ===== FOCOS DE VAZIO PARA TREINO (purificáveis com totem) ===== -->
+    <a-entity corruption-spot position="5 0.01 3"></a-entity>
+    <a-entity corruption-spot position="-4 0.01 5" radius="0.5"></a-entity>
+    <a-entity corruption-spot position="6 0.01 -4" radius="0.7"></a-entity>
+
+    <!-- ===== PAJÉ ESQUECIDO ===== -->
+    <a-entity paje position="-3 0 -2"
+              rotation="0 30 0"></a-entity>
+
+    <!-- ===== 5 PORTAIS AO REDOR ===== -->
+    <!-- Mata Viva (verde) - sempre disponível -->
+    <a-entity portal="destination: mata-viva;
+                      color: #52A256;
+                      label: Mata Viva"
+              position="8 2.5 0"
+              rotation="0 -90 0"></a-entity>
+
+    <!-- Rio Esquecido (azul) -->
+    <a-entity portal="destination: rio-esquecido;
+                      color: #1E88E5;
+                      label: Rio Esquecido;
+                      locked: true"
+              position="2.5 2.5 7.6"
+              rotation="0 -160 0"></a-entity>
+
+    <!-- Floresta em Cinzas (laranja/vermelho) -->
+    <a-entity portal="destination: floresta-cinzas;
+                      color: #E53935;
+                      label: Floresta em Cinzas;
+                      locked: true"
+              position="-6.5 2.5 4.7"
+              rotation="0 -215 0"></a-entity>
+
+    <!-- Floresta Quebrada (roxo/cinza) -->
+    <a-entity portal="destination: floresta-quebrada;
+                      color: #7E57C2;
+                      label: Floresta Quebrada;
+                      locked: true"
+              position="-6.5 2.5 -4.7"
+              rotation="0 -305 0"></a-entity>
+
+    <!-- O Vazio (preto/violeta) -->
+    <a-entity portal="destination: vazio;
+                      color: #1A001F;
+                      label: O Vazio;
+                      locked: true"
+              position="2.5 2.5 -7.6"
+              rotation="0 -20 0"></a-entity>
+
+    <!-- ===== TOAST (mensagens narrativas) ===== -->
+    <a-entity id="toast-anchor" position="0 1.5 -2">
+      <a-text id="toast"
+              value=""
+              align="center"
+              color="#FFD700"
+              width="3"
+              visible="false"
+              position="0 0 0"></a-text>
+    </a-entity>
+
+    <!-- ===== FADE OVERLAY (transição entre cenas) ===== -->
+    <a-entity id="fade-overlay" position="0 0 -0.5">
+      <a-plane width="2" height="2"
+               material="color: #000; opacity: 0; transparent: true; shader: flat"></a-plane>
+    </a-entity>
+
+    <!-- ===== HUD: barra de energia do totem ===== -->
+    <a-entity id="hud-energy" position="0.45 -0.35 -1">
+      <a-plane width="0.4" height="0.04"
+               material="color: #333; opacity: 0.6; transparent: true; shader: flat"></a-plane>
+      <a-plane id="energy-bar" width="0.4" height="0.04" position="0 0 0.001"
+               material="color: #7FFFD4; shader: flat"></a-plane>
+    </a-entity>
+
+    <!-- ===== JOGADOR ===== -->
+    <a-entity id="rig" position="0 1.6 5">
+      <a-camera look-controls="reverseMouseDrag: false; touchEnabled: true"
+                wasd-controls-enabled="false">
+
+        <!-- Cursor de gaze -->
+        <a-entity gaze-cursor></a-entity>
+
+        <!-- Totem na mão "imaginária" (canto inferior direito da visão) -->
+        <a-entity totem
+                  position="0.32 -0.32 -0.6"
+                  rotation="-15 -10 0"></a-entity>
+      </a-camera>
+    </a-entity>
+
+  </a-scene>
+
+  <script>
+    // Esconde loader e desbloqueia áudio do navegador
+    function startGame(e) {
+      if (e) { e.preventDefault(); e.stopPropagation(); }
+      const scene = document.querySelector('a-scene');
+      // Garante que o scene esteja carregado antes de esconder o loader
+      const hideLoader = () => {
+        const loader = document.getElementById('loader');
+        if (loader) {
+          loader.style.opacity = '0';
+          setTimeout(() => loader.remove(), 1000);
+        }
+      };
+      if (scene.hasLoaded) {
+        hideLoader();
+      } else {
+        scene.addEventListener('loaded', hideLoader, { once: true });
+        // fallback: esconde após 4s no máximo
+        setTimeout(hideLoader, 4000);
+      }
+
+      // Inicializa contexto de áudio (necessário no mobile)
+      if ('speechSynthesis' in window) {
+        const u = new SpeechSynthesisUtterance('Mundo das Lendas.');
+        u.lang = 'pt-BR'; u.volume = 0.001;
+        speechSynthesis.speak(u);
+      }
+
+      // Mensagem de boas-vindas
+      setTimeout(() => {
+        const sc = document.querySelector('a-scene');
+        if (sc) sc.emit('hub-message', {
+          text: 'Você chegou ao Coração da Mata. Olhe ao redor.'
+        });
+      }, 1500);
+    }
+
+    // Liga o botão a múltiplos eventos (touch + click) para mobile
+    const startBtn = document.getElementById('start-btn');
+    if (startBtn) {
+      startBtn.addEventListener('click', startGame);
+      startBtn.addEventListener('touchend', function(e){ startGame(e); });
+    }
+
+    // Cria anel decorativo de árvores menores
+    window.addEventListener('load', function () {
+      const ring = document.getElementById('forest-ring');
+      if (!ring) return;
+      const trees = 24;
+      for (let i = 0; i < trees; i++) {
+        const a = (i / trees) * Math.PI * 2;
+        const r = 18 + Math.random() * 6;
+        const x = Math.cos(a) * r;
+        const z = Math.sin(a) * r;
+        const h = 4 + Math.random() * 3;
+
+        const trunk = document.createElement('a-cylinder');
+        trunk.setAttribute('radius', 0.25);
+        trunk.setAttribute('height', h);
+        trunk.setAttribute('segments-radial', 5);
+        trunk.setAttribute('position', x + ' ' + (h/2) + ' ' + z);
+        trunk.setAttribute('color', '#3E2723');
+        ring.appendChild(trunk);
+
+        const top = document.createElement('a-cone');
+        top.setAttribute('radius-bottom', 1.4 + Math.random()*0.5);
+        top.setAttribute('radius-top', 0.1);
+        top.setAttribute('height', 2.5);
+        top.setAttribute('segments-radial', 6);
+        top.setAttribute('position', x + ' ' + (h + 1) + ' ' + z);
+        const shades = ['#1F4020', '#2E5D31', '#3F7042', '#264C28'];
+        top.setAttribute('color', shades[i % shades.length]);
+        top.setAttribute('material', 'flatShading: true');
+        ring.appendChild(top);
+      }
+    });
+
+    // Atualiza barra de energia
+    document.querySelector('a-scene').addEventListener('totem-energy', function (e) {
+      const bar = document.getElementById('energy-bar');
+      if (!bar) return;
+      const pct = e.detail.value / e.detail.max;
+      bar.setAttribute('width', 0.4 * pct);
+      bar.setAttribute('position', (-0.2 + (0.4 * pct) / 2) + ' 0 0.001');
+      const color = pct > 0.5 ? '#7FFFD4' : pct > 0.2 ? '#FFD700' : '#FF6B6B';
+      bar.setAttribute('material', 'color: ' + color + '; shader: flat');
+    });
+  </script>
+</body>
+</html>
